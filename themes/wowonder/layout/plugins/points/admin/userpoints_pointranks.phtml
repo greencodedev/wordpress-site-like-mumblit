@@ -1,0 +1,87 @@
+<?php 
+  			    global $sqlConnect;
+  			    // Load from DB
+  			    $rows = $sqlConnect->query("SELECT * FROM userpointranks ORDER BY amount");
+				$point_ranks = array();
+  			    while($row = $rows->fetch_assoc() ) {
+   			          $point_ranks[] = $row;
+  			    }
+  			    $point_ranks_count = count($point_ranks);
+?>
+<div class="row col-sm-12">
+<form class="js_ajax_forms form-horizontal" action="<?php echo $wo['config']['site_url']; ?>/plugin_requests.php?f=admin_points&task=setting_ranks" data-url="?f=admin_points&task=setting_ranks" method="post">
+    
+<div class="panel panel-default">
+   <div class="panel-heading"><?php echo $wo['lang']['plugin_point_points_rankings']; ?></div>
+      <div class="panel-body">        
+
+                            <div class="form-group">
+                                <label class="col-sm-4"><?php echo $wo['lang']['plugin_point_enable_points_rankings']; ?>?</label>
+                                <div class="col-sm-7">
+                                   <select class="form-control" name="enable_pointrank">
+                                        <option <?php if($wo['system']['setting_userpoints_enable_pointrank'] == 1){ ?>selected=""<?php } ?> value="1">
+		                                   <?php echo $wo['lang']['plugin_point_yes_enable_points_ranking']; ?>.
+		                                </option>
+                                        <option <?php if($wo['system']['setting_userpoints_enable_pointrank'] == 0){ ?>selected=""<?php } ?> value="0">
+		                                   <?php echo $wo['lang']['plugin_point_no_disable_points_ranking']; ?>.
+		                                </option>
+                                    </select>
+                                    <p class="help-block"><?php echo $wo['lang']['plugin_point_enable_points_rankings_desc']; ?>.</p>
+                                </div>
+                            </div>						               
+    </div>
+</div>
+
+
+    <div class="panel panel-default">
+       <div class="panel-heading"><?php echo $wo['lang']['plugin_point_points_rankings']; ?></div>
+         <div class="panel-body table-responsive">                             
+							
+	<table cellpadding='0' cellspacing='0' width="100%" class="table table-striped">  
+	   <tr>
+	     <td width="30%"><strong><?php echo $wo['lang']['plugin_point_points_from']; ?></strong></td>
+	     <td width="50%"><strong><?php echo $wo['lang']['plugin_point_rank_title']; ?></strong></td>
+	   </tr>
+	
+    <?php foreach($point_ranks as $rank){ ?>
+       <tr>
+         <td class='form1'> <input name="point_rank_points[]" value="<?php echo $rank['amount']; ?>" type="text" class="form-control"> </td>
+         <td class='form2'> <input name="point_rank_text[]" value="<?php echo $rank['text']; ?>" type="text" class="form-control"> </td>
+       </tr>
+    <?php }//F ?>
+
+      <tr id="addmorerow" name="addmorerow">
+         <td><a class="mt20 btn btn-success" onclick="addPointsRow(); return false;"> <?php echo $wo['lang']['plugin_point_add_more']; ?> </a> </td>
+         <td></td>
+      </tr>
+    </table>						                       
+                                                             				                              
+            <div class="body-header pull-right flip mt10 mr10">
+                <button class="btn btn-danger no_radius" type="submit"><?php echo $wo['lang']['plugin_point_save_changes']; ?></button>
+            </div>
+
+            <div class="col-xs-12">
+			<?php /* success */ ?>
+            <div class="alert alert-success mb0 mt10 x-hidden" role="alert"></div>
+            <?php /* success */ ?>
+            <?php /* error */ ?>
+            <div class="alert alert-danger mb0 mt10 x-hidden" role="alert"></div>
+            <?php /* error */ ?>
+			</div>	
+			
+        
+    </div>
+</div>                    
+
+<input type='hidden' name='point_ranks_count' value='<?php echo $point_ranks_count; ?>'>
+</form>
+</div>
+
+<div style="display:none">
+    <table>
+       <tr id="pointsrow" name="pointsrow">
+          <td class='form1'> <input name="point_rank_points[]" value="" type="text" class="form-control"> </td>
+          <td class='form2'> <input name="point_rank_text[]" value="" type="text" class="form-control"> </td>
+       </tr>
+    </table>
+</div>

@@ -1,0 +1,58 @@
+<?php 
+        global $sqlConnect;
+		$question_id = $wo['story']['question_id'];
+        
+		/* get question */
+        $getData = $sqlConnect->query("SELECT * FROM posts_questions WHERE question_id = '{$question_id}' LIMIT 1");
+        $resource = $getData->fetch_assoc();
+        
+        // get question options
+        $getQuestionOptions = $sqlConnect->query("SELECT * FROM posts_questions_options WHERE question_id = '{$resource['question_id']}'");
+        while($questionOption = $getQuestionOptions->fetch_assoc()) {
+            
+			if($resource['question_votes'] == 0) {
+                $questionOption['Bar'] = 0;
+            }else {
+                $questionOption['Bar'] = ($questionOption['votes'] / $resource['question_votes']) * 100;
+            }
+			
+            // check if user select the option
+            $getOption = $sqlConnect->query("SELECT * FROM questions_options_votes WHERE user_id = '{$wo['user']['user_id']}' AND question_id = '{$questionOption['question_id']}' AND option_id = '{$questionOption['id']}'");
+            
+			if($getOption->num_rows == 0) {
+                $questionOption['select'] = false;
+            } else {
+                $questionOption['select'] = true;
+                $resource['selected'] = $questionOption['id'];
+            }
+            
+			$questionOptions[] = $questionOption;
+        }	
+?>
+<div class="dataContainer" id="<?php echo $question_id; ?>-question-<?php echo $resource['question_id']; ?>-<?php echo $wo['user']['user_id']; ?>" data-question="<?php echo $resource['question_id']; ?>" data-post="<?php echo $wo['story']['id']; ?>" data-owner="<?php echo $resource['question_user_id']; ?>">  
+         
+ <?php /* Data */ ?>
+    <div class="dataContent mt10 mb10">
+    <table class="questionOptions mt10">   
+	<?php foreach($questionOptions as $option){ ?>
+    <tr>
+   	<td class="questionRadioBtn"><input type="radio" <?php if($option['select']){ echo 'checked="true"'; } ?> class="questionBtn" data-option="<?php echo $option['id']; ?>" name="questionOpts_<?php echo $question_id; ?>"/></td>
+    <td class="questionResultsBar">
+    <div class="questionOption" title="<?php echo $option['title']; ?>">
+		    <div style="width:<?php echo $option['Bar']; ?>%" class="shaded"></div>
+      		<div class="label"><span><?php echo $option['title']; ?></span></div>
+    		<div class="votes"><span>
+			  <b class="optionVotes"><?php echo $option['votes']; ?></b>
+			<?php echo $wo['lang']['plugin_question_votes']; ?></span>
+		    </div>
+   	</div>
+   	</td>
+<td class="questionWhoVoted"><span class="uiButtonText whoVoted" hits="<?php echo $option['votes']; ?>" data-toggle="modal" data-url="<?php echo $wo['config']['site_url']?>/plugin_requests.php?f=question_who_votes&question_id=<?php echo $resource['question_id']; ?>&option_id=<?php echo $option['id']; ?>" title="<?php echo $wo['lang']['plugin_question_who_vote_this']; ?>"> [?]	</span></td>
+    </tr>
+    <?php } ?>
+    </table>
+    <input type="hidden" name="question[votes]" value="<?php echo $resource['question_votes']; ?>" />
+	<input type="hidden" name="question[selected]" value="<?php if(!empty($resource['selected'])){ echo $resource['selected']; } ?>" />
+    </div>
+ <?php /* Data */ ?>
+ </div>

@@ -1,0 +1,162 @@
+<?php 
+$type = ( isset($_POST['type']) ? $_POST['type'] : ( isset($_GET['type']) ? $_GET['type'] : 'website' ) );
+$post_id = ( isset($_POST['post_id']) ? $_POST['post_id'] : ( isset($_GET['post_id']) ? $_GET['post_id'] : 0 ) );
+$ad_id = ( isset($_POST['ad_id']) ? $_POST['ad_id'] : ( isset($_GET['ad_id']) ? $_GET['ad_id'] : 0 ) );
+
+// get ad
+if($ad_id != 0){ 
+	$ad = Ads::get_ad($ad_id, "");
+	$ad['count_title'] = (25) - strlen($ad['title']);
+	$ad['count_desc'] = (99) - strlen($ad['description']);   
+}	
+
+//continue when user exist
+if($ad['user_id'] != $wo ['user']['user_id']) { 
+	header("Content-type: application/json");
+	echo json_encode(array('message' => 'This no is your ads'));
+	exit(); 
+}    
+
+$where = " type='{$ad['plan_type']}' ";
+
+// get plans
+$plans = Ads::get_plans("", FALSE, FALSE, "id DESC", $where);
+?>
+<div class="container mt20">
+	<div class="row">
+
+		<?php /* left panel */ ?>
+		<div class="col-sm-12">
+	<?php 
+	    include "ads_header.phtml";
+	?>
+	   
+	   <div class="row">
+
+    <form class="ads-add-form" action="" method="post">
+        <input type="hidden" name="type" value="<?php echo $ad['type']; ?>"/>
+        <input type="hidden" name="link" value="<?php echo $ad['link']; ?>"/>
+        <input type="hidden" name="id" id="ads-id" value="<?php echo $ad['id']; ?>"/>
+        <input type="hidden" name="post_id" value="<?php echo $ad['post_id']; ?>"/>
+        <input type="hidden" name="page_id" value="<?php echo $ad['page_id']; ?>"/>
+        <div class="col-sm-7">
+            <div class="panel panel-default">
+                <div class="panel-heading"><?php echo $wo['lang']['plugin_ads_ads_info']; ?></div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1"><?php echo $wo['lang']['plugin_ads_campaign_name']; ?></label>
+                        <input name="campaign_name" type="text" value="<?php echo $ad['campaign_name']; ?>" class="form-control" id="exampleInputEmail1" placeholder="Campaign Name">
+                    </div>
+
+                    <?php if($ad['type'] == 'website' or $ad['type'] == 'page'){ ?>
+
+                        <?php if($ad['type'] == 'website'){ ?>
+                            <div class="form-group">
+                                <label><?php echo $wo['lang']['plugin_ads_ads_headline']; ?></label><div class="pull-right flip js_count_t"><?php echo $ad['count_title']; ?></div>
+                                <input type="text" value="<?php echo $ad['title']; ?>" name="title" class="form-control error_t"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label><?php echo $wo['lang']['plugin_ads_display_link']; ?></label>
+                                <input type="text" value="<?php echo $ad['display_link']; ?>" name="display_link" class="form-control"/>
+                            </div>
+                        <?php }//IF ?>
+
+                        <div class="form-group">
+                            <label><?php echo $wo['lang']['plugin_ads_ads_text']; ?></label><div class="pull-right flip js_count_d"><?php echo $ad['count_desc']; ?></div>
+                            <textarea name="description" class="form-control error_d"><?php echo $ad['description']; ?></textarea>
+                        </div>
+
+                        <div class="panel-heading"><?php echo $wo['lang']['plugin_ads_select_image']; ?></div>
+
+                        <div class="ads-image-container">
+
+                            <input class="ads-image-hidden-input" name="imagen" type="hidden" value="<?php echo $ad['images']; ?>" >
+
+                            <?php if(empty($ad['images'])){ ?>
+                            <img class="ads-image" src="<?php echo $wo['config']['site_url']; ?>/assets/plugins/img/no_photo.jpg"/>
+                            <?php }else{ ?>
+                            <img class="ads-image" src="<?php echo $ad['images']; ?>"/>
+                            <?php }//IF ?>
+                            <div style="display: none" class="alert alert-danger" id="ads-image-error"><?php echo $wo['lang']['plugin_ads_error']; ?></div>
+                            <div   class=" fileupload fileupload-exists" data-provides="fileupload">
+
+                                <a class="btn-file btn btn-sm btn-danger">
+                                    <span class="fileupload-new"><?php echo $wo['lang']['plugin_ads_change_image']; ?></span>
+                                    <span class="fileupload-exists"><?php echo $wo['lang']['plugin_ads_change_image']; ?></span>
+
+                                    <input  id="ads-image-input" multiple  class="" type="file" name="image">
+                                </a>
+                                <img class="ad-image-indicator" src="<?php echo $wo['config']['site_url']; ?>/assets/plugins/img/load.gif" width="20" height="20"/>
+                            </div>
+                        </div>
+                    <?php }//IF ?>
+
+                    <div class="panel-heading"><?php echo $wo['lang']['plugin_ads_how_to_spend']; ?></div>
+                    <div class="form-group">
+                        <label><?php echo $wo['lang']['plugin_ads_optimize_for']; ?></label>
+                        <input type="hidden" name="plan_type" value="<?php echo $ad['plan_type']; ?>"/>
+                        <select disabled style="width: 60%" class="form-control ads-plan-type" name="">
+                            <option <?php if($ad['plan_type'] == 'clicks'){ ?>selected<?php }//IF ?> value="clicks"><?php echo $wo['lang']['plugin_ads_clicks']; ?></option>
+                            <option <?php if($ad['plan_type'] == 'impression'){ ?>selected<?php }//IF ?> value="impression"><?php echo $wo['lang']['plugin_ads_impression']; ?></option>
+							<option <?php if($ad['plan_type'] == 'period'){ ?>selected<?php }//IF ?> value="period">Period</option>
+                        </select>
+
+                    </div>
+                    <div class="form-group">
+                        <label><?php echo $wo['lang']['plugin_ads_how_much_to_spend']; ?></label>
+                        <input type="hidden" name="plan_id" value="<?php echo $ad['plan_id']; ?>"/>
+                        <select disabled style="width: 60%" class="form-control ads-plans" name="">
+							<?php foreach($plans as $plan){ ?>
+                            <option <?php if($ad['plan_id'] == $plan['id']){ ?>selected<?php }//IF ?> value="<?php echo $plan['id']; ?>"><?php echo $plan['name']; ?> (<?php echo $plan['price'].' '.$plan['money_type']; ?>)</option>
+                            <?php } ?>
+                        </select>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+			
+		
+
+        <div class="col-sm-5">
+		  <div class="panel">
+            <ul class="panel-body user-action-buttons">
+                <li><a class="preview-ad" data-id="<?php echo $ad['id']; ?>" href=""><i class="fa fa-android-search"></i> <span><?php echo $wo['lang']['plugin_ads_preview_ad']; ?></span></a> </li>
+            </ul>
+		  </div>
+            <div class="panel panel-default">
+                <div class="panel-heading"><?php echo $wo['lang']['plugin_ads_who_do_ad_reach']; ?></div>
+                <div class="panel-body">
+
+                <?php /* Disable in this version */ include "ads_tab_countries.phtml"; ?>
+
+                    <label><?php echo $wo['lang']['plugin_ads_gender']; ?></label>
+                    <select name="gender" class="form-control">
+                        <option <?php if($ad['target_gender'] == 'all'){ ?>selected<?php }//IF ?> value="all"><?php echo $wo['lang']['plugin_ads_all']; ?></option>
+                        <option <?php if($ad['target_gender'] == 'M'){ ?>selected<?php }//IF ?> value="M"><?php echo $wo['lang']['plugin_ads_male']; ?></option>
+                        <option <?php if($ad['target_gender'] == 'F'){ ?>selected<?php }//IF ?> value="F"><?php echo $wo['lang']['plugin_ads_female']; ?></option>
+                    </select>
+
+                    <label><?php echo $wo['lang']['plugin_ads_ad_status']; ?></label>
+                    <select name="status" class="form-control">
+                        <option <?php if($ad['status'] == '1'){ ?>selected<?php }//IF ?> value="1"><?php echo $wo['lang']['plugin_ads_ad_running']; ?></option>
+                        <option <?php if($ad['status'] == '0'){ ?>selected<?php }//IF ?> value="male"><?php echo $wo['lang']['plugin_ads_ad_stopped']; ?></option>
+                    </select>
+                </div>
+
+                <div class="ads-add-footer">
+                    <button href="" class="btn btn-sm btn-success"><?php echo $wo['lang']['plugin_ads_save_ad']; ?></button>
+                </div>
+
+            </div>
+        </div>
+    </form>
+</div>
+	
+		</div>
+		<?php /* left panel */ ?>
+	</div>
+</div>
+<?php /* page content */ ?>

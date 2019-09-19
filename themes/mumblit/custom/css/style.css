@@ -1,0 +1,15 @@
+.chat-container { background: e9ebee !important;
+  color: #333 !important; }
+#wo_useract_btn {
+  border: 1px solid #462178 !important;
+  background: #fff !important;
+  color: #462178 !important;
+  border-radius: 20px !important;
+}
+#wo_useract_btn:hover {
+  background: #462178 !important;
+  color: #fff !important;
+}
+#info_prt {
+  width: 90% !important;
+}

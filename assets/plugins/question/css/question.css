@@ -1,0 +1,54 @@
+/* 
+ * Question CSS
+ * @author LdrMx
+ */
+.publisherContent .close{ margin:-35px 10px; }
+.pubQuestionOptions { margin-bottom: -8px; border-top: 1px solid #ccc; }
+input.shareQuestionOption { width: 100%; }
+.pubQuestionOptions span { background: #fff; padding: 0 5px; position: relative; top: -8px; left: 20px; }
+.uiInput, .uiTextArea{ background: #fff; padding: 4px; margin: 0; color: #666; font-family: "lucida grande",tahoma,verdana,arial,sans-serif; font-size: 11px; line-height: 14px; border: 1px solid #bdc7d8; }
+.uiInput.active, .uiTextArea.active { color: #333; }	
+input.shareInput { width: 100%; font-size: 12px; line-height: 16px; }	
+.uhide{ display:block; } 
+.dataContainer .questionOptions { width: 100%; }
+.questionOptions .questionRadioBtn { width: 25px; position: relative; top: 2px; vertical-align: top; }
+.questionOptions .questionResultsBar { padding: 2px 0; }
+.questionOptions .questionWhoVoted { width: 50px; padding: 5px; vertical-align: top; }
+.dataContainer .questionOption { background: #fff; border: 1px solid #ccc; padding: 3px 5px 6px; position: relative; }
+.questionOption .shaded { background-color: #d8dfea; height: 100%; position: absolute; top: 0; left: 0;  }
+.questionOption .label { color: #3b5998; font-weight: bold; overflow: hidden; position: relative; top: 1px; }
+.questionOption .votes { background-color: #fff; height: 100%; padding: 0 5px; position: absolute; right: 0;  top: 0; visibility: hidden; }
+.questionOption .votes span { color: #808080; font-weight: bold; position: relative; top: 4px; }
+.questionRadioBtn input[disabled="disabled"], .questionRadioBtn input.disabled { opacity: 0.3; }
+.questionRadioBtn:hover, .questionRadioBtn input, .questionOption:hover { cursor: pointer; }
+.questionRadioBtn:hover + .questionResultsBar div.questionOption, .questionOption:hover  { border: 1px solid #788db8; }
+.questionRadioBtn:hover + .questionResultsBar div.votes, .questionOption:hover .votes { visibility: visible; }
+.dataContainer .uiButtonText{ color: #3b5998; cursor: pointer; }
+
+
+/*friend invite*/
+.friend_invite {
+	font-family: trebuchet MS;
+	font-size:12px;
+}
+.friend_invite input[type=text]{
+	padding:3px;
+	font-family: trebuchet MS;
+	font-size:12px;
+	border:1px solid #ccc;
+	min-width:150px;
+	width:100%;
+}
+.friend_invite .friend_container{
+	width:100%;
+	border:1px solid #ccc;
+	padding:10px;
+	height:200px;
+	overflow:auto
+}
+.friend_invite .friend_container ul{padding:0px;margin:0px}
+.friend_invite .friend_container ul li{list-style:none;float:left;width:173px;margin:5px;border:1px solid #CCC;padding:5px;cursor:pointer; border-radius: 3px;}
+.friend_invite .friend_container ul li input[type=checkbox]{display:none}
+.friend_invite .friend_container ul li.active{background:#444; }
+.friend_invite .friend_container ul li.active div{ color:#FFF; }
+.friend_invite .f_photo, .f_desc{ float:left; width:70px; }

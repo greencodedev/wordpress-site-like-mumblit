@@ -1,0 +1,214 @@
+<div class="row col-sm-12">
+<?php global $sqlConnect, $view, $sub_view;
+$id = ( isset($_POST['id']) ? $_POST['id'] : ( isset($_GET['id']) ? $_GET['id'] : '0' ) );
+			    $sql_count = "SELECT COUNT(*) ";
+			    $sql_head = "SELECT * ";
+			    $sql_body = "FROM userpointearner ";
+
+			    $sql_count .= $sql_body;
+			    $total_offers = soft::db_query_count( $sql_count );
+			    $sql = $sql_head . $sql_body ;
+
+			    $offers = array();
+			    $rows = $sqlConnect->query( $sql );
+			    while($row = $rows->fetch_assoc()) {
+
+ 			          $offers[] = array( 'offer_id'			=> 	$row['id'] ,
+			    	  				     'offer_title'		=> 	$row['title'] ,
+				    				     'offer_enabled'		=>	$row['enabled'],
+				    				     'offer_cost'		=>	$row['cost'],
+										 'offer_cant'		=>	$row['cant'],
+				    				     'offer_date'		=>	$row['date'],
+				    				     'offer_views'		=>	$row['views'],
+					    			     'offer_engagements'	=>	$row['engagements'],					
+					    			     'offer_enabledisable'	=>	$row['enabled'] == 0 ? 1 : 0
+				       );
+                }
+
+  			    if($id > 0) { $item_id = $id;
+  			    $upearner = new upearner( $item_id, false );
+  			    //if($upearner->upearner_exists == 0) soft::redirect("userpoints_offers");
+
+  			    $offer_title = $upearner->upearner_info['title'];
+  			    $offer_enabled = $upearner->upearner_info['enabled'];
+  			    $offer_desc = $upearner->upearner_info['body'];
+  			    $offer_cost = $upearner->upearner_info['cost'];
+				$offer_cant = $upearner->upearner_info['cant'];
+  			    $offer_tags = $upearner->upearner_info['tags'];
+  			    $offer_transact_state = $upearner->upearner_info['transact_state'];
+
+  			    $metadata = unserialize( $upearner->upearner_info['metadata'] );
+  
+  			    $redirect_url = $metadata['url'];
+  			    $appear_in_transactions = $metadata['t'];
+
+      } else {
+  			    // Defaults
+  			    $offer_cost = 0;
+				$offer_cant = 0;
+  			    $offer_enabled = 1;
+  			    $offer_transact_state = 1;	// require action to complete
+  			    $redirect_url = '';
+  			    $appear_in_transactions = 1;
+      }
+
+			    $item_id = $id;
+
+
+if($sub_view == ""){ ?>
+    <div class="panel panel-default">
+    <div class="panel-heading"><strong><?php echo $wo['lang']['plugin_point_view_offers']; ?></strong></div>
+    <div class="panel-body">
+                           <small><?php echo $wo['lang']['plugin_point_admin_offers_desc']; ?>.</small>
+						   <div class="mt20 mb10"><a class="btn btn-success no_radius" href="<?php echo $wo['config']['site_url']; ?>/index.php?link1=admin-plugins&view=points_offerts&sub_view=item"><?php echo $wo['lang']['plugin_point_add_new_offer']; ?></a></div>
+        
+		<div class="row panel-body with-table">
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered table-hover js_dataTable">
+                    <thead>
+                        <tr>
+                            <th><?php echo $wo['lang']['plugin_point_title']; ?></th>
+                            <th><?php echo $wo['lang']['plugin_point_points']; ?></th>
+							<th><?php echo $wo['lang']['plugin_point_cant']; ?></th>
+                            <th><?php echo $wo['lang']['plugin_point_views']; ?></th>	
+							<th><?php echo $wo['lang']['plugin_enabled']; ?></th>						
+                            <th><?php echo $wo['lang']['plugin_point_add_date']; ?></th>
+                            <th><?php echo $wo['lang']['plugin_point_options']; ?></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach($offers as $offer){ ?>
+                        <tr>
+                            <td><?php echo $offer['offer_title']; //|regex_replace:"/&#039;/":"'"|truncate:16:"..":true ?></td>
+                            <td><?php echo $offer['offer_cost']; ?></td>
+							<td><?php echo $offer['offer_cant']; ?></td>
+							<td><?php echo $offer['offer_views']; ?></td>
+							<td><?php if($offer['offer_enabled'] == 1){ ?>
+                                <span class="label label-success"><?php echo $wo['lang']['yes']; ?></span>
+                                <?php } else { ?>
+                                <span class="label label-danger"><?php echo $wo['lang']['no']; ?></span>
+                                <?php } ?></td>
+                            <td><?php echo date('Y-m-d H:i:s', $offer['offer_date']); ?></td>
+                            <td>
+                                <button class="btn btn-xs btn-danger offer_delete" data-handle="point_offer" data-id="<?php echo $offer['offer_id']; ?>">
+                                    <i class="fa fa-trash-o"></i>
+                                </button>
+                                <a href="<?php echo $wo['config']['site_url']; ?>/index.php?link1=admin-plugins&view=points_offerts&sub_view=item&id=<?php echo $offer['offer_id']; ?>" class="btn btn-xs btn-primary">
+                                    <i class="fa fa-pencil"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        <?php }//F ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+		
+		
+    </div>
+</div>
+<?php } else { ?>
+            <div class="pull-right mt10 mr10"><a href="<?php echo $wo['config']['site_url']; ?>/index.php?link1=admin-plugins&view=points_offerts"><?php echo $wo['lang']['plugin_back_to_listing']; ?></a></div>
+			
+<div class="panel panel-default">
+    <div class="panel-heading"><strong><?php echo $wo['lang']['plugin_point_add_offer']; ?></strong></div>
+	        			
+         <div class="panel-body">
+<div class="mt10 mb20"><small><?php echo $wo['lang']['plugin_point_add_offer_desc']; ?>.</small></div>
+
+     <form class="js_form form-horizontal" data-url="?f=admin_points" action="<?php echo $wo['config']['site_url']; ?>/plugin_requests.php?f=admin_points" method="post">
+	 
+		   <div class="form-group">
+				<label class="col-sm-3"><?php echo $wo['lang']['plugin_point_title']; ?>:</label>
+				<div class="col-sm-9">
+				<input type="text" class="form-control" name="offer_title" value="<?php if(!empty($offer_title)){ echo $offer_title; } ?>" size="40" maxlength="250">
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-sm-3"><?php echo $wo['lang']['plugin_point_desc']; ?>:</label>
+				<div class="col-sm-9">	
+				<textarea name="offer_desc" rows="4" cols="40" class="form-control"><?php if(!empty($offer_desc)){ echo $offer_desc; } ?></textarea>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-sm-3"><?php echo $wo['lang']['plugin_point_points']; ?>:</label>
+				<div class="col-sm-9">
+				<input type="text" class="form-control" name="offer_cost" value="<?php echo $offer_cost; ?>" size="40" maxlength="50">
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-sm-3"><?php echo $wo['lang']['plugin_point_quantity_of_clicks']; ?>:</label>
+				<div class="col-sm-9">
+				<input type="text" class="form-control" name="offer_cant" value="<?php echo $offer_cant; ?>" size="40" maxlength="50">
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-sm-3"><?php echo $wo['lang']['plugin_point_show_in_transactions']; ?>:</label>
+				<div class="col-sm-9">
+				<select class="form-control" name="appear_in_transactions">
+				   <option value="1"<?php if($appear_in_transactions == 1){ ?> SELECTED<?php } ?>><?php echo $wo['lang']['yes']; ?></option>
+				   <option value="0"<?php if($appear_in_transactions == 0){ ?> SELECTED<?php } ?>><?php echo $wo['lang']['no']; ?></option>
+				</select>
+				</div>
+			</div>	
+			
+			<div class="form-group">
+				<label class="col-sm-3"><?php echo $wo['lang']['plugin_point_redirect_url']; ?>:</label>
+				<div class="col-sm-9">
+				<input name="redirect_url" class="form-control" value="<?php echo $redirect_url; ?>">
+				</div>
+			</div>										
+			
+			<div class="form-group">
+				<label class="col-sm-3"><?php echo $wo['lang']['plugin_point_enabled']; ?>:</label>
+				<div class="col-sm-9">
+				<select class="form-control" name="offer_enabled">
+					<option value="1"<?php if($offer_enabled == 1){ ?> SELECTED<?php } ?>><?php echo $wo['lang']['plugin_enabled']; ?></option>
+					<option value="0"<?php if($offer_enabled == 0){ ?> SELECTED<?php } ?>><?php echo $wo['lang']['plugin_disabled']; ?></option>
+				</select>
+				</div>
+			</div>	
+														   
+			<div class="form-group">
+				<label class="col-sm-3"><?php echo $wo['lang']['plugin_point_tags']; ?>:</label>
+				<div class="col-sm-9">
+				<input type="text" class="form-control" name="offer_tags" value="<?php if(!empty($offer_tags)){ echo $offer_tags; } ?>" size="40" maxlength="50">
+				</div>
+			</div>	
+		
+			<div class="form-group">
+				<label class="col-md-3" for="photos"><?php echo $wo['lang']['plugin_point_photo']; ?></label>  
+				<div class="col-md-5">
+				  <div class="input-group">
+					 <span class="btn btn-default btn-file">
+					 <i class="fa fa-camera"></i>
+					 <input type="file" accept="image/x-png, image/gif, image/jpeg" name="image">
+					 </span>
+				  </div>
+				</div>
+			 </div>
+			<input type="hidden" name="task" value="offer_add_new">
+			<input type="hidden" name="item_id" value="<?php echo $item_id; ?>">
+			
+            <div class="body-header">
+				<button class="btn btn-danger no_radius js_btn" type="submit"><?php echo $wo['lang']['plugin_point_save_offer']; ?></button>
+            </div>
+
+            <div class="row col-xs-12">
+			<?php /* success */ ?>
+            <div class="alert alert-success mb0 mt10 x-hidden" role="alert"></div>
+            <?php /* success */ ?>
+            <?php /* error */ ?>
+            <div class="alert alert-danger mb0 mt10 x-hidden" role="alert"></div>
+            <?php /* error */ ?>
+			</div>	
+	</form>
+ 
+         </div>
+</div>						   
+<?php } ?>
+</div>

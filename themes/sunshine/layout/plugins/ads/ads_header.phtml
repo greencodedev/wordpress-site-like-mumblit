@@ -1,0 +1,8 @@
+<div class="panel ads-menu box pad-l-r">
+        <ul class="nav">
+        <li><a class="<?php if($wo['plugin_page'] == 'ads'){ echo 'active';} ?>" data-ajaxify="true" href="<?php echo $wo['config']['site_url']; ?>/index.php?link1=campaign"><?php echo $wo['lang']['plugin_ads_ads']; ?></a> </li>
+		<li><a class="<?php if($wo['plugin_page'] == 'ads_payment_history'){ echo 'active';} ?>" data-ajaxify="true" href="<?php echo $wo['config']['site_url']; ?>/index.php?link1=campaign_payment_history"><?php echo $wo['lang']['payment_history']; ?></a> </li>
+        <li><a class="<?php if($wo['plugin_page'] == 'ads_create'){ echo 'active';} ?>" data-ajaxify="true" href="<?php echo $wo['config']['site_url']; ?>/index.php?link1=campaign_create"><?php echo $wo['lang']['plugin_ads_create_ads']; ?></a> </li>		
+        </ul>
+        <a href="<?php echo $wo['config']['site_url']; ?>/index.php?link1=campaign_create" class="hidden-xs btn btn-primary pull-right flip ads-create-campaign-button"><?php echo $wo['lang']['plugin_ads_create_campaign']; ?></a>
+</div>

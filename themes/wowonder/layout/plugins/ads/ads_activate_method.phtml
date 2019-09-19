@@ -1,0 +1,39 @@
+<h5>
+	<?php echo $wo['lang']['plugin_ads_transaction_details']; ?>
+</h5>
+<div class="transaction-detail">
+	<table class="table-bordered table">
+		<tr>
+			<td><?php echo $wo['lang']['plugin_ads_campaign_name']; ?></td>
+			<td><?php echo $ad['campaign_name']; ?></td>
+		</tr>
+		<tr>
+			<td><?php echo $wo['lang']['plugin_ads_ad_type']; ?></td>
+			<td><?php echo $ad['type']; ?></td>
+		</tr>
+		<tr>
+			<td><?php echo $wo['lang']['plugin_ads_plan_type']; ?></td>
+			<td><?php echo $ad['plan_type']; ?></td>
+		</tr>
+		<tr>
+			<td><?php echo $wo['lang']['plugin_ads_plan_change']; ?></td>
+			<td><?php echo $ad['name']; ?></td>
+		</tr>
+		<tr>
+			<td><?php echo $wo['lang']['plugin_ads_price']; ?></td>
+			<td>$<?php echo $ad['price']; ?></td>
+		</tr>
+	</table>
+</div>
+<h5>
+	<?php echo $wo['lang']['plugin_ads_select_payment_method']; ?>+
+</h5>
+<ul class="nav ads-payment-method">
+	<?php 
+	include "method_paypal.phtml";
+	include "method_voguepay.phtml";
+	include "method_stripe.phtml";
+	//include "method_coupon.phtml";
+	//include "method_points.phtml";
+	?>
+</ul>

@@ -1,0 +1,97 @@
+        <?php if($post_id == 0){ ?>
+        <div class="box">
+            <div class="content">
+                <div class="alert alert-warning">
+                   <?php echo $wo['lang']['plugin_ads_please_select_a_post']; ?>
+                </div>
+            </div>
+        </div>
+		<?php } elseif($post_id != 0 && $post_exist == 0){ ?>
+        <div class="box">
+            <div class="content">
+                <div class="alert alert-warning">
+                    <?php echo $wo['lang']['plugin_ads_sorry_post_no_exist']; ?>
+                </div>
+            </div>
+        </div>
+        <?php } else { ?>
+           <div class="row"> 
+			<form class="ads-add-form" action="" method="post">
+            <input type="hidden" name="type" value="post"/>
+            <input type="hidden" name="id" id="ads-id" value=""/>
+            <input type="hidden" name="post_id" value="<?php echo $post_id; ?>"/>
+               <div class="col-sm-7">
+			   <div class="panel panel-default">
+			   
+                    <div class="panel-heading"><?php echo $wo['lang']['plugin_ads_ads_info']; ?></div>
+                    <div class="panel-body panel-default">
+                      <div class="form-group">
+         <label for="exampleInputEmail1"><?php echo $wo['lang']['plugin_ads_campaign_name']; ?></label>
+         <input name="campaign_name" type="text" value="<?php echo $wo['lang']['plugin_ads_post_engagement']; ?> - <?php echo $post_id; ?>" class="form-control" id="exampleInputEmail1" placeholder="<?php echo $wo['lang']['plugin_ads_campaign_name']; ?>">
+                    </div>
+
+                    <div class="panel-heading"><b><?php echo $wo['lang']['plugin_ads_how_to_spend']; ?></b></div>
+                    <div class="form-group mt10">
+                    <label><?php echo $wo['lang']['plugin_ads_optimize_for']; ?></label>
+                    <select style="width: 60%" class="form-control ads-plan-type" name="plan_type">
+					<option value="impression"><?php echo $wo['lang']['plugin_ads_impression']; ?></option>
+					<option value="period">Period</option>
+					</select>
+                    </div>
+                    <div class="form-group">
+                    <label><?php echo $wo['lang']['plugin_ads_how_much_to_spend']; ?></label>
+                    <select style="width: 60%" class="form-control ads-plans" name="plan_id">
+                                <?php foreach($plans as $plan){ ?>
+									<option value="<?php echo $plan['id']; ?>"><?php echo $plan['name']; ?> (<?php echo $plan['price'].' '.$plan['money_type']; ?>)</option>
+                                <?php }  ?>
+                            </select>
+
+                     </div>
+                   				 
+                </div>
+            </div>
+		</div>
+			
+			
+
+        <div class="row col-md-5 col-sm-5">
+		  <div class="panel">
+            <ul class="panel-body user-action-buttons">
+                <li><a class="preview-ad" data-id="<?php echo $ad['id']; ?>" href="">
+						<i class="icon ion-android-search"></i> <span><?php echo $wo['lang']['plugin_ads_preview_ad']; ?></span>
+					</a>
+				</li>
+            </ul>
+		  </div>
+<div class="panel panel-default">
+                    <div class="panel-heading"><?php echo $wo['lang']['plugin_ads_who_do_ad_reach']; ?></div>
+                    <div class="panel-body">
+                       
+					   <?php include "ads_tab_countries.phtml"; ?>
+					  
+                        <label><?php echo $wo['lang']['plugin_ads_gender']; ?></label>
+                        <select name="gender" class="form-control">
+                            <option value="all"><?php echo $wo['lang']['plugin_ads_all']; ?></option>
+                            <option value="M"><?php echo $wo['lang']['plugin_ads_male']; ?></option>
+                            <option value="F"><?php echo $wo['lang']['plugin_ads_female']; ?></option>
+                        </select>
+						
+                    </div>
+
+                    <div class="ads-add-footer">
+                        <button class="ad-save-button btn btn-sm btn-primary"><?php echo $wo['lang']['plugin_ads_save_ad']; ?></button>
+                        <button class="btn ad-save-and-activate btn-sm btn-success"><?php echo $wo['lang']['plugin_ads_save_and_activate']; ?></button>
+                    </div>
+
+
+                </div>
+
+<div class="panel panel-default">
+<a data-warning="delete-ad-warning" style="margin:30px 10px" href="<?php echo $wo['config']['site_url']; ?>/index.php?link1=campaign" class="btn btn-danger delete-ad-button"><?php echo $wo['lang']['plugin_ads_delete_cancel_ad']; ?></a>
+</div>
+			
+			
+        </div>
+        </form>
+		</div>
+        <?php } ?>

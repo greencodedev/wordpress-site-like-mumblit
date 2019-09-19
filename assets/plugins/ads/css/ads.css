@@ -1,0 +1,341 @@
+.post-ads .post-options , .pagelet_ego .post-options {
+    color: #000 !important;
+}
+/* STYLES FOR AD BANNERS */
+.ad_top img, .ad_belowmenu img, .ad_bottom img{ width:100%; height: 100%; max-width:728px; max-height:90px;}
+.ad_left img, .ad_right img{ width:100%; height: 100%;  max-width:300px; max-height:600px;}
+.ad_top {
+	padding: 52px 5px 0px 5px;
+	text-align: center;
+}
+.ad_belowmenu {
+	padding: 0px 0px 5px 0px;
+	text-align: center;
+}
+.ad_left {
+	padding: 5px 5px 5px 0px;
+	vertical-align: top;
+	text-align: center;
+}
+.ad_right {
+	padding: 5px 0px 5px 5px;
+	vertical-align: top;
+	text-align: center;
+}
+.ad_bottom {
+	padding: 0;
+	text-align: center;
+	
+}
+
+/*new*/
+.pagelet_ego_head {
+    background: none;
+    /*border-bottom: 1px solid #c8d1e2;*/
+    border-top: 0;
+    margin-bottom: 0;
+    padding: 4px;
+		
+    font-family: inherit;
+    color: #666;
+	font-weight: bold;
+	cursor: pointer;
+    line-height: 13px;
+	font-size: 12px;
+}
+.pagelet_ego_ads{ 
+   padding: 10px 0;
+   cursor: pointer;
+   line-height: 13px; 
+}
+.pagelet_ego_ads.list-group {
+    margin-bottom: 0px;
+    border: 0; 
+	border-top: solid 1px #d3d7dc;
+    background-color: transparent;
+}
+
+.pagelet_ego_ads .ads-click-link{
+   text-decoration: none;
+}
+.pagelet_ego_ads .ad_title{
+   font-size: 12px;
+   color: #3b5998;
+   font-weight:bold;
+}
+.pagelet_ego_ads .ads_link{
+   font-size: 11px;
+   color: #999;
+   cursor: pointer;
+   text-decoration: none;
+}
+.pagelet_ego_ads .ad_image img{
+    width: 100%;
+	max-height:85px;
+	height:100%;
+    padding: 0;
+    border: 0;
+}
+.pagelet_ego_ads .ad_description{
+    color: #141823;
+    font-size: 11px;
+	padding-top: 6px;
+}
+/*new*/
+.ads-payment-method .media{ padding: 15px 0px 0px 5px; height: 72px; }
+
+@media (min-width: 991px) {
+.fixed_elem{
+    overflow: hidden;
+    margin: auto;
+    font-family: inherit;
+    padding-top: 12px;
+    z-index: 0;
+    transform: translateZ(0);
+    bottom: auto;
+    top: 50px;
+    position: fixed !important;
+}
+}
+.pad0{
+margin-top:0px;
+padding: 0px;
+ }
+
+.content_with_ads .panel{
+    margin-top: 20px;
+	margin-right:0px;
+    box-shadow: none;
+    border: 0 none;
+    border-radius: 3px;
+}
+
+
+.ads-home-info h2{
+    font-size: 20px;
+}
+
+.ads-home-info p{
+    font-size: 15px;
+}
+.ads-menu{
+    margin-top: 20px;
+    min-height: 20px;
+    padding-left: 10px;
+    position:relative;
+}
+.ads-menu .ads-create-campaign-button{
+    margin-top:-42px;
+}
+.pad-l-r{
+	padding-right:5px;
+}
+.ads-menu li{
+    display: inline-block;
+}
+.ads-menu li a{
+    padding: 15px 10px;
+    font-weight: bold;
+    font-size:14px;
+    -webkit-transition: all .3s;
+    -moz-transition: all .3s;
+    -ms-transition: all .3s;
+    -o-transition: all .3s;
+    transition: all .3s;
+
+}
+.ads-menu li a:hover, .ads-menu li .active{
+    background: #525252;
+    color: white;
+}
+.create-ads-menu { padding:0px;}
+
+.create-ads-menu li a{
+    text-align: center;
+    font-size: 13px;
+    height: 100px;
+}
+
+.create-ads-menu li a i{
+    font-size: 4em;
+    display: block;
+}
+
+.create-ads-menu li .active{
+    background: #ECECEC;
+}
+
+#pre-video-ads-container, #pre-website-ads-container{   
+    width: 100%;
+}
+#pre-video-ads-container form, #pre-website-ads-container form {
+    width: 80%;
+    margin:30px auto;
+}
+#pre-video-ads-container form input, #pre-website-ads-container form input{
+    width: 80%;
+    display: inline-block;
+}
+#pre-video-ads-container form button, #pre-website-ads-container form button{
+    padding: 10px 10px;
+}
+#pre-video-ads-container .alert, #pre-website-ads-container .alert{
+    display: none;
+    width: 98%;
+    margin-top: 5px;
+}
+
+.ads-image-container{
+    padding: 10px;
+}
+.ads-image-container .ads-image{
+    width: 200px;
+    margin: 0 auto;
+    border: solid 4px #DDD;
+    margin-bottom: 10px;
+}
+.ads-image-container .ad-image-indicator{
+    display: none;
+}
+.ads-location-selector{
+    border: solid 1px lightgray;
+}
+.ads-location-selector .all-location{
+    display: block;
+    padding: 10px;
+    border-bottom: solid 1px lightgray;
+}
+.ads-location-selector .each-ads-location{
+    width: 100%;
+    padding: 10px;
+    overflow: auto;
+    max-height: 150px;
+    margin-bottom: 10px;
+}
+.ads-location-selector .each-ads-location span{
+    display: block;
+    margin-bottom: 5px;
+}
+.ads-add-footer {
+    padding: 10px;
+    background: #DDDDDD;
+}
+
+/**Ads rendering**/
+.post-ads{
+    background: #ffffff;
+    padding: 5px 10px;
+    border-bottom: solid 2px #ECECEC;
+    -moz-box-shadow: 0 0 1px 0px lightgrey;
+    -webkit-box-shadow: 0 0 1px 0px lightgrey;
+    box-shadow: 0 0 1px 0px lightgrey;
+    margin-bottom: 10px;
+    -webkit-border-radius:3px;
+    -moz-border-radius:3px;
+    border-radius:3px;
+}
+.post-ads .head,
+.post-page-ads .head,
+.ads-side .head
+{
+    margin-bottom: 10px;
+    border-bottom: solid 1px #ECECEC;
+    padding:5px;
+    color: #808080;
+    font-size: 13px;
+}
+
+.post-page-ads{
+    width: 100%;
+    padding: 10px;
+    position: relative;
+}
+.post-page-ads .media .media-object{
+    width: 40px;
+    height: 40px;
+    overflow: hidden;
+}
+.post-page-ads .media .media-object img{
+    width: 100%;
+}
+.post-page-ads .media .media-body .media-heading{
+    font-weight: bold;
+
+}
+.ad-image img{
+    width: 100%;
+    padding: 4px;
+    border: solid 1px lightgrey;
+}
+
+.second-head {
+    position: relative;
+}
+.second-head .btn-ad-like-button{
+    position: absolute;
+    top: 10px;
+    right: 0px;
+}
+
+.ad-description{
+    font-size: 13px;
+    color: #808080;
+    margin: 5px 0;
+}
+
+.ads-side{
+    background: #ffffff;
+    padding: 10px;
+}
+
+.ads-side .ad-image{
+    width: 100%;
+    max-height: 150px;
+    overflow: hidden;
+}
+.ads-side .ad-image img{
+    border: none;
+}
+
+.ads-activate-layout {
+    width: 50%;
+    margin: 100px auto;
+}
+
+.ads-payment-method {
+    border: solid 1px lightgrey;
+}
+.ads-payment-method li a:hover, .ads-payment-method li button:hover{
+    background: none;
+    opacity: 0.7;
+}
+.ads-payment-method li { float:left; }
+.ads-payment-method li{ display: inline-block; }
+.ads-payment-method >li>a {
+    display: block;
+    padding: 0;
+    height: 45px;
+}
+
+/*btn*/
+.btn-file{position: relative;overflow: hidden;vertical-align: middle}.btn-file > input{position: absolute;top: 0;right: 0;margin: 0;cursor: pointer;border: solid transparent;border-width: 0 0 100px 200px;opacity: 0;filter: alpha(opacity=0);-moz-transform: translate(-300px, 0) scale(4);direction: ltr}.fileupload{margin-bottom: 9px}.fileupload .uneditable-input{display: inline-block;margin-bottom: 0;vertical-align: middle;cursor: text}.fileupload .thumbnail{display: inline-block;margin-bottom: 5px;overflow: hidden;text-align: center;vertical-align: middle}.fileupload .thumbnail > img{display: inline-block;max-height: 100%;vertical-align: middle}.fileupload .btn{vertical-align: middle}.fileupload-exists .fileupload-new,.fileupload-new .fileupload-exists{display: none}.fileupload-inline .fileupload-controls{display: inline}.fileupload-new .input-append .btn-file{-webkit-border-radius: 0 3px 3px 0;-moz-border-radius: 0 3px 3px 0;border-radius: 0 3px 3px 0}.thumbnail-borderless .thumbnail{padding: 0;border: none;-webkit-border-radius: 0;-moz-border-radius: 0;border-radius: 0;-webkit-box-shadow: none;-moz-box-shadow: none;box-shadow: none}.fileupload-new.thumbnail-borderless .thumbnail{border: 1px solid #ddd}.control-group.warning .fileupload .uneditable-input{color: #a47e3c;border-color: #a47e3c}.control-group.warning .fileupload .fileupload-preview{color: #a47e3c}.control-group.warning .fileupload .thumbnail{border-color: #a47e3c}.control-group.error .fileupload .uneditable-input{color: #b94a48;border-color: #b94a48}.control-group.error .fileupload .fileupload-preview{color: #b94a48}.control-group.error .fileupload .thumbnail{border-color: #b94a48}.control-group.success .fileupload .uneditable-input{color: #468847;border-color: #468847}.control-group.success .fileupload .fileupload-preview{color: #468847}.control-group.success .fileupload .thumbnail{border-color: #468847}
+
+._red_active { border-color: #da2929; -webkit-box-shadow: 0 0 4px #ffbaba, inset 0 0 2px #ffbaba; }
+
+/*admin ads*/
+.bannerborder {
+    text-align: center;
+    vertical-align: center;
+    border: 1px dashed #AAAAAA;
+    min-height: 150px;
+    background: #FFF;
+    padding: 8px 10px 8px 10px;
+    margin-top: 2px;
+    margin-bottom: 5px;
+}
+
+.form-horizontal{ font-size: 11pt; text-align:justify; }
+
+.form-horizontal input.checkbox {
+    vertical-align: middle;
+}

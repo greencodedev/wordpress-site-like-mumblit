@@ -1,0 +1,63 @@
+<?php 
+global $sqlConnect;
+if($wo['system']['setting_userpoints_enable_topusers'] == 1){
+			   
+		       // MAXIMUM TOP USERS TO DISPLAY
+		       $max_top_users = 20;
+
+		       $query = "SELECT UP.*, U.user_id, U.username, U.first_name, U.last_name, U.gender, U.avatar
+      		        FROM userpoints UP
+      		        JOIN Wo_Users U
+      		          ON UP.user_id = U.user_id
+     		         WHERE UP.totalearned  != '0'
+      		        ORDER BY UP.totalearned DESC ";
+
+		       $query .= " LIMIT $max_top_users ";
+
+		       $gettop = $sqlConnect->query($query);
+
+		       // GET THEM INTO AN ARRAY
+		       $items = array();
+		       $rank = 1;
+			   $total_items = $gettop->num_rows;
+			   if($total_items > 0){
+		          while($row = $gettop->fetch_assoc()) {
+						if($row['avatar']!= ''){ $row['user_picture'] =  $row['avatar']; } else { $row['user_picture'] = 'upload/photos/d-avatar.jpg'; }
+	     if($row['first_name']!= ''){ $row['user_fullname'] =  $row['first_name'].' '.$row['last_name']; } else { $row['user_fullname'] = $row['username']; }
+                        /* get the connection between the viewer & the target */
+                        //$row['connection'] = $user->connection($row['user_id']);
+				        //$row['user_position'] = userpoints_get_rank($row['user_id']);
+				        $row['user_rank'] = userpointsrank($row['totalearned']);		
+ 		                $row['userpoints_rank'] = $rank++;
+ 		                $items[] = $row;
+		           }
+			    }
+		            
+				/* assign variables 
+		    	$smarty->assign('total_items', $total_items);
+				$smarty->assign('items', $items);   */
+		}
+?>
+   <div class="list-group panel-default points_content">
+                    
+					<div class="list-group-item light clearfix mt5">
+                        <div class="col-sm-7">
+                            <strong><?php echo $wo['lang']['plugin_point_our_all_stars']; ?></strong>
+						</div>	                     
+                    </div>
+					
+        <div class="panel-body">	
+						
+				<div class="row mt20">			
+                   <?php if($total_items == 0){ ?> <div style="text-align:center;"><?php echo $wo['lang']['plugin_point_no_user_withpoint']; ?>.</div>
+			       <?php } else { ?>
+				        <ul> 
+						<?php foreach($items as $_user){ 
+						   include "__feeds_user_top.phtml";
+						}//F ?>
+						</ul>
+		        	<?php } ?>
+		        </div>
+						
+         </div>
+   </div>

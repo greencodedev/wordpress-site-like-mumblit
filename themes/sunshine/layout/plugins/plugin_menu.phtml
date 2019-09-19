@@ -1,0 +1,25 @@
+<?php if(!empty($wo['plugin_list']['plugin_menu']) && $wo['plugin_list']['plugin_menu']){ 
+		foreach($wo['plugin_list']['plugin_menu'] as $plugin_main){ ?>
+			<li <?php if($wo['plugin_page'] == $plugin_main['name']){ echo 'class="active"'; } ?> >
+				<a href="
+				<?php 
+				if(!empty($plugin_main['url'])){
+					echo $plugin_main['url'];
+				} else{
+					echo $wo['config']['site_url'].'/index.php?link1='.$plugin_main['link'];
+				}
+				?>
+				">
+				<?php 
+				if(!empty($plugin_main['svg'])){
+					echo $plugin_main['svg'];
+				} else if(!empty($plugin_main['image'])){
+					echo '<img src="'.$wo['config']['site_url'].'/assets/plugins/'.$plugin_main['image'].'" class="fa" style="width:20px;">';
+				} else{
+					echo '<i class="fa fa-fw '.$plugin_main['icon'].'"></i>';
+				}
+				?>
+				<?php echo $plugin_main['title']; ?></a>
+			</li>
+<?php }
+} ?>

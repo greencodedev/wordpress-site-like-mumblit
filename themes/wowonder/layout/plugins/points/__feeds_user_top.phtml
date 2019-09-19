@@ -1,0 +1,18 @@
+<li class="feeds-item" data-id="<?php echo $_user['id']; ?>">
+    <div class="data-container <?php if($_small){ ?>small<?php } ?>">
+        <a href="<?php echo $wo['config']['site_url']; ?>/<?php echo $_user['user_name']; ?>">
+            <img class="data-avatar" src="<?php echo $_user['user_picture']; ?>" alt="<?php echo $_user['user_fullname']; ?>">
+        </a>
+        <div class="data-content">
+
+            <div>
+                <span class="name js_user-popover" data-uid="<?php echo $_user['user_id']; ?>">
+                    <a href="<?php echo $wo['config']['site_url']; ?>/<?php echo $_user['user_name']; ?>"><?php echo $_user['user_fullname']; ?></a>
+                </span>
+            </div>
+			<div><?php echo $wo['lang']['plugin_point_points']; ?>: <?php echo $_user['totalearned']; ?></div>
+			<div><?php echo $wo['lang']['plugin_point_rank']; ?>: <?php echo $_user['user_rank']; ?></div>
+            
+        </div>
+    </div>
+</li>

@@ -1,0 +1,282 @@
+<div class="page-margin">
+	<div class="row">
+		<div class="col-md-2 leftcol"><?php echo Wo_LoadPage("sidebar/left-sidebar"); ?></div>
+		<div class="col-md-7 middlecol">
+			<?php if ($wo['config']['user_status'] == 1) { ?>
+				<div class="user-status-home">
+					<ul class="status-list">
+						<li>
+							<div class="user-avatar">
+								<a href="<?php echo Wo_SeoLink('index.php?link1=create-status'); ?>"><img src="<?php echo $wo['user']['avatar'];?>"></a>
+							</div>  
+							<div class="plus" onclick="window.location.href='<?php echo Wo_SeoLink('index.php?link1=create-status'); ?>'"><i class="fa fa-plus-circle"></i></div>
+						</li>
+						<?php
+							if ($wo['config']['user_status'] == 1) {
+								$get_user_status = Wo_GetFriendsStatus(array('limit' => 8));
+								if (!empty($get_user_status)) {
+						?>
+						<?php
+							foreach ($get_user_status as $key => $wo['user_status']) {
+								echo Wo_LoadPage('home/user-status');
+							}
+							} 
+							if (Wo_CountStories() > 6) {
+						?>
+							<div class="time pull-right view-more-stories" title="<?php echo $wo['lang']['see_all'] ?>"><a href="<?php echo Wo_SeoLink('index.php?link1=more-status'); ?>"><i class="fa fa-bars"></i></a></div>
+							<div class="clear"></div>
+						<?php } } ?>
+					</ul>
+				</div>
+		
+			<?php 
+				}
+				if (Wo_IsThereAnnouncement() === true) { 
+				$announcement = Wo_GetHomeAnnouncements();
+			?>
+			<div class="home-announcement">
+				<div class="alert alert-success" style="background-color: white;">
+					<span class="close announcements-option" data-toggle="tooltip" onclick="Wo_ViewAnnouncement(<?php echo $announcement['id']; ?>);" title="<?php echo $wo['lang']['hide'];?>">
+						<i class="fa fa-remove"></i>
+					</span>
+					<?php echo $announcement['text']; ?>
+				</div>
+			</div>
+			<!-- .home-announcement -->
+		
+			<?php
+				} 
+				if($wo['loggedin'] == true) {
+					echo Wo_LoadPage('story/publisher-box');
+				} 
+        
+				if ($wo['config']['order_posts_by'] == 0) {
+			?>
+
+			<?php } ?>
+			<div class="order-by" style="background-color: #fff; color: #000 !important; border-radius: 4px; margin-bottom: 8px; width: 100%; padding: 8px; a.color: #000; border: 1px solid #ccc; height: 40px;">
+					<div class="dropdown">
+						<?php echo $wo['lang']['store_posts_by'] ?>: <a class="dropdown-toggle" type="button" data-toggle="dropdown">
+						<span class="order-text"><?php echo ($wo['user']['order_posts_by'] == 0) ? $wo['lang']['all'] : $wo['lang']['people_i_follow']; ?></span>
+						<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="#" onclick="Wo_StorePosts(0);"><?php echo $wo['lang']['all'] ?></a></li>
+							<li><a href="#" onclick="Wo_StorePosts(1);"><?php echo $wo['lang']['people_i_follow'] ?></a></li>
+						</ul>
+			<div class="pull-right" style="border-left: 1px solid #ccc; padding-left: 5px;"><form action="#" method="post" class="toggleSense"><input type="checkbox" id="showSense" name="showSense" style="vertical-align: text-top;" <?php if($_COOKIE['sense'] == 1){echo 'checked';}?>><span for="showSense"> Show Sensitive?</span></form></div></div></div>
+			<div id="slideshow" style="height: 108px; overflow: hidden; margin-bottom: 15px; width: 100%;">
+   <a href="https://www.mumblit.com/ads/create/"><div>
+     <div class="panel panel-white panel-shadow" style="border: 1px solid #ccc !important; padding: 8px; height: 108px;"><img src="https://www.mumblit.com/social.jpg" style="width: 90px; height: 90px; border-radius: 8px; margin-right: 20px;" align="left"><p style="vertical-align: top;"><b>Looking for better ways to promote your business?</b><br><em>Mumblit provides several options scaled to your needs.</em><br><br><i class="fas fa-chart-line fa-lg"  style="margin-right: 10px;"></i> <a href="https://www.mumblit.com/ads/create/">Advertise Your Business on Mumblit.Com!</a></p></div>
+   </div></a>
+   <div><a href="https://www.mumblit.com/create-page">
+     <div class="panel panel-white panel-shadow" style="border: 1px solid #ccc !important; padding: 8px; height: 108px;"><img src="https://www.mumblit.com/pagesad.png" style="width: 90px; height: 90px; border-radius: 8px; margin-right: 20px;" align="right"><p style="vertical-align: top;"><b>Attract More Attention with Mumblit Pages!</b><br><em>Create a custom Mumblit page to display your entity!</em><br><br><i class="fas fa-receipt fa-lg"  style="margin-right: 10px;"></i> <a href="https://www.mumblit.com/create-page">Create Your Page on Mumblit.Com!</a></p></div></a>
+   </div>
+   <div> <a href="https://www.mumblit.com/create-group">
+     <div class="panel panel-white panel-shadow" style="border: 1px solid #ccc !important; padding: 8px; height: 108px;"><img src="https://www.mumblit.com/groupsad.png" style="width: 90px; height: 90px; border-radius: 8px; margin-right: 20px;" align="left"><p style="vertical-align: top;"><b>Connect with members of the same interests!</b><br><em>Groups help exchange ideas easily and collectively!</em><br><br><i class="fas fa-users fa-lg"  style="margin-right: 10px;"></i> <a href="https://www.mumblit.com/create-group">Create Your Group on Mumblit!</a></p></div></a>
+   </div>
+   <div> 
+     <a href="https://www.lifewire.com/how-to-whitelist-a-sender-or-domain-in-gmail-1172106"><div class="panel panel-white panel-shadow" style="border: 1px solid #ccc !important; padding: 8px; height: 108px;"><img src="https://www.mumblit.com/emailad.png" style="width: 90px; height: 90px; border-radius: 8px; margin-right: 20px;" align="right"><p style="vertical-align: top;"><b>Not getting our e-mails? Whitelist us!</b><br><em>Prevent Mumblit e-mails from wrongly going to spam!</em><br><br><i class="fas fa-envelope-open-text fa-lg"  style="margin-right: 10px;"></i> <a href="https://www.lifewire.com/how-to-whitelist-a-sender-or-domain-in-gmail-1172106">Whitelist us in GMail!</a></p></div></a>
+   </div>
+</div>
+<script>
+$("#slideshow > div:gt(0)").hide();
+
+setInterval(function() { 
+  $('#slideshow > div:first')
+    .fadeOut(1000)
+    .next()
+    .fadeIn(1000)
+    .end()
+    .appendTo('#slideshow');
+},  10000);
+	</script>	
+			<div class="btn btn-main btn-active posts-count" onclick="Wo_GetNewPosts();"></div>
+			<div class="posts_load">
+				<div id="posts-laoded">
+					<div class="wo_loading_post">
+						<div class="wo_loading_post_child"></div>
+					</div>
+				</div>
+			</div>
+			<!-- #posts -->
+		</div>
+		<!-- .col-md-8 -->
+		<?php echo Wo_LoadPage('sidebar/content');?>
+	</div>
+</div>
+<!-- .page-margin -->
+<style>
+.post-youtube iframe {height: 277px !important;}
+</style>
+
+<?php 
+if ($wo['user']['social_login'] == 1) { 
+  echo Wo_LoadPage('modals/create-password');
+} 
+?>
+
+<script type="text/javascript">
+$(function() {
+    loadposts();
+});
+
+$(document).on('click', '.story-image-wrapper', function(event) {
+  event.preventDefault();
+  $value = $(this).parents(".story-container").attr('data-status-id');
+  $.post(Wo_Ajax_Requests_File() + '?f=story_view', {id: $value}, function(data, textStatus, xhr) {
+    	
+  });
+});
+
+/* Standard syntax */
+document.addEventListener("fullscreenchange", function() {
+  $('video').toggleClass('active-player');
+});
+
+/* Firefox */
+document.addEventListener("mozfullscreenchange", function() {
+  $('video').toggleClass('active-player');
+});
+
+/* Chrome, Safari and Opera */
+document.addEventListener("webkitfullscreenchange", function() {
+  $('video').toggleClass('active-player');
+});
+
+/* IE / Edge */
+document.addEventListener("msfullscreenchange", function() {
+  $('video').toggleClass('active-player');
+});
+
+
+function loadposts() {
+  $.get(Wo_Ajax_Requests_File() + '?f=load_posts', function(data) {
+    document.getElementById('posts-laoded').innerHTML = data;
+  	Wo_FinishBar();
+  	$('.video-js').each(function(index, el) {
+  		fluidPlayer($(this).attr('id'), {
+	        layoutControls: {
+	            primaryColor:           "<?php echo $wo['config']['btn_background_color'];?>",
+	            fillToContainer: true,
+	            playbackRateEnabled: true,
+	        }
+        });
+  	});
+  	$(".post-description p, .product-description").each(function(index, el) {
+  		$(this).readmore({
+	      speed: 75,
+	      moreLink: '<a href="#" class="hash"><?php echo $wo["lang"]["read_more"];?></a>',
+	      lessLink: '<a href="#" class="hash"><?php echo $wo["lang"]["read_less"];?></a>'
+	    });
+  	});
+  	$(".post-commet-textarea .textarea").triggeredAutocomplete({
+       hidden: '#hidden_inputbox_comment',
+       source: Wo_Ajax_Requests_File() + "?f=mention",
+       trigger: "@" 
+    });
+  	$(".comment-reply textarea").triggeredAutocomplete({
+       hidden: '#hidden_inputbox_comment_reply',
+       source: Wo_Ajax_Requests_File() + "?f=mention",
+       trigger: "@"
+    });
+    $('#load-more-posts').show();
+  });
+}
+  <?php if ($wo['user']['social_login'] == 1) { ?>
+  $(window).on("load", function (e) {
+       $('#create-password').modal('show');
+    });
+  $(function() {
+    var create_password_container = $('#create-password');
+    $('form.create-password').ajaxForm({
+      url: Wo_Ajax_Requests_File() + '?f=update_new_logged_user_details',
+      beforeSend: function() {
+        Wo_progressIconLoader($('form.create-password').find('button'));
+      },
+      success: function(data) {
+        if (data.status == 200) {
+          create_password_container.find('.error-container').html("<div class='alert alert-success'>" + data.message + "</div>");
+           $('#update-username').attr('href', data.url);
+           setTimeout(function() {
+            $('#create-password').modal('hide');
+           }, 1500);
+        } else {
+          var errors = data.errors.join("<br>");
+          create_password_container.find('.error-container').html("<div class='alert alert-danger'>" + errors + "</div>");
+        }
+        Wo_progressIconLoader($('form.create-password').find('button'));
+      }
+    });
+  });
+
+<?php } ?>
+
+function Wo_StorePosts(type) {
+  if (type > 1) {
+     return false;
+  }
+  if (type == 0) {
+    $('.order-text').text('<?php echo $wo['lang']['all'] ?>');
+  } else {
+    $('.order-text').text('<?php echo $wo['lang']['people_i_follow'] ?>');
+  }
+  $('#posts-laoded').html('<div class="wo_loading_post"><div class="wo_loading_post_child"></div></div>');
+  $.get(Wo_Ajax_Requests_File() + '?f=update_order_by', {type:type}, function (data) {
+    if (data.status == 200) {
+      loadposts();
+    }
+  });
+}
+
+function Wo_ViewAnnouncement(id) {
+    var announcement_container = $('.home-announcement');
+    $.get(Wo_Ajax_Requests_File() + '?f=update_announcement_views', {id:id}, function (data) {
+      if (data.status == 200) {
+          announcement_container.slideUp(200, function () {
+            $(this).remove();
+          });
+      }
+    });
+}
+
+function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays*60*60*1000));
+    var expires = "expires="+ d;
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+function getCookieValue(a) {
+    var b = document.cookie.match('(^|;)\\s*' + a + '\\s*=\\s*([^;]+)');
+    return b ? b.pop() : '';
+}
+
+$(function () {
+    var is_day_enabled = getCookieValue('day_status');
+    var myDate = new Date();
+    var hrs = myDate.getHours();
+    var greet;
+    var color;
+	var quote;
+    if (hrs < 12) {
+        greet = '<?php echo $wo['lang']['good_morning']?>, <?php echo $wo['user']['name']?> <img src="<?php echo $wo['config']['theme_url'];?>/img/park.png"/>';
+        color = '#7FC583';
+		quote = '<?php echo $wo['lang']['good_morning_quote']?>';
+    } else if (hrs >= 12 && hrs <= 18) {
+        greet = '<?php echo $wo['lang']['good_afternoon']?>, <?php echo $wo['user']['name']?> <img src="<?php echo $wo['config']['theme_url'];?>/img/desert.png"/>';
+        color = '#ffc107';
+		quote = '<?php echo $wo['lang']['good_afternoon_quote']?>';
+    } else if (hrs >= 18 && hrs <= 24) {
+        greet = '<?php echo $wo['lang']['good_evening']?>, <?php echo $wo['user']['name']?> <img src="<?php echo $wo['config']['theme_url'];?>/img/sea.png"/>';
+        color = '#FF4F70';
+		quote = '<?php echo $wo['lang']['good_evening_quote']?>';
+    }
+    if (is_day_enabled != 1) {
+      setTimeout(function () {
+        $('.greetalert').css('border-left', '2.5px solid ' + color );
+        $('#daynightmsg').html('<div class="small-texts">' + greet + '</div><p>' + quote + '</p>');
+        $('.greetalert').removeClass('hidden');
+      }, 100);
+    }
+});
+</script>

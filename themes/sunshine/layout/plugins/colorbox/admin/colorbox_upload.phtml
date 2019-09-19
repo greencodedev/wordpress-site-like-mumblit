@@ -1,0 +1,349 @@
+<?php global $sqlConnect, $sub_view; ?>
+<div class="row col-sm-12">
+	<?php if($sub_view == ""){ ?>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<strong>Select the type of color and upload</strong>	
+		</div>
+		
+        <div class="col-sm-12">
+			<div class="row clearfix">
+			
+			<div class="col-sm-4 text-center"  style="border-bottom:2px solid #00ff00;" onclick="color_method(1);">
+				<div class="info-box bg-light-green hover-expand-effect">
+					<div class="icon">
+						<i class="fa fa-font"></i>
+					</div>
+					<div class="content">
+						<div class="text">A COLOR</div>
+						<div class="number count-to" data-from="0" data-to="2" data-speed="1000" data-fresh-interval="20">1</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-sm-4 text-center" style="border-bottom:2px solid #ff0000;" onclick="color_method(2);">
+				<div class="info-box bg-cyan hover-expand-effect">
+					<div class="icon">
+						<i class="fa fa-font"></i>
+					</div>
+					<div class="content">
+						<div class="text">TWO COLORS</div>
+						<div class="number count-to" data-from="0" data-to="9" data-speed="1000" data-fresh-interval="20">2</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-sm-4 text-center" style="border-bottom:2px solid #0000ff;" onclick="color_method(3);">
+				<div class="info-box bg-pink hover-expand-effect">
+					<div class="icon">
+						<i class="fa fa-photo"></i>
+					</div>
+					<div class="content">
+						<div class="text">IMAGES</div>
+						<div class="number count-to" data-from="0" data-to="1" data-speed="1000" data-fresh-interval="20">multiple</div>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+    </div>
+		
+		<div class="panel-body" style="border:1px solid #ccc;">
+				
+			<form class="js_ajax_forms form-horizontal form_reaction" data-url="?f=admin_colorbox&only=colorbox&task=new_color" method="post" enctype="multipart/form-data"> 
+			<input type="hidden" name="type" value="1">
+				<div class="colorbox_type colorbox_type_1 x-hidden">						                        
+					<span>Color</span>
+					<div class="input-group colorpicker colorpicker-element">
+						<div class="form-line">
+							<input type="text" class="form-control color_0" value="rgba(0,163,255,1)" name="color1">
+						</div>
+						<span class="input-group-addon">
+							<i></i>
+						</span>	
+					</div>
+				<div class="form-group">
+					<button type='submit' class='btn btn-success no_radius pull-right mr10'>Send color</button>
+				</div>
+				
+				<div class="btn btn-primary no_radius" onclick="generate_color('1');">CLICK FOR SEE PREVIEW COLOR COMBINATION</div>
+				<div class="showcolor_1 x-hidden" style="height:300px; width:100%;"></div>
+				
+				<div class="row col-xs-12">
+					<?php /* success */ ?>
+					<div class="alert alert-success mb0 mt10 x-hidden"  role="alert"></div>
+					<?php /* ssuccess */ ?>
+					<?php /* serror */ ?>
+					<div class="alert alert-danger mb0 mt10 x-hidden"  role="alert"></div>
+					<?php /* serror */ ?>
+				</div>
+				</div>
+			</form>
+			
+			<form class="js_ajax_forms form-horizontal form_reaction" data-url="?f=admin_colorbox&only=colorbox&task=new_color" method="post" enctype="multipart/form-data"> 
+			<input type="hidden" name="type" value="2">	
+				<div class="colorbox_type colorbox_type_2 x-hidden">						                        
+					<span>Color 1</span>
+					<div class="input-group colorpicker colorpicker-element">
+						<div class="form-line">
+							<input type="text" class="form-control color_1" value="rgba(16,18,16,1)" name="color1">
+						</div>
+						<span class="input-group-addon">
+							<i></i>
+						</span>	
+					</div>                        
+					<span>Color 2</span>
+					<div class="input-group colorpicker colorpicker-element">
+						<div class="form-line">
+							<input type="text" class="form-control color_2" value="rgba(255,0,76,1)" name="color2">
+						</div>
+						<span class="input-group-addon">
+							<i></i>
+						</span>							
+					</div>						
+								
+					<div class="form-group">
+						<button type='submit' class='btn btn-success no_radius pull-right mr10'>Send Colors</button>
+					</div>
+					<div class="btn btn-primary no_radius" onclick="generate_color('2');">CLICK FOR SEE PREVIEW COLOR COMBINATION</div>
+					<div class="showcolor_2 x-hidden" style="height:300px; width:100%;"></div>
+
+				<div class="row col-xs-12">
+					<?php /* success */ ?>
+					<div class="alert alert-success mb0 mt10 x-hidden"  role="alert"></div>
+					<?php /* ssuccess */ ?>
+					<?php /* serror */ ?>
+					<div class="alert alert-danger mb0 mt10 x-hidden"  role="alert"></div>
+					<?php /* serror */ ?>
+				</div>
+				</div>
+			 </form>
+			 
+			 
+<form class="js_ajax_forms_ form-horizontal form_reaction" data-url="?f=admin_colorbox&only=colorbox&task=new_src" action="<?php echo $wo['config']['site_url']; ?>/plugin_requests.php?f=admin_colorbox&only=colorbox&task=new_src" method="post" enctype="multipart/form-data"> 
+
+				<div class="colorbox_type colorbox_type_3 x-hidden">				
+					<div class="form-group">
+						<label class="col-sm-4">colorbox image:</label>
+						<div class="col-sm-7">
+							<label for="ColorboxImage" class="ml10 btn btn-primary no_radius"><i class="fa fa-upload"></i>Cargar</label>
+							<p class="help-block">Select multiple image of you PC if you add image no will to show color</p>
+						</div>
+					</div>
+					<div class="form-group x-hidden">
+						<button type='submit' class='btn btn-success no_radius pull-right mr10'>Send Image</button>
+					</div>				
+					<input class="ColorboxImage" style="display:none;" name="file" type="file" multiple accept="image/*" id="ColorboxImage">
+				</div>	
+					
+				<div class="form-group x-hidden">
+					<button type='submit' class='btn btn-success no_radius pull-right mr10'>Send Colors</button>
+				</div>
+				</div>
+			 </form>
+
+
+		</div>
+	</div>
+
+	<div class="panel panel-default col-sm-12">
+		<div class="panel-heading">
+			<strong>Colorbox List</strong>
+		</div>
+	</div>
+
+	<div id="ColorboxContent">
+
+		<?php 	$query = "SELECT * FROM colorbox ORDER BY id DESC"; 
+				$resource = $sqlConnect->query($query);				
+				$count_colorboxs =  $resource->num_rows;
+				$colorbox_vars = array();
+				if($resource->num_rows > 0) {				
+					while($row = $resource->fetch_assoc()){
+						$colorbox_vars[] = $row;
+					}
+				}
+				if($count_colorboxs > 0){ 
+				
+				foreach($colorbox_vars as $k => $con){ ?>
+
+		<div class="col-sm-3 colorbox" style="padding-right:2px;" data-token="<?php echo $k; ?>" data-id="<?php echo $con['id']; ?>">
+			<div class="panel panel-default clearfix" style="padding:0;">
+				<div class="panel-body" style="padding:0;">
+					<div class="pull-right" style="margin:5px; position:absolute;">
+						<button type="button" class="close js_colorbox_remover" title="Remove"><span>×</span></button>
+					</div>
+					<?php if($con['type'] == '1'){ ?>
+					<div class="pull-left image" style="color:rgba(255,255,255,1.00);font-size:30px;font-weight:700;line-height:1.2000em;padding:50px 30px;text-align:center; background-repeat: no-repeat;
+    background-size: 100% 100%; height: 120px; width:100%; background-color : <?php echo $con['c1']; ?>;"><div onclick="get_info_color('<?php echo $con['type']; ?>', '<?php echo $con['id']; ?>', '<?php echo $con['c1']; ?>', '<?php echo $con['c2']; ?>');" class="btn"><i class="fa fa-pencil"></i></div></div>
+					<?php } else if($con['type'] == '2'){ ?>
+					<div class="pull-left image" style="color:rgba(255,255,255,1.00);font-size:30px;font-weight:700;line-height:1.2000em;padding:50px 30px;text-align:center; background-repeat: no-repeat;
+    background-size: 100% 100%; height: 120px; width:100%; background-image : linear-gradient(45deg, <?php echo $con['c1']; ?> 0%, <?php echo $con['c2']; ?> 100%);"><div onclick="get_info_color('<?php echo $con['type']; ?>', '<?php echo $con['id']; ?>', '<?php echo $con['c1']; ?>', '<?php echo $con['c2']; ?>');" class="btn"><i class="fa fa-pencil"></i></div></div>
+					<?php } else if($con['type'] == '3'){ ?>
+					<div class="pull-left image" style="color:rgba(255,255,255,1.00);font-size:30px;font-weight:700;line-height:1.2000em;padding:50px 30px;text-align:center; background-repeat: no-repeat;
+    background-size: 100% 100%; height: 120px; width:100%; background-image : url(&quot;<?php echo $wo['config']['site_url']; ?>/upload/colorbox/<?php echo $con['src']; ?>.<?php echo $con['filetype']; ?>&quot;);"><div>
+							<label for="new_src_<?php echo $con['id']; ?>" class="btn label_new_src"><i class="fa fa-camera"></i></label>
+							<input class="new_src" style="display:none;" name="file" type="file" accept="image/*" id="new_src_<?php echo $con['id']; ?>">
+						</div>
+					</div>
+					<?php } ?>
+				</div>
+			</div>
+		</div>
+		<?php }} ?>
+
+	</div>
+	<?php } ?>
+</div>
+
+<link href="<?php echo Wo_LoadAdminLink('plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.css'); ?>" rel="stylesheet">
+<script src="<?php echo Wo_LoadAdminLink('plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js'); ?>"></script>
+<script>
+$('body').on('click', '.js_btn_c', function(e){ e.preventDefault;
+		var self = $(this);														  
+		var _this = $(this).closest('.form_color');
+        var get_url = _this.attr('data-url');			
+		$('.form_color').ajaxForm({url: site_ajax+get_url, beforeSend: function() {
+			self.prop('disabled', true);
+		}, success: function(result) {
+			$('.colorbox[data-id="'+result.id+'"]').find('.panel-body').html(result.html);																							
+			self.prop('disabled', false);
+			
+			$('#modal_leader').remove();
+			$('.modal-backdrop').remove();
+			$('body').removeClass('modal-open');
+        }
+     });
+ });
+  
+function get_info_color(type, id, c1, c2){
+    var addhtml = '';
+	addhtml +=  '<span>Color 1</span><div class="input-group colorpicker colorpicker-element"><div class="form-line"><input type="text" class="form-control color_1" value="'+c1+'" name="color1"></div><span class="input-group-addon"></span></div> ';
+	if(type == '2'){
+		addhtml +=  '<span>Color 2</span><div class="input-group colorpicker colorpicker-element"><div class="form-line"><input type="text" class="form-control color_2" value="'+c2+'" name="color2"></div><span class="input-group-addon"></span></div>';
+	}
+	var chtml = '<form class="form_color form-horizontal form_colorbox_edit" data-url="?f=admin_colorbox&amp;only=colorbox&amp;id='+id+'&amp;task=color_edit" method="post" enctype="multipart/form-data"><input type="hidden" name="type" value="'+type+'"><div class="colorbox_type colorbox_type_'+type+'">'+addhtml+'<div class="form-group"><button type="submit" class="btn btn-success no_radius pull-right mr10 js_btn_c">Send Colors</button></div><div class="btn btn-primary no_radius" onclick="generate_color(3);">CLICK FOR SEE PREVIEW COLOR COMBINATION</div><div class="showcolor_3 x-hidden" style="height:300px; width:100%;"></div><div class="row col-xs-12"><div class="alert alert-success mb0 mt10 x-hidden"  role="alert"></div><div class="alert alert-danger mb0 mt10 x-hidden"  role="alert"></div></div></div></form>';
+	
+	var _get_info_color = {'title':'Edit this color', 'message':chtml}
+	_modal('1', _get_info_color);
+	$(function(){ $('.form_colorbox_edit .colorpicker').colorpicker(); });
+}
+
+function color_method(id){
+	$('.colorbox_type').addClass('x-hidden');
+	$('.colorbox_type_'+id).removeClass('x-hidden');
+}
+
+function generate_color(type){
+    if(type == '2'){
+		var c1 = $('.color_1').val();
+		var c2 = $('.color_2').val();
+		$('.showcolor_2').removeClass('x-hidden').css({'background-image':'linear-gradient(45deg, '+c1+' 0%, '+c2+' 100%)' });
+	} else if(type == '3'){
+		var c2 = '';
+		var c1 = $('.form_colorbox_edit .color_1').val();
+		if($('.form_colorbox_edit .color_2').length > 0){
+			var c2 = $('.form_colorbox_edit .color_2').val();
+			$('.form_colorbox_edit .showcolor_3').removeClass('x-hidden').css({'background-image':'linear-gradient(45deg, '+c1+' 0%, '+c2+' 100%)' });
+		} else {
+			$('.form_colorbox_edit .showcolor_3').removeClass('x-hidden').css({'background-color':c1 });
+			}
+		
+	} else {
+		var c0 = $('.color_0').val();
+		$('.showcolor_1').removeClass('x-hidden').css({'background-color':c0 });
+	}
+}
+
+$('body').on('change', '.color_0', function(){ 
+	generate_color(1);
+});	
+$('body').on('change', '.color_1, .color_2', function(){ 
+	generate_color(2);
+});
+$('.form_colorbox_edit').on('change', ' .color_1, color_2', function(){ 
+	generate_color(3);
+});
+	
+$(function(){ $('.colorpicker').colorpicker(); });
+
+
+$('body').on('change', '.new_src', function(e){ e.preventDefault();
+	var self = $( this );
+	var id = self.closest('.colorbox').attr('data-id');
+	var files = this.files;
+	for ( var i = 0; i < files.length; i++ ) {
+		var filename = files[i].name;
+		var ext = filename.substring( filename.lastIndexOf(".") + 1 ).toLowerCase();
+		var allowed = "";
+		if ( ext == "jpg" || ext == "png" || ext == "gif" || ext == "jpeg" ) {
+			var fd = new FormData();
+			fd.append('file', files[i] );
+			self.closest('.colorbox').find('.label_new_src').addClass('x-hidden');
+			$.ajax( {
+				type: 'post',
+				url: site_ajax + '?f=admin_colorbox&only=colorbox&task=src&id='+id,
+				contentType: false,
+				processData: false,
+				data: fd,
+				cache: false,
+				success: function (result) {
+					self.closest('.colorbox').find('.label_new_src').removeClass('x-hidden');
+					if(result.result == 1) {
+						self.closest('.colorbox').find('.image').css({'background-image': 'url("'+result.html+'")'});
+					}
+				}
+			} );
+		} else {
+			alert('this file no is permisse');
+		}
+	}
+} );
+
+
+
+var ColorboxCount = 0;
+function ColorboxFileUpload(files) {
+	for ( var i = 0; i < files.length; i++ ) {
+		var filename = files[i].name;
+		var ext = filename.substring( filename.lastIndexOf(".") + 1 ).toLowerCase();
+		if ( ext == "jpg" || ext == "png" || ext == "gif" || ext == "jpeg" ) {
+			var formData = new FormData();
+			formData.append('file', files[i] );
+			var count_id = ColorboxCount++;
+			$('#ColorboxContent').prepend('<div class="col-sm-3 loading" style="padding-right:2px;" id="load_colorbox_' + count_id + '"> <div class="panel panel-default"><div class="panel-body"> <div class="loader loader_small"></div></div> </div></div>');
+			$.ajax( {
+				type: 'post', url: site_url + '/plugin_requests.php?f=admin_colorbox&only=colorbox&task=new_src&type=3&count_id=' + count_id,
+				contentType: false, processData: false, data: formData,	cache: false,
+				success: function(result) {
+					$('#load_colorbox_' + result.id).after(result.html);
+					$('#load_colorbox_' + result.id).remove();
+					$('.form_colorbox input').val('');
+				}
+			} );
+		} else {
+			alert('this formart no permise');
+		}
+	}
+}
+
+
+
+$('body').on('change', '.ColorboxImage', function(e){ 
+	var files = this.files; ColorboxFileUpload(files);
+});	
+
+
+$('body').on('click', '.js_colorbox_remover', function(e){ e.preventDefault();
+	var self = $( this );
+	var id = self.closest('.colorbox').attr('data-id');
+	self.closest('.colorbox').hide();
+	$.ajax( {
+		type: 'post', url: site_url + '/plugin_requests.php?f=admin_colorbox&only=colorbox',
+		data: {'task': 'delete', 'id': id }, cache: false,
+		success: function ( result ) {
+			self.closest('.colorbox').remove();
+		}
+	} );
+});
+</script>

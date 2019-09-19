@@ -1,0 +1,152 @@
+<?php 
+	global $sqlConnect,$uptransaction_states;
+	$query = " SELECT * FROM uptransactions  WHERE user_id = '{$wo['user']['user_id']}' ";
+
+	// GET TOTAL ITEMS
+	$sql_count = $sqlConnect->query($query);
+	$total_items = $sql_count->num_rows;
+
+	$sql = $query." ORDER BY date DESC";
+	$rows = $sqlConnect->query( $sql );
+
+	$items = array();
+	 while($row = $rows->fetch_assoc()){ 
+		   $row['_date'] = date('Y-m-d H:i:s', $row['date']);
+		   $row['state'] = $uptransaction_states[$row['state']];
+		   $items[] = $row;
+	 }	
+	
+	/* vault */
+	$points_all = userpoints_get_all($wo['user']['user_id']);
+
+	if($points_all) {
+	   $user_points = $points_all['count'];
+	   $user_points_totalearned = $points_all['totalearned'];
+	} else {
+	   $user_points = 0;
+	   $user_points_totalearned = 0;
+	}
+
+	$user_rank = userpoints_get_rank($wo['user']['user_id']);
+?>
+
+<div class="list-group panel-default points_content">      
+	<div class="list-group-item light clearfix mt5">
+		<div class="col-sm-7">
+			<strong>Points transfer</strong>
+		</div>	                     
+	</div>					
+	<div class="panel-body">	
+		<form class="js_ajax_forms form-horizontal" data-url="?f=points&s=transfer&only=points" action="<?php echo $wo['config']['site_url']; ?>/plugin_requests.php?f=points&s=transfer&only=points" method="post" enctype="multipart/form-data">			
+			
+			<div class="point_box col-sm-12">
+				<div class=" col-sm-3">
+				<strong>Friend</strong>
+				</div>
+				<div class="point_option form-group col-sm-9">
+				 <div style="background:#ccc;border:1px solid #999; padding:5px;" class="point_option_box x-hidden">
+					 <span class="point_option_text"></span>
+					<div class="pull-right flip">
+						<button type="button" class="close"><span>×</span></button>
+					</div>	
+				 </div>
+				 <input type="hidden" class="point_option_id" name="recipient_id" value="">
+				 <input type="text" class="form-control point_option_name" name="point_option_name" value="" autocomplete="off" placeholder="Write name of you friend">
+				</div>
+			</div> 
+		
+			<div class="col-sm-12">
+				<div class=" col-sm-3">
+				<strong>Mount</strong>
+				</div>
+				<div class="form-group col-sm-9">
+					<input type="text" class="form-control" name="points_amount" placeholder="Write a mount">
+				</div>
+			</div>
+			<div class="col-sm-12">
+				<div class="form-group">
+					<button type="submit" class="ml10 btn btn-success no_radius">Send points</button>
+				</div>
+			</div>
+			<div class="row col-xs-12">
+				<?php /* success */ ?>
+				<div class="alert alert-success mb0 mt10" style="display:none;" role="alert"></div>
+				<?php /* ssuccess */ ?>
+				<?php /* serror */ ?>
+				<div class="alert alert-danger mb0 mt10" style="display:none;" role="alert"></div>
+				<?php /* serror */ ?>
+			</div>
+			<input type="hidden" name="task" value="sendpoints">
+		</form>				
+	</div>
+</div>
+<script>
+// run user suggest
+$('body').on('keyup', '.point_option_name', function() {
+	var _this = $(this);
+	var raw_query = _this.val();
+	if(raw_query !== null && raw_query.length > 0) {
+		var query = raw_query;
+		/* check if results dropdown-menu already exist */
+		if(_this.next('.dropdown-menu').length == 0) {
+			/* construct a new one */
+			var offset = _this.offset();
+			var posX = offset.left - $(window).scrollLeft();
+			if($(window).width() - posX < 180) {
+				_this.after('<div class="dropdown-menu auto-complete tl"><div class="loader loader_small ptb10"></div></div>');
+			} else {
+				_this.after('<div class="dropdown-menu auto-complete"><div class="loader loader_small ptb10"></div></div>');
+			}
+		}
+		$.post( site_ajax, {'f':'autocomplete','s': 'users', 'query': query, 'type': 'point', 'only':'admin'}, function(response) {
+			if(response.callback) {
+				eval(response.callback);
+			} else if(response.suggest) {
+				_this.next('.dropdown-menu').show().html(response.suggest);
+			}
+		}, 'json');
+	} else {
+		/* check if results dropdown-menu already exist */
+		if(_this.next('.dropdown-menu').length > 0) {
+			_this.next('.dropdown-menu').hide();
+		}
+	}
+});
+
+/* show previous results dropdown-menu when the input is clicked */
+$('body').on('click focus', '.point_option_name', function() {
+	var query = $(this).val();
+	if(query !== null && query.length > 0) {
+		$(this).next('.dropdown-menu').show();
+	}
+});
+
+/* hide the results dropdown-menu when clicked outside the input */
+$('body').on('click', function(e) {
+	if(!$(e.target).is(".point_option_name")) {
+		$('.point_option_name').next('.dropdown-menu').hide();
+	}
+});
+
+/* add an user suggest */
+$('body').on('click', '.js_point_add', function() {
+	var self = $(this).closest('.point_option');	
+	var input1 = self.find('.point_option_name');
+	var input2 = self.find('.point_option_id');
+	var username = $(this).attr('data-username');
+	var userid = $(this).attr('data-uid');
+	var src = $(this).find('img').attr('src');
+	self.find('.point_option_box').removeClass('x-hidden');
+	self.find('.point_option_text').html('<img src="'+src+'" width="22"> '+username);
+	input2.val(userid);
+	input1.val(username).addClass('x-hidden');		
+});
+
+$('body').on('click', '.point_option .close', function() {
+	$(this).closest('.point_option_box').addClass('x-hidden');
+	$(this).closest('.point_option').find('.point_option_id').val('');
+	$(this).closest('.point_option').find('.point_option_text').html('');
+	$(this).closest('.point_option').find('.point_option_name').val('').removeClass('x-hidden').focus();	
+});
+
+</script>

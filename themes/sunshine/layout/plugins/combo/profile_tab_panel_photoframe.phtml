@@ -1,0 +1,22 @@
+<button onclick="show_photo_frame($(this));" class="btn btn-primary">photo frame</button>
+
+<div class="photoframe hidden">
+	<div class="photo_backdrop" onclick="$(this).closest('.photoframe').addClass('hidden');"></div>
+	<div class="wrapper">
+		<div class="cont">
+		<div class="<?php echo Wo_RightToLeft('pull-right');?> close" onclick="$(this).closest('.photoframe').addClass('hidden');"><i class="fa fa-close"></i></div>	
+			<div class="designs">
+				<img class="design active" src="<?php echo $wo['config']['site_url']; ?>/upload/frames/1.png" data-design="1" />
+				<img class="design" src="<?php echo $wo['config']['site_url']; ?>/upload/frames/2.png" data-design="2" />
+				<img class="design" src="<?php echo $wo['config']['site_url']; ?>/upload/frames/3.png" data-design="3" />
+			</div>				
+			<div class="preview">
+				<div id="crop-area"></div>
+				<img src="<?php echo $wo['config']['site_url']; ?>/upload/frames/1.png" class="fg" data-design="1" />
+			</div>
+			<div class="send_photo">
+				  <button class="download btn btn-primary">Add Frame</button>
+			</div>      		
+		</div>
+	</div>
+</div>

@@ -1,0 +1,7 @@
+<?php if($wo['system']['ads_enable_paypal'] == 1){ ?>
+<li>
+	<a href="<?php echo $wo['config']['site_url']; ?>/index.php?link1=ads-activate&ad_id=<?php echo $ad['id']; ?>&action=paypal<?php if($wo['system']['ads_enable_sandbox'] == 1){ ?>&sandbox=1<?php }else{ ?>&sandbox=0<?php }//IF ?>">
+		<img width="60" src="<?php echo $wo['config']['site_url']; ?>/assets/plugins/ads/images/paypal-icon.png"/>
+	</a>
+</li>
+<?php } ?>

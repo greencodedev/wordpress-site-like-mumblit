@@ -1,0 +1,88 @@
+<?php
+  				global $sqlConnect,$uptransaction_states;
+  				$query = " SELECT * FROM uptransactions  WHERE user_id = '{$wo['user']['user_id']}' ";
+
+  				// GET TOTAL ITEMS
+  				$sql_count = $sqlConnect->query($query);
+  				$total_items = $sql_count->num_rows;
+
+  				$sql = $query." ORDER BY date DESC";
+  				$rows = $sqlConnect->query( $sql );
+  
+  				$items = array();
+   				 while($row = $rows->fetch_assoc()){ 
+    				   $row['_date'] = date('Y-m-d H:i:s', $row['date']);
+    				   $row['state'] = $uptransaction_states[$row['state']];
+     				   $items[] = $row;
+    			 }	
+  				
+  				/* vault */
+  				$points_all = userpoints_get_all($wo['user']['user_id']);
+
+   			    if($points_all) {
+     			   $user_points = $points_all['count'];
+     			   $user_points_totalearned = $points_all['totalearned'];
+    			} else {
+    			   $user_points = 0;
+     			   $user_points_totalearned = 0;
+    			}
+
+    			$user_rank = userpoints_get_rank($wo['user']['user_id']);
+?>
+             <?php /* box 3 */ ?>
+             <div class="list-group panel-default" id="points_vault">
+             <div class="list-group-item light clearfix mt5"><div class="col-sm-7"><strong><?php echo $wo['lang']['plugin_point_my_vault']; ?></strong></div></div>
+                    <div class="panel-body">
+                     <small><?php echo $wo['lang']['plugin_point_text_include_total_points']; ?>.</small>
+             <div class="mt20">
+             <div class="col-sm-5"><strong><?php echo $wo['lang']['plugin_point_balance_m']; ?>:</strong> <?php echo $user_points; ?> <?php echo $wo['lang']['plugin_point_points']; ?></div>
+			 <div class="col-sm-7"><strong><?php echo $wo['lang']['plugin_point_total_points_earned_m']; ?>:</strong> <?php echo $user_points_totalearned; ?> <?php echo $wo['lang']['plugin_point_points']; ?></div>
+             <div class="col-sm-12"><?php if($user_points_totalearned != 0){ ?><strong><?php echo $wo['lang']['plugin_point_star_rating_m']; ?>:</strong> <?php echo $user_rank; ?> <?php echo $wo['lang']['plugin_point_place']; ?><?php } else { ?><?php echo $wo['lang']['plugin_point_not_ranked']; ?><?php } ?></div>
+             </div>
+             </div>
+             </div>
+<?php /* box 3 */ ?>	
+			 
+			    <div class="list-group panel-default points_content">
+                    <div class="list-group-item light clearfix mt5">
+                        <div class="col-sm-7">
+                            <strong><?php echo $wo['lang']['plugin_point_my_transaction_history']; ?></strong> <br />
+						</div>	
+						<div class="pull-right">You have <strong class="total_invites"><?php echo $user_points; ?></strong> <?php echo $wo['lang']['plugin_point_points']; ?></div>                        
+                    </div>
+                    <div class="panel-body">
+                        <small><?php echo $wo['lang']['plugin_point_text_include_post']; ?>.</small>
+			
+						
+						<div class="row mt20">			
+<?php if($total_items == 0){ ?> <div style="text-align:center;"><?php echo $wo['lang']['plugin_point_no_have_points']; ?>.</div>
+			<?php } else { ?> 
+<div class="panel-body table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th><?php echo $wo['lang']['plugin_point_description']; ?></th>
+				<th><?php echo $wo['lang']['plugin_point_amount']; ?></th>
+                <th><?php echo $wo['lang']['plugin_point_status']; ?></th>
+                <th><?php echo $wo['lang']['plugin_point_date']; ?></th>                
+            </tr>
+            </thead>
+
+            <tbody class="ads_list_content">
+<?php foreach($items as $item){ ?>
+            <tr>			
+			<td id="invite_<?php echo $item['id']; ?>" title="<?php echo $item['text']; ?>"><?php echo truncate($item['text'], 16 ,true); ?></td>
+			<td><?php echo $item['amount']; ?></td>	
+			<td><?php echo $item['state']; ?></td>
+			<td class="post-time"><a class="js_moment" data-time="<?php echo $item['date']; ?>"><?php echo $item['_date']; ?></a></td>	
+			</tr>
+<?php }//F ?>
+           </tbody>
+        </table>
+	</div>	
+			<?php } ?>
+		</div>
+						
+                    </div>
+                </div>
+        <?php /* box 1 */ ?>

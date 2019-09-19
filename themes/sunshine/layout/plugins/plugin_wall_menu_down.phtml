@@ -1,0 +1,17 @@
+<?php if(!empty($wo['plugin_list']['publiser_footer'])){ 
+  foreach($wo['plugin_list']['publiser_footer'] as $pfoo){ ?>	
+		 <div class="sun_pub_more_items">
+				<div class="poster-left-buttons">
+					<span class="btn btn-file js_<?php echo $pfoo['id']; ?>">
+						<span>
+						<?php if(!empty($pfoo['icon'])){ ?>
+							<i class="fa <?php echo $pfoo['icon']; ?>" <?php if(!empty($pfoo['color'])){ echo 'style="color:#'.$pfoo['color'].'; font-size:16px;"'; } ?> alt="<?php echo $pfoo['text']; ?>"></i>
+						<?php }else{ ?>
+							<img src="<?php echo $wo['config']['site_url']; ?>/assets/plugins/img/<?php echo $pfoo['img']; ?>" class="fa fa-fw"" alt="<?php echo $pfoo['text']; ?>" />
+						<?php } ?> 
+						</span> <?php echo $pfoo['text']; ?>
+					</span>
+				</div>
+			</div>
+   <?php }
+	     } ?>

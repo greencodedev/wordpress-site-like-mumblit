@@ -1,0 +1,102 @@
+<div class="row col-sm-12">
+                        <div class="panel panel-default">
+    <div class="panel-heading"><?php echo $wo['lang']['plugin_point_general_activity']; ?></div>
+    <div class="panel-body">
+
+        <form class="js_ajax_forms form-horizontal" data-url="?f=admin_points&task=setting" action="<?php echo $wo['config']['site_url']; ?>/plugin_requests.php?f=admin_points&task=setting" method="post">
+
+			<div class="form-group">
+				<label class="col-sm-4"><?php echo $wo['lang']['plugin_point_enable_rank']; ?></label>
+				<div class="col-sm-7">
+					 <select class="form-control" name="setting_userpoints_enable_topusers">
+						<option <?php if($wo['system']['setting_userpoints_enable_topusers'] == 1){ ?>selected=""<?php } ?> value="1"><?php echo $wo['lang']['plugin_point_yes_enable_top']; ?></option>
+						<option <?php if($wo['system']['setting_userpoints_enable_topusers'] == 0){ ?>selected=""<?php } ?> value="0"><?php echo $wo['lang']['plugin_point_no_disable_top']; ?>
+				</option>
+					</select>
+					<p class="help-block"><?php echo $wo['lang']['plugin_point_rank_desc']; ?></p>
+				</div>
+			</div>						
+		
+		   
+		
+			<div class="form-group">
+				<label class="col-sm-4"><?php echo $wo['lang']['plugin_point_enable_offers']; ?></label>
+				<div class="col-sm-7">
+					<select class="form-control" name="setting_userpoints_enable_offers">
+						<option <?php if($wo['system']['setting_userpoints_enable_offers'] == 1){ ?>selected=""<?php } ?> value="1"><?php echo $wo['lang']['plugin_point_yes_enable_offers']; ?></option>
+						<option <?php if($wo['system']['setting_userpoints_enable_offers'] == 0){ ?>selected=""<?php } ?> value="0"><?php echo $wo['lang']['plugin_point_no_disable_offers']; ?></option>
+					</select>
+					<p class="help-block"><?php echo $wo['lang']['plugin_point_offers_desc']; ?></p>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-sm-4"><?php echo $wo['lang']['plugin_point_enable_shop']; ?></label>
+				<div class="col-sm-7">
+						<select class="form-control" name="setting_userpoints_enable_shop">
+							<option <?php if($wo['system']['setting_userpoints_enable_shop'] == 1){ ?>selected=""<?php } ?> value="1"><?php echo $wo['lang']['plugin_point_yes_enable_shop']; ?></option>
+							<option <?php if($wo['system']['setting_userpoints_enable_shop'] == 0){ ?>selected=""<?php } ?> value="0"><?php echo $wo['lang']['plugin_point_no_disable_shop']; ?></option>
+						</select>
+					<p class="help-block"><?php echo $wo['lang']['plugin_point_shop_desc']; ?></p>
+				</div>
+			</div>
+			
+			
+			<div class="form-group">
+				<label class="col-sm-4"><?php echo $wo['lang']['plugin_point_enable_invitations']; ?></label>
+				<div class="col-sm-7">
+						<select class="form-control" name="userpoints_invitation">
+							<option <?php if($wo['system']['userpoints_invitation'] == 1){ ?>selected=""<?php } ?> value="1"><?php echo $wo['lang']['yes']; ?></option>
+							<option <?php if($wo['system']['userpoints_invitation'] == 0){ ?>selected=""<?php } ?> value="0"><?php echo $wo['lang']['no']; ?></option>
+						</select>
+					<p class="help-block"><?php echo $wo['lang']['plugin_point_block_invitations']; ?></p>
+				</div>
+			</div> 
+			<div class="form-group">
+				<label class="col-sm-4"><?php echo $wo['lang']['plugin_point_enable_refers']; ?></label>
+				<div class="col-sm-7">
+						<select class="form-control" name="userpoints_refer">
+							<option <?php if($wo['system']['userpoints_refer'] == 1){ ?>selected=""<?php } ?> value="1"><?php echo $wo['lang']['yes']; ?></option>
+							<option <?php if($wo['system']['userpoints_refer'] == 0){ ?>selected=""<?php } ?> value="0"><?php echo $wo['lang']['no']; ?></option>
+						</select>
+					<p class="help-block"><?php echo $wo['lang']['plugin_point_block_refers']; ?></p>
+				</div>
+			</div> 
+			
+			
+			<div class="form-group">
+				<label class="col-sm-4"><?php echo $wo['lang']['plugin_point_enable_send_points_u']; ?></label>
+				<div class="col-sm-7">
+						<select class="form-control" name="level_allow_transfer">
+							<option <?php if($wo['system']['level_allow_transfer'] == 1){ ?>selected=""<?php } ?> value="1"><?php echo $wo['lang']['yes']; ?></option>
+							<option <?php if($wo['system']['level_allow_transfer'] == 0){ ?>selected=""<?php } ?> value="0"><?php echo $wo['lang']['no']; ?></option>
+						</select>
+					<p class="help-block"><?php echo $wo['lang']['plugin_point_should_active_transfers']; ?>?</p>
+				</div>
+			</div> 
+			
+			<div class="form-group">
+				<label class="col-sm-4"><?php echo $wo['lang']['plugin_point_max_points_for_day']; ?></label>
+				<div class="col-sm-7">
+						<input class="form-control" name="level_max_transfer" value="<?php echo $wo['system']['level_max_transfer']; ?>">
+					<p class="help-block"><?php echo $wo['lang']['plugin_point_add_mount_max_transfer']; ?></p>
+				</div>
+			</div> 
+			              
+                        
+            <div class="body-header">
+                <button class="btn btn-danger no_radius" type="submit"><?php echo $wo['lang']['plugin_save_changes']; ?></button>
+            </div>
+
+            <div class="row col-xs-12">
+			<?php /* success */ ?>
+            <div class="alert alert-success mb0 mt10 x-hidden" role="alert"></div>
+            <?php /* success */ ?>
+            <?php /* error */ ?>
+            <div class="alert alert-danger mb0 mt10 x-hidden" role="alert"></div>
+            <?php /* error */ ?>
+			</div>	
+			<input type='hidden' name='crontab_prev_state' value='{$setting_crontab_enabled}'>
+        </form>
+    </div>
+</div>                    </div>

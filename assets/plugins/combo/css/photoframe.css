@@ -1,0 +1,87 @@
+.photoframe {
+	position:fixed;
+	z-index:10;
+	top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+.photo_backdrop {
+    position: fixed;
+    background-color: #000;
+	opacity:.5;
+	top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+.photoframe .wrapper {
+	min-height: 100%;
+	text-align: center;
+	z-index: 2;
+}
+.photoframe .cont {
+	display: table;
+	padding: 20px 10px 10px 10px;
+	width: 420px;
+	background: #fff;
+	color: #000;
+	margin:80px auto;
+	position:relative;
+}
+.photoframe .send_photo {
+	padding-top:10px;
+}
+.photoframe .designs {;
+	max-width: 420px;
+	width: 100%;
+	overflow-x: scroll;
+    overflow-y: hidden;
+    height: 100px;
+    white-space:nowrap
+}
+.photoframe .preview {
+	position: relative;
+	display: inline-block;
+	max-height: 400px;
+	height: 100%;
+	max-width: 400px;
+	width: 100%;
+	background: #fff;
+}
+.photoframe .profile-pic, .fg {
+	width: 100%;
+}
+.photoframe .fg {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 10;
+}
+.photoframe .fb-set-pic {
+  display: table;
+  margin: 20px auto;
+}
+.photoframe .fb-set-pic {
+  background-color: #4267b2;
+  border-color: #4267b2;
+  color: #fff;
+  font-size: 1em;
+  border-radius: 10px;
+  outline: none;
+  padding: 10px 20px;
+}
+.photoframe .design {
+	border: 5px dashed #CCC;	
+	box-shadow: 1px 1px 10px #999;
+	margin: 2px;
+	max-height: 80px;
+	cursor: pointer;
+	display:inline-block;
+	vertical-align:top;
+}
+.photoframe .design.active {
+  border: 5px dashed #000;
+}

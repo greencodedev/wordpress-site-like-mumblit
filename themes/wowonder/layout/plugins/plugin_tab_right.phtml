@@ -1,0 +1,11 @@
+<div class="pagelet_ego_ad <?php if(!empty($wo['plugin_list']['ego_in_profile'])){ echo 'ego_in_profile'; } else { echo 'ego_in_home'; } ?> pagelet_ego" id="pagelet_ego">
+	<div id="rightColumn">
+		<?php 
+		if(!empty($wo['plugin_list']['tab_rigth']) && $wo['plugin_list']['tab_rigth']){ 
+			foreach($wo['plugin_list']['tab_rigth'] as $tab_rigth){
+				echo Wo_LoadPage('plugins/'.$tab_rigth);
+			}
+		}
+		?>
+	</div>
+</div>

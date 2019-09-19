@@ -1,0 +1,7 @@
+<?php if(!empty($wo['plugin_list']['index_content']) && $wo['plugin_list']['index_content']){ ?>
+    <?php foreach($wo['plugin_list']['index_content'] as $index_content){ ?>
+        <?php foreach($index_content as $key => $val){ ?>
+	    	<?php if($wo['plugin_page'] == $key){ include $val; } ?>
+	    <?php } ?>
+    <?php } ?>
+<?php } ?>

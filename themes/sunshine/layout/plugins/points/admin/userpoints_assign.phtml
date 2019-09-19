@@ -1,0 +1,117 @@
+<?php
+global $sqlConnect, $action_group_types;
+
+$task = ( isset($_POST['task']) ? $_POST['task'] : ( isset($_GET['task']) ? $_GET['task'] : 'main' ) );
+$item_id = ( isset($_POST['item_id']) ? $_POST['item_id'] : ( isset($_GET['item_id']) ? $_GET['item_id'] : '0' ) );
+
+$result = 0;
+$actions_dbr = $sqlConnect->query( "SELECT  * FROM  actionpoints WHERE action_id >= 100 ORDER BY action_group DESC, action_id" );
+$actions = array();
+$action_group_previd = -1;
+$action_group_id = -1;
+
+while($row = $actions_dbr->fetch_assoc()) {
+	  $action_group_id = $row['action_group'];
+   if($action_group_id != $action_group_previd) {
+	  if($action_group_previd != -1) {
+		 $actions[] = $action_group;
+		 $action_types[] = @$action_group_types[intval($action_group_previd)];
+		 $action_group = array();
+	   }
+		 $action_group_previd = $action_group_id;
+   }
+
+// seconds -> days
+$row['action_rolloverperiod'] = $row['action_rolloverperiod'] / 86400; 
+$action_group[] = $row;
+}
+if(!empty($action_group)) { 
+	$actions[] = $action_group; $action_types[] = $action_group_types[intval($action_group_previd)];
+}			   
+?>
+<div class="row col-sm-12">
+  <div class="panel panel-default">
+  
+    <div class="panel-heading"><?php echo $wo['lang']['plugin_point_assign_activity_points']; ?></div>
+	
+	<div class="panel-body"><?php echo $wo['lang']['plugin_point_assign_activity_desc']; ?>This page allows assigning various activity points. You can limit maximum amount of accumulated points for a designated period ('Rollover period'). Enter 0 for 'Max' field to disable limiting. Enter 0 for 'Rollover period' field to make it an all time cap..</div>
+    
+	<div class="panel-body">
+  <form action="<?php echo $wo['config']['site_url']; ?>/plugin_requests.php?f=admin_points&task=admin_userpoints_assign" class="js_ajax_forms form-horizontal" data-url="?f=admin_points&task=admin_userpoints_assign" method="post">
+  
+  <input type="hidden" name="task" value="admin_userpoints_assign"/>
+  <?php /* LOOP THROUGH ACTIONS */ ?>
+
+<?php foreach($actions as $key => $action){ ?>
+
+<div style="font-weight: bold; width: 600px; text-align: center; padding-bottom: 2px"> <?php echo $action_types[$key]; ?></div> 
+<div class="panel-body table-responsive">
+        <table class="table table-striped">
+			<thead>
+            <tr>
+                <th><?php echo $wo['lang']['plugin_point_action_name']; ?></th>
+                <th><?php echo $wo['lang']['plugin_point_points']; ?></th>
+
+                <th><?php echo $wo['lang']['plugin_point_max']; ?></th>
+                <th><?php echo $wo['lang']['plugin_point_rollover_period']; ?></th>
+            </tr>
+            </thead>
+
+            <tbody class="ads_list_content">
+<?php 
+    foreach($action as $k => $v){ 	
+		if((!is_null($v['action_requiredplugin'])) ){ 
+			$unavailable = false; //true :/
+		} else { 
+			$unavailable = false;
+		}
+?>
+  
+    <tr>
+    <td>  
+		<div id='upedit_<?php echo $key; ?><?php echo $k; ?>' style="display:none;width:260px">
+		<input id='upinput_<?php echo $key; ?><?php echo $k; ?>' <?php if($unavailable){ ?>disabled<?php } ?> type='text' class='text' size=40 name='actionsname[<?php echo $v['action_id']; ?>]' value='<?php echo $v['action_name']; ?>'>
+		</div>  
+		<div id='upshow_<?php echo $key; ?><?php echo $k; ?>' style="display:block; width:260px" <?php if(!$unavailable){ ?>onclick="up_edit_inplace('<?php echo $key; ?><?php echo $k; ?>')"<?php } ?>> <?php echo $v['action_name']; ?>&nbsp;<?php if($unavailable){ ?>
+		<br>
+		<font color="red"> <?php echo $wo['lang']['plugin_point_requires']; ?> <?php echo $v['action_requiredplugin']; ?></font> <?php } ?>
+		</div>
+	</td>
+	
+    <td>
+	<input <?php if($unavailable){ ?>disabled<?php } ?>  type='text' class='text' size=5 name='actions[<?php echo $v['action_id']; ?>]' value='<?php echo $v['action_points']; ?>'>
+	</td>
+    
+	<td>
+	<input <?php if($unavailable){ ?>disabled<?php } ?>  type='text' class='text' size=5 name='actionsmax[<?php echo $v['action_id']; ?>]' value='<?php echo $v['action_pointsmax']; ?>'>
+	</td>
+    
+	<td>
+	<input <?php if($unavailable){ ?>disabled<?php } ?>  type='text' class='text' size=5 name='actionsrollover[<?php echo $v['action_id']; ?>]' value='<?php echo $v['action_rolloverperiod']; ?>'> <?php echo $wo['lang']['plugin_point_days']; ?>
+	</td>
+    
+	</tr>			
+           <?php }//F	?>	
+			
+            </tbody>
+        </table>
+</div>
+                           
+                   
+<?php }//F	?>		
+            <div class="body-header">
+                <button class="btn btn-danger no_radius" type="submit"><?php echo $wo['lang']['plugin_point_save_changes']; ?></button>
+            </div>
+
+            <div class="row col-xs-12">
+			<?php /* success */ ?>
+            <div class="alert alert-success mb0 mt10 x-hidden" role="alert"></div>
+            <?php /* success */ ?>
+            <?php /* error */ ?>
+            <div class="alert alert-danger mb0 mt10 x-hidden" role="alert"></div>
+            <?php /* error */ ?>
+			</div>	
+        </form>
+    </div>
+  </div>                    
+</div>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+ <sitemap>
+  <loc>https://www.mumblit.com/xml/sitemap.xml</loc>
+  <lastmod>2019-03-25</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://www.mumblit.com/xml/sitemap-1.xml</loc>
+  <lastmod>2019-03-25</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>https://www.mumblit.com/xml/sitemap-2.xml</loc>
+  <lastmod>2019-03-25</lastmod>
+ </sitemap>
+</sitemapindex>

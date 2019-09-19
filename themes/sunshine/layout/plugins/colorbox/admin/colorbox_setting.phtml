@@ -1,0 +1,79 @@
+<div class="row col-sm-12">
+	<div class="panel panel-default">
+		<div class="panel-heading"><?php echo $wo['lang']['plugin_configurations']; ?></div>
+		<div class="panel-body">
+		
+			<form action="<?php echo $wo['config']['site_url']; ?>/plugin_requests.php?f=admin_colorbox&task=setting" class="js_ajax_forms form-horizontal" data-url="?f=admin_colorbox&task=setting" method="post">
+													
+				<div class="form-group">
+					<label class="col-sm-4">Active colorbox?</label>
+					<div class="col-sm-7">
+						<select class="form-control" name="colorbox_enable">
+							<option <?php if($wo['system']['colorbox_enable'] == 1){ echo 'selected=""'; } ?> value="1"><?php echo $wo['lang']['yes']; ?></option>
+							<option <?php if($wo['system']['colorbox_enable'] == 0){ echo 'selected=""'; } ?> value="0"><?php echo $wo['lang']['no']; ?></option>
+						</select>
+						<p class="help-block">Active colorbox or disable</p>
+					</div>
+				</div>				
+	
+				<div class="form-group">
+					<label class="col-sm-4">Limit?</label>
+					<div class="col-sm-7">
+							<input class="form-control" name="colorbox_limit" value="<?php echo $wo['system']['colorbox_limit']; ?>">
+						<p class="help-block">Limit to 50 for default characters</p>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-sm-4">Enable cut image?</label>
+					<div class="col-sm-7">
+						<select class="form-control" name="colorbox_image_cut">
+							<option <?php if($wo['system']['colorbox_image_cut'] == 1){ echo 'selected=""'; } ?> value="1"><?php echo $wo['lang']['yes']; ?></option>
+							<option <?php if($wo['system']['colorbox_image_cut'] == 0){ echo 'selected=""'; } ?> value="0"><?php echo $wo['lang']['no']; ?></option>
+						</select>
+						<p class="help-block">Active colorbox or disable cut image default full image</p>
+					</div>
+				</div>	
+				
+				<div class="form-group">
+					<label class="col-sm-4">Cut image width</label>
+					<div class="col-sm-7">
+							<input class="form-control" name="colorbox_image_cut_width" value="<?php echo $wo['system']['colorbox_image_cut_width']; ?>">
+						<p class="help-block">Limit of image width default 375</p>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-sm-4">Cut image height</label>
+					<div class="col-sm-7">
+							<input class="form-control" name="colorbox_image_cut_height" value="<?php echo $wo['system']['colorbox_image_cut_height']; ?>">
+						<p class="help-block">Limit of image height default 275</p>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-sm-4">Quality of image</label>
+					<div class="col-sm-7">
+							<input class="form-control" name="colorbox_image_quality" value="<?php echo $wo['system']['colorbox_image_quality']; ?>">
+						<p class="help-block">Increment or down quality default 80%</p>
+					</div>
+				</div>
+				
+				<div class="body-header">
+					<button class="btn btn-success" type="submit"><?php echo $wo['lang']['plugin_save_changes']; ?></button>
+				</div>
+				
+				<div class="row col-xs-12">
+					<?php /* success */ ?>
+					<div class="alert alert-success mb0 mt10 x-hidden" role="alert"></div>
+					<?php /* ssuccess */ ?>
+					<?php /* serror */ ?>
+					<div class="alert alert-danger mb0 mt10 x-hidden" role="alert"></div>
+					<?php /* serror */ ?>
+				</div>	
+			
+			</form>
+
+		</div>
+	</div>
+</div>

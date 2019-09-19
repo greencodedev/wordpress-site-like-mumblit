@@ -1,0 +1,100 @@
+<div class="row col-sm-12">
+                        <div class="panel panel-default">
+    <div class="panel-heading"><?php echo $wo['lang']['plugin_configurations']; ?></div>
+    <div class="panel-body">
+
+        <form class="js_ajax-forms form-horizontal" data-url="?f=admin_question&task=setting" method="post">
+
+                            <div class="form-group">
+                                <label class="col-sm-4"><?php echo $wo['lang']['plugin_question_p_limit_answers']; ?></label>
+                                <div class="col-sm-7">
+                                    <input class="form-control" type="text" name="val[question_limit_answers]" value="<?php echo $wo['system']['question_limit_answers']; ?>">
+                                    <p class="help-block"><?php echo $wo['lang']['plugin_question_p_limit_answers_desc']; ?></p>
+                                </div>
+                            </div>
+												
+                            <div class="form-group x-hidden">
+                                <label class="col-sm-4"><?php echo $wo['lang']['plugin_question_p_enable_add_answers']; ?></label>
+                                <div class="col-sm-7">
+     <select class="form-control" name="val[question_enable_add_answers]">
+        <option <?php if($wo['system']['question_enable_add_answers'] == 1){ echo 'selected=""'; } ?> value="1"><?php echo $wo['lang']['yes']; ?></option>
+        <option <?php if($wo['system']['question_enable_add_answers'] == 0){ echo 'selected=""'; } ?> value="0"><?php echo $wo['lang']['no']; ?></option>
+    </select>
+                                    <p class="help-block"><?php echo $wo['lang']['plugin_question_p_enable_add_answers_desc']; ?></p>
+                                </div>
+                            </div>
+                        			
+                            <div class="form-group x-hidden">
+                                <label class="col-sm-4"><?php echo $wo['lang']['plugin_question_p_enable_multivote']; ?></label>
+                                <div class="col-sm-7">
+    <select class="form-control" name="val[question_enable_multi_votes]">
+        <option <?php if($wo['system']['question_enable_multi_vote'] == 1){ echo 'selected=""'; } ?> value="1"><?php echo $wo['lang']['yes']; ?></option>
+        <option <?php if($wo['system']['question_enable_multi_vote'] == 0){ echo 'selected=""'; } ?> value="0"><?php echo $wo['lang']['no']; ?></option>
+    </select>
+                                <p class="help-block"><?php echo $wo['lang']['plugin_question_p_enable_multivote_desc']; ?></p>
+                                </div>
+                            </div>
+    
+	                    
+                            <div class="form-group">
+                                <label class="col-sm-4"><?php echo $wo['lang']['plugin_question_p_enable_invite_vote']; ?></label>
+                                <div class="col-sm-7">
+   <select class="form-control" name="val[question_enable_invite_to_friends]">
+        <option <?php if($wo['system']['question_enable_invite_to_friends'] == 1){ echo 'selected=""'; } ?> value="1"><?php echo $wo['lang']['yes']; ?></option>
+        <option <?php if($wo['system']['question_enable_invite_to_friends'] == 0){ echo 'selected=""'; } ?> value="0"><?php echo $wo['lang']['no']; ?></option>
+    </select>
+                                    <p class="help-block"><?php echo $wo['lang']['plugin_question_p_enable_invite_vote_desc']; ?></p>
+                                </div>
+                            </div>
+							
+							<div class="form-group">
+                                <label class="col-sm-4"><?php echo $wo['lang']['plugin_question_p_enable_email_invite_vote']; ?></label>
+                                <div class="col-sm-7">
+   <select class="form-control" name="val[question_enable_email_invite_to_friends]">
+        <option <?php if($wo['system']['question_enable_email_invite_to_friends'] == 1){ echo 'selected=""'; } ?> value="1"><?php echo $wo['lang']['yes']; ?></option>
+        <option <?php if($wo['system']['question_enable_email_invite_to_friends'] == 0){ echo 'selected=""'; } ?> value="0"><?php echo $wo['lang']['no']; ?></option>
+    </select>
+                                    <p class="help-block"><?php echo $wo['lang']['plugin_question_p_enable_email_invite_vote_desc']; ?></p>
+                                </div>
+                            </div>
+                        
+                            <div class="form-group x-hidden">
+                                <label class="col-sm-4"><?php echo $wo['lang']['plugin_question_p_enable_question_profile']; ?></label>
+                                <div class="col-sm-7">
+    <select class="form-control" name="val[question_enable_show_in_profile]">
+        <option <?php if($wo['system']['question_enable_show_in_profile'] == 1){ echo 'selected=""'; } ?> value="1"><?php echo $wo['lang']['yes']; ?></option>
+        <option <?php if($wo['system']['question_enable_show_in_profile'] == 0){ echo 'selected=""'; } ?> value="0"><?php echo $wo['lang']['no']; ?></option>
+    </select>
+                                    <p class="help-block"><?php echo $wo['lang']['plugin_question_p_enable_question_profile_desc']; ?></p>
+                                </div>
+                            </div>
+														
+                                                                           
+            <div class="body-header"><button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o progress-icon" data-icon="floppy-o"></i> <?php echo $wo['lang']['plugin_save_changes']; ?></button></div>
+			
+        </form>
+    </div>
+</div>                    </div>
+
+<script type="text/javascript">
+$(function() {
+    $('.js_ajax-forms').click(function(){
+	var data_url = $(this).attr('data-url');
+	$(this).ajaxForm({
+      url: site_ajax + data_url,
+      beforeSend: function() {
+        Wo_progressIconLoader($('.js_ajax-forms').find('button'));
+      },
+      success: function(data) {
+        if (data.status == 200) {
+          $('.js_ajax-forms button').html('<i class="fa fa-check"></i> <?php echo $wo["lang"]["saved"];?>');
+          setTimeout(function () {
+            $('.js_ajax-forms button').html('<i class="fa fa-floppy-o progress-icon" data-icon="floppy-o"></i>  <?php echo $wo["lang"]["plugin_save_changes"]; ?>');
+          }, 2000);
+          Wo_progressIconLoader($('.js_ajax-forms').find('button'));
+        } 
+      }
+    });
+	});
+});
+</script>

@@ -1,0 +1,191 @@
+	<?php 
+	global $sub_view;
+	$by = ( isset($_POST['by']) ? $_POST['by'] : ( isset($_GET['by']) ? $_GET['by'] : 'all' ) );
+	$where = "";
+	if($by != 'all'){ $where = " type='{$by}' "; } 	
+	// get plans
+	$plans = Ads::get_plans("", FALSE, FALSE, "id DESC", $where);	
+	$task = ( isset($_POST['task']) ? $_POST['task'] : ( isset($_GET['task']) ? $_GET['task'] : '' ) );
+	?>		
+	  <div class="panel panel-default">
+	
+		<?php if($sub_view == ""){ ?> 
+	
+		<div class="panel-heading"><strong>Advertising Packages</strong></div>
+		
+		<div class="panel-body"><small>Here you can manage advertising packages available for your advertisers.</small></div>
+		
+		<div class="panel-body">
+				
+			<div class="clearfix mb20"> <a href="index.php?link1=admin-plugins&view=campaigns_manage&sub_view=plan_add" class="btn btn-success"><?php echo $wo['lang']['plugin_ads_add_ads_plans']; ?></a> </div>
+				 
+				<ul class="nav nav-tabs">
+				  <li class="<?php if($by == 'all'){ echo 'active'; }//if ?>">
+					  <a href="<?php echo $wo['config']['site_url'];?>/index.php?link1=admin-plugins&view=campaigns_manage&by=all"><?php echo $wo['lang']['plugin_ads_all']; ?></a>
+				  </li>
+				  <li class="<?php if($by == 'impression'){ echo 'active'; }//if ?>">
+					  <a href="<?php echo $wo['config']['site_url'];?>/index.php?link1=admin-plugins&view=campaigns_manage&by=impression"><?php echo $wo['lang']['plugin_ads_impression']; ?></a>
+				  </li>
+				  <li class="<?php if($by == 'clicks'){ echo 'active'; }//if ?>">
+					  <a href="<?php echo $wo['config']['site_url'];?>/index.php?link1=admin-plugins&view=campaigns_manage&by=clicks"><?php echo $wo['lang']['plugin_ads_clicks']; ?></a>
+				  </li>
+				  <li class="<?php if($by == 'period'){ echo 'active'; }//if ?>">
+					  <a href="<?php echo $wo['config']['site_url'];?>/index.php?link1=admin-plugins&view=campaigns_manage&by=period">Period</a>
+				  </li>
+				</ul>
+	<div class="row panel-body table-responsive">
+			<table class="table table-striped table-bordered table-hover js_dataTable">
+				<thead>
+				<tr>
+					<th><?php echo $wo['lang']['plugin_ads_name']; ?></th>
+					<th><?php echo $wo['lang']['plugin_ads_type']; ?></th>
+					<th><?php echo $wo['lang']['plugin_ads_price']; ?></th>
+					<th><?php echo $wo['lang']['plugin_ads_quantity']; ?></th>
+				    <th>Pay</th>
+					<th><?php echo $wo['lang']['plugin_ads_action']; ?></th>
+				</tr>
+				</thead>
+	
+				<tbody class="ads_list_content">
+					
+					<?php foreach($plans as $plan){ ?>
+						<tr class="list_ad" data-id="<?php echo $plan['id']; ?>">
+							<td><?php echo $plan['name']; ?></td>
+							<td><?php echo $plan['type']; ?></td>
+							<td><?php echo $plan['price']; ?></td>
+							<td><?php echo $plan['quantity']; ?></td>
+							<td><?php echo $plan['money_type']; ?></td>
+							<td>
+		<a href="<?php echo $wo['config']['site_url'];?>/index.php?link1=admin-plugins&view=campaigns_manage&sub_view=plan_add&plan_id=<?php echo $plan['id']; ?>" title="<?php echo $wo['lang']['edit']; ?>"><i class="fa fa-pencil"></i></a>
+		<a class="admin-delete-plan-from-list" data-id="<?php echo $plan['id']; ?>" href="#" title="<?php echo $wo['lang']['plugin_ads_delete']; ?>"><i class="fa fa-trash-o"></i></a>
+							</td>
+						</tr>
+	                <?php } ?>					
+					
+				</tbody>
+			</table>
+	</div>
+	
+	
+	
+		</div>
+	  <?php }else{ 
+			$plan_id = ( isset($_POST['plan_id']) ? $_POST['plan_id'] : ( isset($_GET['plan_id']) ? $_GET['plan_id'] : 0 ) );
+			//get plan
+			if($plan_id != 0){ $plan = Ads::get_plan($plan_id, "");  }	else {
+			   $plan = array('id' => '', 'name' => '', 'description' => '', 'type' => '', 'price' => '', 'quantity' => '', 'enable' => 1, 'money_type' => 'USD' );
+			}
+		  ?> 
+		  <div class="pull-right mt10 mr10"><a href="index.php?link1=admin-plugins&view=campaigns_manage"><?php echo $wo['lang']['plugin_back_to_listing']; ?></a></div>
+		  <div class="panel-heading"><strong>Add / Edit Advertising Campaign Package</strong></div>
+		  <div class="panel-body"><small>Here you can create advertising packages and assign prices.</small></div>
+		  <div class="panel-body">
+			  
+			  <form class="js_ajax_forms form-horizontal" data-url="?f=admin_ads" method="post"> 
+				<input type="hidden" name="task" value="plan_save"/>            
+				<input type="hidden" value="<?php echo $plan['id']; ?>" class="form-control" name="plan_id"/>
+				
+				<div class="form-group">
+					<label class="col-sm-4"><?php echo $wo['lang']['plugin_ads_plan_title']; ?></label>
+					<div class="col-sm-7">
+						<input type="text" value="<?php echo $plan['name']; ?>" class="form-control" name="name"/>
+						<p class="help-block"><?php echo $wo['lang']['plugin_ads_plan_unique_name']; ?></p>
+					</div>
+	
+				</div>
+	
+				<div class="form-group">
+					<label class="col-sm-4"><?php echo $wo['lang']['plugin_ads_plan_desc']; ?></label>
+					<div class="col-sm-7">
+						<input value="<?php echo $plan['description']; ?>" type="text" class="form-control" name="description"/>
+						<p class="help-block"><?php echo $wo['lang']['plugin_ads_plan_short_desc']; ?></p>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-sm-4">Enable?</label>
+					<div class="col-sm-7">
+						<select name="enable" class="form-control">                        
+							<option <?php if($plan['enable'] == '1'){ echo 'selected'; } ?> value="1"><?php echo $wo['lang']['yes']; ?></option>
+							<option <?php if($plan['enable'] == '0'){ echo 'selected'; } ?> value="0"><?php echo $wo['lang']['no']; ?></option>
+						</select>
+						<p class="help-block">You wanna activate this plan?</p>
+					</div>
+				</div>
+	
+				<div class="form-group">
+					<label class="col-sm-4"><?php echo $wo['lang']['plugin_ads_plan_type']; ?></label>
+					<div class="col-sm-7">
+						<select name="type" class="form-control">                        
+							<option <?php if($plan['type'] == 'impression'){ echo 'selected'; } ?> value="impression"><?php echo $wo['lang']['plugin_ads_impression']; ?></option>
+							<option <?php if($plan['type'] == 'clicks'){ echo 'selected'; } ?> value="clicks"><?php echo $wo['lang']['plugin_ads_clicks']; ?></option>
+							<option <?php if($plan['type'] == 'period'){ echo 'selected'; } ?> value="period"><?php echo $wo['lang']['plugin_ads_period']; ?></option>
+						</select>
+						<p class="help-block"><?php echo $wo['lang']['plugin_ads_plan_type_be']; ?></p>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-sm-4"><?php echo $wo['lang']['plugin_ads_plan_quantity']; ?></label>
+					<div class="col-sm-7">
+						<input value="<?php echo $plan['quantity']; ?>" type="text" placeholder="<?php echo $wo['lang']['plugin_ads_plan_example_100']; ?>" class="form-control" name="quantity"/>
+						<p class="help-block"><?php echo $wo['lang']['plugin_ads_plan_give_quantity']; ?>
+							<strong><?php echo $wo['lang']['plugin_ads_like_clicks_imp']; ?></strong>
+							<?php echo $wo['lang']['plugin_ads_stop_the_ads']; ?>
+						</p>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-sm-4"><?php echo $wo['lang']['plugin_ads_plan_price']; ?> </label>
+					<div class="col-sm-2">
+						<input value="<?php echo $plan['price']; ?>" type="text" placeholder="<?php echo $wo['lang']['plugin_ads_plan_example_30']; ?>" class="form-control" name="price"/>
+					</div>
+					<div class="col-sm-5">
+						<select name="payment_currency" class="form-control" id="setting_payment_currency">
+							<option <?php if($plan['money_type'] == 'USD'){ echo 'selected'; } ?> value="USD" selected="selected">U.S. Dollar (USD)</option>
+							<option <?php if($plan['money_type'] == 'EUR'){ echo 'selected'; } ?> value="EUR">Euro (EUR)</option>
+							<option <?php if($plan['money_type'] == 'CAD'){ echo 'selected'; } ?> value="CAD">Canadian Dollar (CAD)</option>
+							<option <?php if($plan['money_type'] == 'JPY'){ echo 'selected'; } ?> value="JPY">Japanese Yen (JPY)</option>
+							<option <?php if($plan['money_type'] == 'GBP'){ echo 'selected'; } ?> value="GBP">Pound Sterling (GBP)</option>
+							<option <?php if($plan['money_type'] == 'AUD'){ echo 'selected'; } ?> value="AUD">Australian Dollar (AUD)</option>
+							<option <?php if($plan['money_type'] == 'NZD'){ echo 'selected'; } ?> value="NZD">New Zealand Dollar (NZD)</option>
+							<option <?php if($plan['money_type'] == 'HKD'){ echo 'selected'; } ?> value="HKD">Hong Kong Dollar (HKD)</option>
+							<option <?php if($plan['money_type'] == 'SGD'){ echo 'selected'; } ?> value="SGD">Singapore Dollar (SGD)</option>
+							<option <?php if($plan['money_type'] == 'CHF'){ echo 'selected'; } ?> value="CHF">Swiss Franc (CHF)</option>
+							<option <?php if($plan['money_type'] == 'SEK'){ echo 'selected'; } ?> value="SEK">Swedish Krona (SEK)</option>
+							<option <?php if($plan['money_type'] == 'NOK'){ echo 'selected'; } ?> value="NOK">Norwegian Krone (NOK)</option>
+							<option <?php if($plan['money_type'] == 'DKK'){ echo 'selected'; } ?> value="DKK">Danish Krone (DKK)</option>
+							<option <?php if($plan['money_type'] == 'PLN'){ echo 'selected'; } ?> value="PLN">Polish Zloty (PLN)</option>
+							<option <?php if($plan['money_type'] == 'HUF'){ echo 'selected'; } ?> value="HUF">Hungarian Forint (HUF)</option>
+							<option <?php if($plan['money_type'] == 'CZK'){ echo 'selected'; } ?> value="CZK">Czech Koruna (CZK)</option>
+							<option <?php if($plan['money_type'] == 'ILS'){ echo 'selected'; } ?> value="ILS">Israeli New Shekel (ILS)</option>
+							<option <?php if($plan['money_type'] == 'MXN'){ echo 'selected'; } ?> value="MXN">Mexican Peso (MXN)</option>
+							<option <?php if($plan['money_type'] == 'POINT'){ echo 'selected'; } ?> value="POINT">Points(Plugin Point)</option>
+						</select>
+					</div>
+					<div class="col-sm-4"></div>
+					<div class="col-sm-6">
+					<p class="help-block"><?php echo $wo['lang']['plugin_ads_plan_price_dollar']; ?> <strong><?php echo $wo['lang']['plugin_ads_for_example_30']; ?></strong></p>
+					</div>
+				</div>
+				
+	
+				<div class="body-header">
+					<button class="btn btn-danger no-radius" type="submit"><?php echo $wo['lang']['plugin_ads_plan_add']; ?></button>
+				</div>
+				
+				<div class="row col-xs-12">
+				<?php /* success */ ?>
+				<div class="alert alert-success mb0 mt10 x-hidden" role="alert"></div>
+				<?php /* ssuccess */ ?>
+				<?php /* serror */ ?>
+				<div class="alert alert-danger mb0 mt10 x-hidden" role="alert"></div>
+				<?php /* serror */ ?>
+				</div>	
+				
+			</form>
+		  </div>
+	  <?php } ?> 
+	
+</div>

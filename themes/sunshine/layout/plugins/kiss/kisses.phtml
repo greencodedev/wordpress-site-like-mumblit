@@ -1,0 +1,73 @@
+<?php /* kisses */
+  //get kisses
+     $kisses = kiss::get_kisses($wo['user']['user_id']);
+  
+  // get profile friends
+     $friends_count = count(Wo_GetFollowing($wo['user']['user_id'],'sidebar',10));
+   
+  // get profile friends_suggest
+    $friends = array();
+	if($friends_count > 0) { $friends = kiss::get_friends($wo['user']['user_id']); }
+	
+ ?>
+<div class="content_kisses">       
+        <?php /* center panel 1 */ ?>
+                <div class="panel panel-default">
+                    <div class="panel-heading light clearfix mt5">
+                        <div class="col-sm-6">
+                            <strong><?php echo $wo['lang']['plugin_kiss_kisses']; ?></strong>
+						</div>	
+						<div class="col-sm-6">
+<input type="text" name="kiss" class="text_search_kiss" placeholder="<?php echo $wo['lang']['plugin_kiss_kiss_search_friend']; ?>"/>
+	<div class="dropdown-menu_page page_auto-complete" id="list_f_kisses"><ul id="typeahead_list_f_kiss"></ul></div>
+	                     </div>
+                        
+                    </div>
+                    <div class="panel-body row">
+                        <?php if(count($kisses) > 0){ ?>
+                            <ul>
+                                <?php 
+									foreach($kisses as $kiss){
+										$suggest = 0;
+										include "ajax_kiss.phtml";
+									}
+								?>
+                            </ul>
+                        <?php } else { ?>
+                            <p class="text-center text-muted">
+                                <?php echo $wo['lang']['plugin_kiss_kiss_no_available']; ?>
+                            </p>
+                        <?php } ?>
+
+                    </div>
+                </div>
+        <?php /* center panel 1 */ ?>
+		
+		<?php /* center panel 2 */ ?>
+                <div class="panel panel-default">
+                    <div class="panel-heading light clearfix">
+                        <div class="mt5">
+                            <strong><?php echo $wo['lang']['plugin_kiss_kiss_suggest']; ?></strong>
+                        </div>
+                    </div>
+                    <div class="panel-body row">
+                        <?php if(count($friends) > 0){ ?>
+                            <ul>
+                                <?php 
+									foreach($friends as $kiss){
+										$suggest = 1;
+										include "ajax_kiss.phtml";
+									}
+								?>
+                            </ul>
+                        <?php } else { ?>
+                            <p class="text-center text-muted">
+                                <?php echo $wo['lang']['plugin_kiss_kiss_suggest_no_available']; ?>
+                            </p>
+                        <?php } ?>
+
+                    </div>
+                </div>
+            
+        <?php /* center panel 2 */ ?>
+</div>

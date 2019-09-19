@@ -1,0 +1,12 @@
+<ul>
+    <?php foreach($users as $_user){ ?>
+    <li>
+        <div class="data-container clickable small js_<?php if(!empty($type)){ echo $type; } else {echo 'share'; } ?>_add" data-uid="<?php echo $_user['id']; ?>" data-username="<?php echo $_user['fullname']; ?>">
+            <img class="data-avatar" src="<?php echo $_user['photo']; ?>" alt="">
+            <div class="data-content">
+                <div><strong><?php echo $_user['fullname']; ?></strong></div>
+            </div>
+        </div>
+    </li>
+    <?php } ?>
+</ul>

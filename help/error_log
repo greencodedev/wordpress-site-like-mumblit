@@ -1,0 +1,11 @@
+[10-May-2019 21:08:42 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function get_feed_build_date() in /home/mumblit/public_html/mumblit/help/wp-includes/feed-rss2-comments.php:52
+Stack trace:
+#0 /home/mumblit/public_html/mumblit/help/wp-includes/template.php(704): require_once()
+#1 /home/mumblit/public_html/mumblit/help/wp-includes/functions.php(1435): load_template('/home/mumblit/p...')
+#2 /home/mumblit/public_html/mumblit/help/wp-includes/class-wp-hook.php(288): do_feed_rss2(true)
+#3 /home/mumblit/public_html/mumblit/help/wp-includes/class-wp-hook.php(310): WP_Hook->apply_filters('', Array)
+#4 /home/mumblit/public_html/mumblit/help/wp-includes/plugin.php(465): WP_Hook->do_action(Array)
+#5 /home/mumblit/public_html/mumblit/help/wp-includes/functions.php(1399): do_action('do_feed_rss2', true, 'rss2')
+#6 /home/mumblit/public_html/mumblit/help/wp-includes/template-loader.php(40): do_feed()
+#7 /home/mumblit/public_html/mumblit/help/wp-blog-header.php(19): require_once('/home/mumblit/p...')
+#8 /home/mumblit/public_html/mumblit/help/index.php(17): in /home/mumblit/public_html/mumblit/help/wp-includes/feed-rss2-comments.php on line 52

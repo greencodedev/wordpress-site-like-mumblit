@@ -1,0 +1,52 @@
+<?php global $sub_view; ?>
+<div class="list-group-item"><i class="fa fa-fw fa-language"></i> Edit key: <?php echo $sub_view; ?></div>
+<div class="list-group panel mt10">
+   <div class="setting-well page-margin panel-body">
+     <form class="js_ajax-forms langs form-horizontal"  data-url="../../plugin_requests.php?f=admin_plugins&task=update_lang_key"  action="<?php echo $system['system_url']; ?>/plugin_requests.php?f=admin_plugins&task=update_lang_key" method="post">
+        <?php
+        $langs = Wo_GetLangDetails($_GET['id']);
+        if (count($langs) > 0) {
+            foreach ($langs as $key => $wo['langs']) {
+            	foreach ($wo['langs'] as $wo['key_'] => $wo['lang_vlaue']) {
+            		echo Wo_LoadPage('plugins/edit_key/list');
+            	}
+            }
+        }  else {
+        	echo "<h4>Keyword not found</h4>";
+        }
+        ?>
+        <?php if (count($langs) > 0) { ?>
+         <input type="hidden" name="hash_id" value="<?php echo Wo_CreateSession();?>">
+         <div class="form-group">
+            <label class="col-md-2"></label>  
+            <div class="col-md-7">
+               <button type="submit" class="btn btn-main">
+               <i class="fa fa-floppy-o progress-icon" data-icon="floppy-o"></i>  <?php echo $wo['lang']['save']?>
+               </button>   
+            </div>
+         </div>
+        <input type="hidden" name="id_of_key" value="<?php echo $_GET['id'] ?>">
+        <?php } ?>
+      </form>
+   </div>
+</div>
+<script type="text/javascript">
+$(function() {
+    $('form.langs').ajaxForm({
+      url: Wo_Ajax_Requests_File() + '?f=admin_setting&s=update_lang_key',
+      beforeSend: function() {
+        Wo_progressIconLoader($('form.langs').find('button'));
+      },
+      success: function(data) {
+        if (data.status == 200) {
+          $('form.langs button').html('<i class="fa fa-check"></i> <?php echo $wo["lang"]["saved"];?>');
+          setTimeout(function () {
+            $('form.langs button').html('<i class="fa fa-floppy-o progress-icon" data-icon="floppy-o"></i>  <?php echo $wo["lang"]["save"]?>');
+          }, 2000);
+        } 
+        Wo_progressIconLoader($('form.langs').find('button'));
+      }
+    });
+});
+
+</script>

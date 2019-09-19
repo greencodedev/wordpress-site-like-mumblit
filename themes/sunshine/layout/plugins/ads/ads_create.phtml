@@ -1,0 +1,60 @@
+<?php 
+	
+	//variables
+	$type = ( isset($_POST['type']) ? $_POST['type'] : ( isset($_GET['type']) ? $_GET['type'] : 'website' ) );
+	$post_id = ( isset($_POST['post_id']) ? $_POST['post_id'] : ( isset($_GET['post_id']) ? $_GET['post_id'] : 0 ) );
+	
+	// valid inputs
+	$valid['view'] = array('', 'website', 'page', 'post');
+	if(!in_array($type, $valid['view'])) { header("Location: " . Wo_SeoLink('index.php?link1=oops')); exit(); }
+	
+	//get my list pages
+	if($type == 'page'){ 
+	   $pages = Wo_GetMyPages(); 
+	}else if($type == 'post'){
+	   global $sqlConnect;
+	   $post_id = Wo_Secure($post_id);
+	   //get post_id exist
+	   $post_query = $sqlConnect->query("SELECT post_id FROM Wo_Posts WHERE post_id='{$post_id}' LIMIT 1");
+	   $post_exist = $post_query->num_rows;
+	}
+	
+	 //get array plans of ads defaul clicks  and post only impressions     
+	 if($type == 'post'){ $where = " type='impression' "; } else{ $where = " type='clicks' "; }
+	 
+	 // get plans
+	 $plans = Ads::get_plans("", FALSE, FALSE, "id DESC", $where);	 
+?>
+	
+	
+	<div class="container mt20">
+	<div class="col-md-11">
+		
+			<?php /* left panel */ ?>
+			<div class="col-sm-12" style="padding:0px;"><?php include "ads_header.phtml"; ?></div>
+			<?php /* left panel */ ?>
+			
+			<div class="col-md-12 panel create-ads-menu">
+			<ul class="nav">
+		       <li class="col-md-4"><a class="<?php if($type == 'website'){ echo 'active'; } ?>" href="<?php echo $wo['config']['site_url']; ?>/index.php?link1=campaign_create"> <i class="fa fa-paper-plane icon"></i> <span class="hidden-xs"><?php echo $wo['lang']['plugin_ads_send_people']; ?></span></a> </li>
+		       <li class="col-md-4"><a class="<?php if($type == 'page'){ echo 'active'; } ?>" href="<?php echo $wo['config']['site_url']; ?>/index.php?link1=campaign_create&type=page"> <i class="icon fa fa-thumbs-o-up"></i> <span class="hidden-xs"><?php echo $wo['lang']['plugin_ads_promote_your_page']; ?></span></a> </li>
+		       <li class="col-md-4"><a class="<?php if($type == 'post'){ echo 'active'; } ?>" href="<?php echo $wo['config']['site_url']; ?>/index.php?link1=campaign_create&type=post"> <i class="icon fa fa-wechat"></i> <span class="hidden-xs"><?php echo $wo['lang']['plugin_ads_boost_your_post']; ?></span></a> </li>
+			</ul>
+		 </div>
+	
+	<?php /* page content */ ?>  
+	<div class="col-md-12" style="padding:0px;">
+	<?php 
+	     if($type == 'website'){ 
+	        include "ads_type_website.phtml";
+	     } else if($type == 'page'){ 
+	        include "ads_type_page.phtml";
+	     } else if($type == 'post'){ 
+		    include "ads_type_post.phtml";
+	     } 
+	 ?>
+	</div>
+	<?php /* page content */ ?>
+	
+	</div>
+	</div>

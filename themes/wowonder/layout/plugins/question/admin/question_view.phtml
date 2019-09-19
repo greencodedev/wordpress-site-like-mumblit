@@ -1,0 +1,89 @@
+<div class="list-group">
+
+   <div class="setting-well">
+   <div class="table-responsive">
+      <table class="table table-hover table-bordered table-condensed setting-table">
+         <thead>
+            <tr>
+               <th><?php echo $wo['lang']['id'];?></th>
+               <th><?php echo $wo['lang']['publisher'];?> </th>
+               <th><?php echo $wo['lang']['post_link'];?> </th>
+               <th><?php echo $wo['lang']['time'];?> </th>
+               <th><?php echo $wo['lang']['action'];?></th>
+            </tr>
+         </thead>
+         <tbody class="posts-result manage-posts-list">
+            <?php 
+            $page_id  = 0;
+            $group_id = 0;
+            $user_id  = 0;
+            $postsData = array(
+                'filter_by' => 'poll',
+                'limit' => 100,
+                'publisher_id' => $user_id,
+                'group_id' => $group_id,
+                'page_id' => $page_id,
+                'after_post_id' => 0
+            );
+			
+               $posts = Wo_GetPosts($postsData);
+                if (count($posts) > 0) {
+                  foreach ($posts as $wo['story']) {
+                    echo Wo_LoadPage('admin/manage_posts/posts-list');
+                  }
+                } 
+               ?>
+         </tbody>
+      </table>
+      </div>
+      <input type="hidden" id="hash_id" name="hash_id" value="<?php echo Wo_CreateSession();?>">
+      <div class="no-result">
+         <?php 
+            if (count($posts) == 0) {
+              echo '<span class="center-text">' . $wo['lang']['there_are_not_new_posts_for_now'] . '</span>';
+            }
+            ?>
+      </div>
+      <?php
+         if (count($posts) > 0) { 
+         ?>
+      <div class="view-more-wrapper view-more-posts-wrapper">
+         <span class="text-center btn btn-default" onclick="Wo_AdminGetMorePosts();">
+         <i class="fa fa-arrow-down progress-icon" data-icon="arrow-down"></i> <?php echo $wo['lang']['show_more_posts'];?>
+         </span>
+      </div>
+      <?php } ?>
+      <span class="center-text"></span>
+   </div>
+</div>
+<script>
+function Wo_AdminDeletePost(post_id) {
+    if (confirm("<?php echo $wo['lang']['post_delete_confirmation'];?>") == false) {
+      return false;
+    }
+    hash_id = $('#hash_id').val();
+    var delete_icon = $('.manage-posts-list').find('#PostID_' + post_id).find('.delete-post');
+    Wo_progressIconLoader(delete_icon);
+    $.post(site_ajax + '?f=admin_setting&s=delete_post', {post_id:post_id, hash_id:hash_id}, function(data) {
+      if (data.status == 200) {
+        $('#PostID_' + post_id).fadeOut(300, function() {
+          $(this).remove();
+        });
+      }
+    });
+}
+
+function Wo_AdminGetMorePosts() {
+    after_post_id = $('.manage-posts-list').find('.setting-postlist:last').attr('data-post-id');
+    view_more_wrapper = $('.view-more-posts-wrapper');
+    Wo_progressIconLoader(view_more_wrapper.find('.text-center'));
+    $.get(site_ajax + '?f=admin_setting&s=get_more_posts&filter_by_more=poll', {after_post_id:after_post_id}, function(data) {
+      if (data.html.length != 0) {
+        $('tbody.posts-result').append(data.html);
+      } else {
+        view_more_wrapper.find('.text-center').text("<?php echo $wo['lang']['no_more_posts'];?>");
+      }
+      Wo_progressIconLoader(view_more_wrapper.find('.text-center'));
+    });
+}
+</script>

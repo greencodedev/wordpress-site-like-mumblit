@@ -1,0 +1,59 @@
+<?php 
+/* update views */
+Ads::updateAd($ad); 
+if($ad['type'] == 'website'){ ?>
+<div class="pagelet_ego_ads list-group">
+
+<?php include "ads_random_btn.phtml"; ?>
+
+<a class="ads-click-link" data-id="<?php echo $ad['id']; ?>" onclick="return window.open('<?php echo $ad['link']; ?>')" href="javascript:void(0)" data-ajaxify="true">
+
+<div class="ad_title">
+      <?php echo $ad['title']; ?>
+</div>
+
+<div class="ads_link">
+   <?php echo $ad['display_link']; ?>
+</div>
+
+<div class="ad_image">
+   <img src="<?php echo $ad['images']; ?>">		
+</div>
+
+<div class="ad_description">
+   <?php echo $ad['description']; ?>
+</div>
+</a>
+</div>
+
+<?php } else if($ad['type'] == 'page'){ ?>
+
+<?php $info_ads_page = Ads::get_page($ad['page_id']); //echo json_encode($info_ads_page); ?>
+
+<div class="pagelet_ego_ads list-group">
+<?php include "ads_random_btn.phtml"; ?>
+<a class="ads-click-link" data-id="<?php echo $ad['id']; ?>" onclick="return window.open('<?php echo $wo['config']['site_url'].'/'.$info_ads_page['page_name']; ?>')" href="javascript:void(0)" data-ajaxify="true">
+
+<div class="ad_title mb10">
+      <?php echo $info_ads_page['page_title']; ?>
+</div>
+
+<div class="ad_image">
+   <img src="<?php echo $ad['images']; ?>">		
+</div>
+
+<div class="ad_description">
+   <?php echo $ad['description']; ?>
+</div>
+</a>
+
+<div class="ad_description mb10"> 
+   <?php echo Wo_GetLikeButton($info_ads_page['page_id']); ?>
+   <span class="<?php echo Wo_RightToLeft('pull-right');?>">
+   <?php echo Wo_CountPageLikes($info_ads_page['page_id']); ?> <i class="fa fa-fw fa-thumbs-up"></i>
+   </span>
+</div>
+
+
+</div>
+<?php } ?>

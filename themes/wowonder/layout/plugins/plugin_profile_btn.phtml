@@ -1,0 +1,18 @@
+<?php if(!empty($wo['plugin_list']['plugin_main_profile']) && $wo['plugin_list']['plugin_main_profile']){ 
+         foreach($wo['plugin_list']['plugin_main_profile'] as $plugin_main_profile){ ?>
+                <li class="list-group-item">
+				        <strong>						
+						<?php 
+						if(!empty($plugin_main_profile['image'])){
+							echo '<img src="'.$wo['config']['site_url'].'/assets/plugins/'.$plugin_main_profile['image'].'" class="fa" style="width:20px;">';
+						} else{
+							echo '<i class="fa '.$plugin_main_profile['icon'].' fa-fw"></i>';
+						}
+						?>
+						</strong>
+                        <a href="<?php if(!empty($plugin_main_profile['link'])){ echo $plugin_main_profile['link']; } else { echo '#'; } ?>" class="js_<?php echo $plugin_main_profile['name']; ?>-user" data-uid="<?php echo $wo['user_profile']['user_id']; ?>">
+						<?php echo $plugin_main_profile['title']; ?>
+						</a>
+                </li>
+<?php }
+} ?>

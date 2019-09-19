@@ -1,0 +1,230 @@
+<?php global $sqlConnect, $sub_view; ?>
+<div class="row col-sm-12">
+	<?php if($sub_view == ""){ ?>
+	
+		
+		<div class="list-group panel-default">
+			<div class="list-group-item">
+				<strong>Upload an image</strong>
+			</div>
+			<div class="panel-body">
+								
+				<form class="js_ajax_forms_ form-horizontal form_reaction" data-url="?f=admin_combo" action="<?php echo $wo['config']['site_url']; ?>/plugin_requests.php?f=admin_combo" method="post" enctype="multipart/form-data"> 	  
+					
+					<input type="hidden" name="task" value="add_file">					
+					
+					<div class="form-group">
+                                <label class="col-sm-4">reaction key:</label>
+                                <div class="col-sm-7">
+                                    <input class="form-control" type="text" name="reaction_key" value="">
+                                    <p class="help-block">word no space example "haha": reaction-<b>haha</b>-button.php</p>
+                                </div>
+                    </div>
+					
+					<div class="form-group">
+                                <label class="col-sm-4">reaction name:</label>
+                                <div class="col-sm-7">
+                                    <input class="form-control" type="text" name="text" value="">
+                                    <p class="help-block">write a name example: "Haha"</p>
+                                </div>
+                    </div>
+					
+					<div class="form-group">
+                                <label class="col-sm-4">reaction status:</label>
+                                <div class="col-sm-7">
+									<select class="form-control" name="reaction_status">
+										<option value="1"><?php echo $wo['lang']['plugin_enabled']; ?></option>
+										<option value="0"><?php echo $wo['lang']['plugin_disabled']; ?></option>
+									</select>
+                                    <p class="help-block">Reaction Active</p>
+                                </div>
+                    </div>
+					
+					<div class="form-group">
+                                <label class="col-sm-4">reaction status:</label>
+                                <div class="col-sm-7">
+									<select class="form-control" name="reaction_colour">
+											<option value="opt-active">blue</option>
+											<option value="red-opt">red</option>
+											<option value="orange-opt">orange</option>
+											<option value="yellow-opt">yellow</option>
+											<option value="green-opt">green</option>
+									</select>
+									<p class="help-block">Reaction Active</p>
+                                </div>
+                    </div>
+					
+					<div class="form-group">
+                                <label class="col-sm-4">reaction image:</label>
+                                <div class="col-sm-7">
+                                    <label for="ReactionImage" class="ml10 btn btn-primary no_radius"><i class="fa fa-upload"></i>Cargar</label>
+                                    <p class="help-block">Select a image of you PC</p>
+                                </div>
+                    </div>			
+					
+					<input class="ReactionImage" style="display:none;" name="file" type="file" multiple="" accept="image/*" id="ReactionImage">					
+				
+					<div class="form-group x-hidden">
+						<button type='submit' class='btn btn-success no_radius pull-right mr10'>Send Image</button>
+					</div>
+								
+					<div class="row col-xs-12">
+						<?php /* success */ ?>
+						<div class="alert alert-success mb0 mt10" role="alert"></div>
+						<?php /* ssuccess */ ?>
+						<?php /* serror */ ?>
+						<div class="alert alert-danger mb0 mt10" role="alert"></div>
+						<?php /* serror */ ?>
+					</div>
+					
+				</form>  
+				
+			</div>
+		</div>	
+		
+		<div class="list-group panel-default">
+			<div class="list-group-item">
+				<strong>Reaction List</strong>
+			</div>
+		</div>				
+			
+	<div id="ReactionContent">
+	
+		<?php 	$query = "SELECT * FROM reactions ORDER BY reaction_id DESC"; 
+				$resource = $sqlConnect->query($query);				
+				$count_reactions =  $resource->num_rows;
+				$reaction_vars = array();				
+				while($reaction_info = $resource->fetch_assoc()){ $reaction_vars[] = $reaction_info; }
+				
+				if($count_reactions > 0){ foreach($reaction_vars as $k => $con){ ?>											
+						
+					<div class="col-sm-6 reaction" style="padding:2px;" data-token="<?php echo $k; ?>" data-id="<?php echo $con['reaction_id']; ?>">
+						<div class="list-group panel-default clearfix">
+							<div class="panel-body">
+								<div class="pull-right">
+									<button type="button" class="close js_reaction_remover" title="Remove"><span>×</span></button>
+								</div>								
+								<div class="pull-left image">
+									<img src="<?php echo $wo['config']['site_url']; ?>/upload/reaction/reaction_<?php echo $con['reaction_key']; ?>.<?php echo $con['reaction_filetype']; ?>" title="<?php echo $wo['lang']['reaction_'.$con['reaction_id']]; ?>" class="img-rounded avatar">
+									<div>
+										<label for="new_src_<?php echo $con['reaction_id']; ?>" class="btn label_new_src"><i class="fa fa-camera"></i></label>
+										<input class="new_src" style="display:none;" name="file" type="file" accept="image/*" id="new_src_<?php echo $con['reaction_id']; ?>">
+									</div>
+								</div>								
+								<div class="pull-left form-group ml10">
+									<div><b>reaction_key</b>: <span class="edit_reaction_key"><?php echo $con['reaction_key']; ?></span> <div class="edit_key_input"></div></div>
+									<div class="mt5"><b>Text</b>: <?php echo $wo['lang']['reaction_'.$con['reaction_id']]; ?> <a href="<?php echo $wo['config']['site_url']; ?>/admincp/edit_key&id=reaction_<?php echo $con['reaction_id']; ?>"><i class="fa fa-pencil"></i></a> </div>			
+									<div class="mt10">
+										<select class="form-control" name="reaction_status">
+												<option <?php if($con['reaction_status'] == 1){ echo 'selected=""'; } ?> value="1"><?php echo $wo['lang']['plugin_enabled']; ?></option>
+												<option <?php if($con['reaction_status'] == 0){ echo 'selected=""'; } ?> value="0"><?php echo $wo['lang']['plugin_disabled']; ?></option>
+										</select>
+									</div>	
+									<div class="mt10">
+										<select class="form-control" name="reaction_colour">
+												<option <?php if($con['reaction_colour'] == 'opt-active'){ echo 'selected=""'; } ?> value="opt-active">blue</option>
+												<option <?php if($con['reaction_colour'] == 'red-opt'){ echo 'selected=""'; } ?> value="red-opt">red</option>
+												<option <?php if($con['reaction_colour'] == 'orange-opt'){ echo 'selected=""'; } ?> value="orange-opt">orange</option>
+												<option <?php if($con['reaction_colour'] == 'yellow-opt'){ echo 'selected=""'; } ?> value="yellow-opt">yellow</option>
+												<option <?php if($con['reaction_colour'] == 'green-opt'){ echo 'selected=""'; } ?> value="green-opt">green</option>
+										</select>
+									</div>	
+								</div>							
+							</div>
+						</div>
+					</div>
+		<?php }} ?>
+
+	</div>								  		   
+	<?php } ?>
+</div>
+
+<script>
+$('body').on('change', '.new_src', function(e){ event.preventDefault();
+var self = $(this);
+var reaction_id = self.closest('.reaction').attr('data-id');
+var files = this.files;
+for (var i = 0; i < files.length; i++){    
+	var filename = files[i].name;
+	var ext = filename.substring(filename.lastIndexOf(".")+1).toLowerCase();
+	var allowed= "";
+	if(ext == "jpg" || ext == "png" || ext == "gif" || ext == "jpeg"){  
+		var fd = new FormData(); fd.append('file', files[i]);
+		self.closest('.reaction').find('.label_new_src').addClass('x-hidden');
+		$.ajax({ type: 'post', url: site_ajax+'?f=admin_combo&task=reaction_src&reaction_id='+reaction_id, contentType:false, processData: false, data: fd, cache : false,  success: function(result){ self.closest('.reaction').find('.label_new_src').removeClass('x-hidden');
+		if(result.result == 1){	self.closest('.reaction').find('.image img').attr({'src':result.html}); }
+		}
+		});
+	} else { alert('this file no is permisse'); }
+} 
+});
+
+	var ReactionCount = 0;		
+	function ReactionFileUpload(files){
+			for (var i = 0; i < files.length; i++){
+			var filename = files[i].name;
+			var ext = filename.substring(filename.lastIndexOf(".")+1).toLowerCase();
+			if(ext == "jpg" || ext == "png" || ext == "gif" || ext == "jpeg"){
+								
+				var formData = new FormData();
+				formData.append('file', files[i]);	
+				var count_id= ReactionCount++;						
+				$("#ReactionContent").prepend('<div class="col-sm-6 loading" style="display: list-item;" id="load_reaction_'+count_id+'"> <div class="list-group panel-default"><div class="panel-body"> <div class="loader loader_small"></div></div> </div></div>');
+				
+				var reaction_key = $('.form_reaction input[name=reaction_key]').val();
+				var reaction_status = $('.form_reaction select[name="reaction_status"]').val();
+				var reaction_colour = $('.form_reaction select[name="reaction_colour"]').val();
+				var text = $('.form_reaction input[name=text]').val();
+
+				$.ajax({type: 'post',url: site_url+'/plugin_requests.php?f=admin_combo&task=add_file&reaction_key='+reaction_key+'&count_id='+count_id+'&reaction_status='+reaction_status+'&text='+text+'&reaction_colour='+reaction_colour, 
+				contentType:false, processData: false, data: formData, cache : false, 
+				success: function(result){ 
+					$('#load_reaction_'+result.id).after(result.html);
+					$('#load_reaction_'+result.id).remove();
+					$('.form_reaction input').val('');
+				}
+				});								
+			}else{ alert('this formart no permise'); }						
+		}
+	}
+	
+		$('body').on('change', '#ReactionContent select[name="reaction_status"]', function(){
+		    var self = $(this);
+			var reaction_id = self.closest('.reaction').attr('data-id');
+			var reaction_status = self.val(); 
+			$.ajax({type: 'post',url: site_url+'/plugin_requests.php?f=admin_combo', data: {'task':'reaction_status', 'reaction_status':reaction_status, 'reaction_id':reaction_id}, cache : false, 
+						success: function(result){}
+			});
+		});
+		$('body').on('change', '#ReactionContent select[name="reaction_colour"]', function(){
+		    var self = $(this);
+			var reaction_id = self.closest('.reaction').attr('data-id');
+			var reaction_colour = self.val(); 
+			$.ajax({type: 'post',url: site_url+'/plugin_requests.php?f=admin_combo', data: {'task':'reaction_colour', 'reaction_colour':reaction_colour, 'reaction_id':reaction_id}, cache : false, 
+						success: function(result){}
+			});
+		});
+	
+	$('body').on('change', '.ReactionImage', function(event){ 
+		if($('input[name=reaction_key]').val() == ''){ alert('please add a key first'); return false; }
+		if($('input[name=text]').val() == ''){ alert('please add a text first'); return false; }
+		var files = this.files; ReactionFileUpload(files);
+	});	
+							
+	$('body').on('click', '.js_reaction_remover', function(event){ event.preventDefault(); 
+		var self = $(this);
+		var reaction_id = self.closest('.reaction').attr('data-id');
+		self.closest('.reaction').hide();
+		$.ajax({type: 'post',url: site_url+'/plugin_requests.php?f=admin_combo', data: {'task':'reaction_delete', 'reaction_id':reaction_id}, cache : false, 
+					success: function(result){ 
+						self.closest('.reaction').remove();
+					}
+		});
+	});	
+	$('body').on('click', '.edit_reaction_key', function(event){ event.preventDefault(); 
+	var self = $(this);
+	var reaction_id = self.closest('.reaction').attr('data-id');
+	var text_old = self.addClass('x-hidden').html();
+	self.parent().find('.edit_key_input').html('<form class="js_ajax_forms form-horizontal" data-url="?f=admin_combo" action="<?php echo $wo['config']['site_url']; ?>/plugin_requests.php?f=admin_combo" method="post" enctype="multipart/form-data"><input type="hidden" name="task" value="reaction_key"><input type="hidden" name="reaction_id" value="'+reaction_id+'"><input class="form-control" type="text" name="reaction_key" value="'+text_old+'" placeholder="reaction key"><button class="btn btn-success">update</button><div class="alert alert-success mb0 mt10" role="alert"></div><div class="alert alert-danger mb0 mt10" role="alert"></div></form>');
+	});
+</script>

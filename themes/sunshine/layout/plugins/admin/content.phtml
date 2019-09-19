@@ -1,0 +1,104 @@
+<?php 
+if ($wo['loggedin'] == false) {
+   header("Location: " . $wo['config']['site_url']);
+   exit();
+}
+$is_admin = Wo_IsAdmin();
+$is_moderoter = Wo_IsModerator();
+if ($is_admin === false && $is_moderoter === false) {
+    header("Location: " . $wo['config']['site_url']);
+    exit();
+}
+
+//type plugin
+$task = ( isset($_POST['task']) ? $_POST['task'] : ( isset($_GET['task']) ? $_GET['task'] : '' ) );
+$v = ( isset($_POST['v']) ? $_POST['v'] : ( isset($_GET['v']) ? $_GET['v'] : '' ) );
+$by = ( isset($_POST['by']) ? $_POST['by'] : ( isset($_GET['by']) ? $_GET['by'] : 'all' ) );
+$view = ( isset($_POST['view']) ? $_POST['view'] : ( isset($_GET['view']) ? $_GET['view'] : '' ) );
+$sub_view = ( isset($_POST['sub_view']) ? $_POST['sub_view'] : ( isset($_GET['sub_view']) ? $_GET['sub_view'] : '' ) );
+
+// page content
+if($view == ''){
+  //PLUGINS INSTELLED
+  $plugins_installed = LdrSoft::get_plugins_list("", false, false, "", "");
+	
+  // find install files
+  $plugins_ready = array();
+  $p_ready = array();
+  if($dh = opendir("./")) {
+  while(($file = readdir($dh)) !== false) {
+    if($file != "." && $file != "..") {  
+	  if(strpos($file, "LdrMx/install_") === 0 && !in_array($file, $plugin_types)) {
+        include "./$file";
+	    $p_ready[] = array('p_name' => $p_name, 'p_version' => $p_version, 'p_type' => $p_type, 'p_desc' => $p_desc, 'p_icon' => $p_icon);
+      } 
+    }
+  }
+  closedir($dh); 
+}       $plugins_ready['count'] = count($p_ready);
+        $plugins_ready['plugins'] = $p_ready;
+}
+
+ // Generate notifications
+ $admin_notifications = array();
+
+ //PLUGINS INSTELLED
+ $plugins_installed = LdrSoft::get_plugins_list("", false, false, "", "");
+?>
+<div class="page-margin sidebar">
+  <?php if (is_dir('install')) { ?>
+  <div class="alert alert-danger">
+    <i class="fa fa-fw fa-exclamation-triangle"></i> <strong>Important !</strong>Please delete the install folder for security reasons.
+  </div>
+  <?php } ?>
+   <div class="row admin-panel">
+      <div class="col-md-3">
+         <ul class="list-group  filterby settings-by">
+		 <li class="list-group-item filter-by-li hidden"></li>
+		 
+            <li class="list-group-item filter-by-li"><a href="<?php echo Wo_SeoLink('index.php?link1=admin-cp');?>"><i class="fa fa-fw fa-bar-chart"></i> <?php echo $wo['lang']['dashboard'];?></a></li>
+            <hr>
+			<li class="list-group-item filter-by-li <?php echo (isset($page_['color']) && !empty($page_['color'])) ? $page_['color']: '';?> <?php echo ($view == '') ? 'avtive': '';?>">
+				<a href="<?php echo $wo['config']['site_url']?>/index.php?link1=admin-plugins<?php //echo Wo_SeoLink('');?>">
+					<i class="fa fa-fw fa-plug"></i> <?php echo $wo['lang']['plugin_plugins'];?>
+				</a>
+			</li>
+			
+			<li class="list-group-item filter-by-li <?php if($view == languages){ echo 'avtive'; } ?>" >
+				<a href="<?php echo $wo['config']['site_url']?>/index.php?link1=admin-plugins&view=languages">
+					<i class="fa fa-language fa-fw fa-lg pr10"></i> <?php echo $wo['lang']['language'];?>
+				</a>
+			</li>
+			
+			<hr>
+			<?php if(!empty($wo['plugin_list']['admin_menu'])){ 
+			foreach($wo['plugin_list']['admin_menu'] as $plugin_actived){ 
+			      foreach($plugin_actived as $key => $val){ ?>
+					<li class="list-group-item filter-by-li <?php if($view == $val){ echo 'avtive'; } ?>" >
+						<a href="<?php echo $wo['config']['site_url']?>/index.php?link1=admin-plugins&view=<?php echo $val; ?>">
+							<i class="fa fa-fw fa-cog"></i><?php echo $key; ?>
+						</a>
+					</li>
+			<?php } } 
+			}
+			?>
+			
+            <hr>
+			<li class="list-group-item filter-by-li"><i class="fa fa-fw fa-copyright"></i> Build v<?php echo $wo['script_version'];?></li>
+         </ul>
+      </div>
+      <div class="col-md-9">
+		<?php if($view == ""){ include 'admin_plugins.phtml'; }
+			else if($view == 'languages'){  echo Wo_LoadPage("plugins/languages/content"); } 
+			else if($view == 'edit_lang'){  echo Wo_LoadPage("plugins/edit_lang/content"); } 
+			else if($view == 'edit_key'){  echo Wo_LoadPage("plugins/edit_key/content"); } 
+			if(!empty($wo['plugin_list']['admin_tab'])){           
+			foreach($wo['plugin_list']['admin_tab'] as $plugin_tab){
+				foreach($plugin_tab as $key => $val){ if($view == $key){ echo Wo_LoadPage("plugins/{$val}"); } } 
+			}
+			}
+			?>
+      </div>
+	  	  
+   </div>
+</div>

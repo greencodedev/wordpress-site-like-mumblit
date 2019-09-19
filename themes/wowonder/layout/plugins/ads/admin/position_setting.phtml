@@ -1,0 +1,98 @@
+<div class="row col-sm-12">
+
+	<div class="panel panel-default">
+		<div class="panel-heading"><?php echo $wo['lang']['plugin_configurations']; ?></div>
+		<div class="panel-body">
+
+		<form class="js_ajax_forms form-horizontal" action="" data-url="?f=admin_ads&task=position_setting" method="post">		
+		    
+			<div class="form-group">
+				<label class="col-sm-4"><?php echo $wo['lang']['plugin_ads_c_ads_lc']; ?></label>
+				<div class="col-sm-7">
+			<select class="form-control" name="enable_ads_left_column">
+			<option <?php if($wo['system']['enable_ads_left_column'] == 1){ echo 'selected=""'; } ?> value="1"><?php echo $wo['lang']['yes']; ?></option>
+			<option <?php if($wo['system']['enable_ads_left_column'] == 0){ echo 'selected=""'; } ?> value="0"><?php echo $wo['lang']['no']; ?></option>
+			</select>
+				<p class="help-block"><?php echo $wo['lang']['plugin_ads_c_ads_lc_desc']; ?></p>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-sm-4"><?php echo $wo['lang']['plugin_ads_c_no_ads_left']; ?></label>
+				<div class="col-sm-7">
+					<input class="form-control" type="text" name="ads_no_left_column" value="<?php echo $wo['system']['ads_no_left_column']; ?>">
+					<p class="help-block"><?php echo $wo['lang']['plugin_ads_c_no_ads_left_desc']; ?></p>
+				</div>
+			</div>			
+			
+			<div class="mb20"><hr></div>
+			
+			<div class="form-group">
+				<label class="col-sm-4"><?php echo $wo['lang']['plugin_ads_c_ads_ppm']; ?></label>
+				<div class="col-sm-7">
+			<select class="form-control" name="pagelet_ego">
+			<option <?php if($wo['system']['pagelet_ego'] == 1){ echo 'selected=""'; } ?> value="1"><?php echo $wo['lang']['yes']; ?></option>
+			<option <?php if($wo['system']['pagelet_ego'] == 0){ echo 'selected=""'; } ?> value="0"><?php echo $wo['lang']['no']; ?></option>
+			</select>
+					<p class="help-block"><?php echo $wo['lang']['plugin_ads_c_ads_ppm_desc']; ?></p>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-sm-4"><?php echo $wo['lang']['plugin_ads_c_no_ads_rigth']; ?></label>
+				<div class="col-sm-7">
+					<input class="form-control" type="text" name="ads_no_right_column" value="<?php echo $wo['system']['ads_no_right_column']; ?>">
+					<p class="help-block"><?php echo $wo['lang']['plugin_ads_c_no_ads_rigth_desc']; ?></p>
+				</div>
+			</div>
+			
+			<div class="mb20"><hr></div>
+			
+			<div class="form-group">
+				<label class="col-sm-4"><?php echo $wo['lang']['plugin_ads_c_enable_ad_rigth_place']; ?></label>
+				<div class="col-sm-7">
+					<input class="form-control" type="text" name="enable_ad_rigth_place" value="<?php echo $wo['system']['enable_ad_rigth_place']; ?>">
+					<p class="help-block"><?php echo $wo['lang']['plugin_ads_c_enable_ad_rigth_place_desc']; ?></p>
+				</div>
+			</div>	
+			
+			<div class="mb20"><hr></div>																				 
+			
+			<div class="form-group">
+				<label class="col-sm-4"><?php echo $wo['lang']['plugin_ads_c_ads_p']; ?></label>
+				<div class="col-sm-7">
+			<select class="form-control" name="enable_ads_on_post">
+			<option <?php if($wo['system']['enable_ads_on_post'] == 1){ echo 'selected=""'; } ?> value="1"><?php echo $wo['lang']['yes']; ?></option>
+			<option <?php if($wo['system']['enable_ads_on_post'] == 0){ echo 'selected=""'; } ?> value="0"><?php echo $wo['lang']['no']; ?></option>
+			</select>
+				<p class="help-block"><?php echo $wo['lang']['plugin_ads_c_ads_p_desc']; ?></p>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-sm-4"><?php echo $wo['lang']['plugin_ads_c_ads_post']; ?></label>
+				<div class="col-sm-7">
+			<select class="form-control" name="enable_website_ads_on_post">
+			<option <?php if($wo['system']['enable_website_ads_on_post'] == 1){ echo 'selected=""'; } ?> value="1"><?php echo $wo['lang']['yes']; ?></option>
+			<option <?php if($wo['system']['enable_website_ads_on_post'] == 0){ echo 'selected=""'; } ?> value="0"><?php echo $wo['lang']['no']; ?></option>
+			</select>
+					<p class="help-block"><?php echo $wo['lang']['plugin_ads_c_ads_post_desc']; ?></p>
+				</div>
+			</div>
+                                    	                                         
+			<div class="body-header">
+                <button class="btn btn-success" type="submit"><?php echo $wo['lang']['plugin_save_changes']; ?></button>
+            </div>
+
+            <div class="row col-xs-12">
+			<?php /* success */ ?>
+            <div class="alert alert-success mb0 mt10 x-hidden" role="alert"></div>
+            <?php /* ssuccess */ ?>
+            <?php /* serror */ ?>
+            <div class="alert alert-danger mb0 mt10 x-hidden" role="alert"></div>
+            <?php /* serror */ ?>
+			</div>	
+        </form>
+    </div>
+</div>                    
+</div>

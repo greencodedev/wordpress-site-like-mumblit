@@ -1,0 +1,10 @@
+<?php 
+if(!empty($wo['plugin_list']['plugin_wall_tabs']) && $wo['plugin_list']['plugin_wall_tabs']){ 
+   foreach($wo['plugin_list']['plugin_wall_tabs'] as $pwmt){ ?>
+	<?php if($pwmt['tab_input'] == 'none'){ ?>
+	<div class="publisher-meta" data-meta="<?php echo $pwmt['id']; ?>"></div>
+	<?php } else if($pwmt['tab_input'] == 'new'){ ?><div class="publisher-<?php echo $pwmt['id']; ?>"></div>
+	<?php } else if($pwmt['tab_input'] == 'create'){ ?><?php echo $pwmt['tab_content']; ?>
+    <?php } else if($pwmt['tab_input'] == 'normal'){ ?><div class="publisher-meta" data-meta="<?php echo $pwmt['id']; ?>"><i class="fa <?php echo $pwmt['icon']; ?> fa-fw"></i><input type="text" id="plugin_wall_js_<?php echo $pwmt['tab_input']; ?>" placeholder='<?php echo $pwmt['text']; ?>'></div><?php } ?>
+	<?php }
+} ?>	

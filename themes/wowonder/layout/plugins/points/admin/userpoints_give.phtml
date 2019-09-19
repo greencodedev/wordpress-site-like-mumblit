@@ -1,0 +1,117 @@
+<?php 
+/* assign variables */
+$message = 'Hi,
+
+I decided to give your more points.
+
+Enjoy!';  
+
+$subject = $wo['lang']['plugin_point_more_points'];
+$send_message = 1;
+$set_points = 0;
+$points = 0;
+$sendtotype = 0;
+?>
+<div class="row col-sm-12">
+
+    <div class="panel panel-default">
+      <div class="panel-heading"><strong><?php echo $wo['lang']['plugin_point_give_points']; ?></strong></div>
+        <div class="panel-body">
+           <small><?php echo $wo['lang']['plugin_point_give_points_desc']; ?></small>
+						          
+		<div class="row panel-body">	  
+		  		  
+		<form class="js_ajax_forms form-horizontal tab_users_suggest" data-url="?f=admin_points" action="<?php echo $wo['config']['site_url']; ?>/plugin_requests.php?f=admin_points" method="post">
+			<input type="hidden" name="task" value="dogivepoints">		 
+			<div class="form-group">
+				<label class="col-sm-3"><?php echo $wo['lang']['plugin_point_give_to']; ?>:</label>
+				<div class="col-sm-9">
+				<select class="form-control" name="sendtotype" id="sendtotype" onchange="userpoints_onchange($(this))">
+				   <option value="0" <?php if($sendtotype == 0){ ?>SELECTED<?php } ?>><?php echo $wo['lang']['plugin_point_all_users']; ?></option>
+				   <option value="1" <?php if($sendtotype == 3){ ?>SELECTED<?php } ?>><?php echo $wo['lang']['plugin_point_specific_u']; ?></option>
+				</select>
+				</div>
+			</div>					
+			
+			<div class="form-group <?php if($sendtotype != 1 || $sendtotype != 2 || $sendtotype != 3){ ?>x-hidden<?php } ?>" id="div_sent_to_1">
+				<label class="col-sm-3"><?php echo $wo['lang']['plugin_point_user']; ?>:</label>
+				<div class="col-sm-9">
+				<input type='hidden' class='form-control user_id' size='30' name='user_id' value=''>  
+				<input class='form-control js_users_suggest' type='text' name='username' value='' autocomplete='off'>	
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-sm-3"><?php echo $wo['lang']['plugin_point_amount']; ?>:</label>
+				<div class="col-sm-9">
+				<input type='text' class='form-control' name='points' size="5" value="<?php echo $points; ?>" maxlength="6">
+				<small>(<?php echo $wo['lang']['plugin_point_points_negative_desc']; ?>)</small>
+				</div>
+			</div>
+			
+			<div class="form-group mb10 mt10">
+				<div class="col-sm-3"></div>
+				<div class="col-sm-9">
+					<div>
+					<input type='checkbox' name='set_points' id='set_points' value='1'<?php if($set_points == 1){ ?> checked='checked'<?php } ?>>
+					<label class="ml5" for='set_points'><?php echo $wo['lang']['plugin_point_set_points_desc']; ?></label>
+					</div>
+					<div>
+					<input type='checkbox' name='send_message' id='send_message' value='1'<?php if($send_message == 1){ ?> checked='checked'<?php } ?>>
+					<label class="ml5" for='send_message'><?php echo $wo['lang']['plugin_point_also_send_msg']; ?></label>
+					</div>				
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-sm-3"><?php echo $wo['lang']['plugin_point_from_u']; ?>:</label>
+				<div class="col-sm-9">
+				<select class="form-control" name="from_user_id_suggest" onchange="from_user_id_suggest_onChanged($(this).val())">
+				  <option value="<?php echo $wo['user']['user_id']; ?>" SELECTED> <?php echo $wo['user']['name']; ?> </option>
+				  <option value="0"> <?php echo $wo['lang']['plugin_point_other']; ?> </option>
+				</select>
+				</div>
+			</div>
+			
+			<div class="form-group x-hidden" id='user_id_suggest_other'>
+				<label class="col-sm-3"><?php echo $wo['lang']['plugin_point_please_specific_u']; ?>:</label>
+				<div class="col-sm-9">
+				<input type='hidden' class='form-control user_id' size='30' name='from_user_id' value=''>
+				<input type='text' class='form-control js_users_suggest' size='30' name='from_username' value='' autocomplete='off'>
+				</div>
+			</div>
+								
+			<div class="form-group">
+				<label class="col-sm-3"><?php echo $wo['lang']['plugin_point_subject']; ?>:</label>
+				<div class="col-sm-9">
+				<input type='text' class='form-control' size='30' name='subject' value='<?php echo $subject; ?>' maxlength='200'>
+				</div>
+			</div>			
+														   
+			<div class="form-group">
+				<label class="col-sm-3"><?php echo $wo['lang']['plugin_point_message']; ?>:</label>
+				<div class="col-sm-9">
+				<textarea class="form-control" rows='6' cols='80' name='message'><?php echo $message; ?></textarea>
+				</div>
+			</div>	
+			
+			<div class="body-header">
+				<button class="btn btn-danger no_radius" type="submit"><?php echo $wo['lang']['plugin_point_give_points']; ?></button>
+			</div>
+			
+			<div class="row col-xs-12">
+			<?php /* success */ ?>
+			<div class="alert alert-success mb0 mt10 x-hidden" role="alert"></div>
+			<?php /* success */ ?>
+			<?php /* error */ ?>
+			<div class="alert alert-danger mb0 mt10 x-hidden" role="alert"></div>
+			<?php /* error */ ?>
+			</div>	
+		</form>
+		  		  
+        </div>		
+		
+        </div>
+     </div>
+
+</div>

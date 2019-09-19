@@ -1,0 +1,32 @@
+<?php 
+   $type = ( isset($_POST['type']) ? $_POST['type'] : ( isset($_GET['type']) ? $_GET['type'] : 'question' ) );
+   $post_id = ( isset($_POST['post_id']) ? $_POST['post_id'] : ( isset($_GET['post_id']) ? $_GET['post_id'] : '0' ) );
+?>
+<form action="<?php echo $wo['config']['site_url'];?>/plugin_requests.php?f=new_friend_invite" method="post" class="friend_invite">
+		<div class="">Type name of your friend: <input type="text" id="friend_name" /><div>
+		<div class="friend_container mt20">
+			<ul>
+			        <?php
+                    if (Wo_CountFollowing($wo['user']['user_id']) == 0) {
+                        echo '<h5 class="search-filter-center-text">' . $wo['lang']['not_following'] . '</h5>';
+                    } else {
+                        foreach(Wo_GetFollowing($wo['user']['user_id'],'profile', 100) as $wo['UsersList']) {
+                    ?>
+				<li>
+					<div>
+						<div class="f_photo"><img src="<?php echo $wo['UsersList']['avatar'];?>" alt="<?php echo $wo['UsersList']['name']; ?> Profile Picture" width="60"></div>
+						<div class="f_desc"><input type="checkbox" name="friend[]"value="<?php echo $wo['UsersList']['id'];?>"><?php echo $wo['UsersList']['name']; ?></div>
+					</div>
+				</li>
+					<?php 
+                        }
+                    }
+                    ?>			
+			</ul>
+		</div><div style="clear:both"></div>
+		<div class="modal-footer">
+		  <input class="btn btn-success send_friend_invite" type="submit" value="<?php echo $wo['lang']['plugin_question_send_request']; ?>" />
+		  <img src="<?php echo $wo['config']['site_url'];?>/assets/plugins/img/load.gif" style="display:none;" id="#formLoading">
+		</div>
+		<input type="hidden" name="post_id" value="<?php echo $post_id; ?>">
+		</form>

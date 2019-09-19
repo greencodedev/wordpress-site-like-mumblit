@@ -1,0 +1,17 @@
+<script type="text/javascript" src="<?php echo $wo['config']['site_url'];?>/assets/plugins/javascript/core.js"></script>
+<script type="text/javascript">$('.search-for-posts-container').closest('.list-group').attr({'id':'search-for-posts-container'});</script>
+<?php 
+     if(!empty($wo['HtmlBP'])){ echo $wo['HtmlBP']; } 
+       if(!empty($wo['plugin_list']['footer_js']) && $wo['plugin_list']['footer_js']){ 
+  	       foreach($wo['plugin_list']['footer_js'] as $load_js){ 
+	          echo '<script src="'.$wo['config']['site_url'].'/assets/plugins/'.$load_js.'.js"></script>';
+		  }
+	   }
+?>
+<?php 
+      if(!empty($wo['plugin_list']['footer']) && $wo['plugin_list']['footer']){ 
+         foreach($wo['plugin_list']['footer'] as $plugins_footer){ 
+		    echo Wo_LoadPage('plugins/'.$plugins_footer);
+		 }
+      }
+?>

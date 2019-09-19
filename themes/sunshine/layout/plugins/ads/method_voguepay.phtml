@@ -1,0 +1,17 @@
+<?php if(!empty($wo['system']['ads_enable_voguepay']) && $wo['system']['ads_enable_voguepay'] == 1){ ?>
+<li>
+	<form method='POST' action='https://voguepay.com/pay/'>
+	<input type='hidden' name='v_merchant_id' value='<?php if($wo['system']['voguePayMerchantId'] != ''){ echo $wo['system']['voguePayMerchantId']; } else { echo 'demo'; } ?>' />
+	<input type='hidden' name='merchant_ref' value='<?php echo $ad['id']; ?>' />
+	<input type='hidden' name='memo' value='<?php echo $ad['campaign_name']; ?>' />
+	<input type='hidden' name='notify_url' value='<?php echo $wo['config']['site_url']; ?>/index.php?link1=ads-activate&ad_id=<?php echo $ad['id']; ?>&action=voguepay&type=notification' />
+	<input type='hidden' name='success_url' value='<?php echo $wo['config']['site_url']; ?>/index.php?link1=ads-activate&ad_id=<?php echo $ad['id']; ?>&action=voguepay&type=thank_you' />
+	<input type='hidden' name='fail_url' value='<?php echo $wo['config']['site_url']; ?>/index.php?link1=ads-activate&ad_id=<?php echo $ad['id']; ?>&action=voguepay&type=failed' />
+	<input type='hidden' name='developer_code' value='<?php echo $wo['user']['user_id']; ?>' />
+	<input type='hidden' name='store_id' value='<?php echo $ad['id']; ?>' />
+	<input type='hidden' name='cur' value='USD' />
+	<input type='hidden' name='total' value='<?php echo $ad['price']; ?>' />
+	<input type='image' width="60" src='<?php echo $wo['config']['site_url']; ?>/assets/plugins/ads/images/voguepay-icon.png' alt='Submit' />
+	</form>
+</li>
+<?php } ?>

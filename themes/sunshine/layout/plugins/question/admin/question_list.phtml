@@ -1,0 +1,64 @@
+<?php 
+	global $sqlConnect, $sub_view;
+	$questions = array(); 
+	$resource = $sqlConnect->query("SELECT * FROM posts_questions");
+	while($row = $resource->fetch_assoc()){
+		$questions[] = $row;
+	}
+?>
+
+<div class="row col-sm-12">
+	<div class="panel panel-default">
+
+		<?php if($sub_view == ""){ ?> 
+			<div class="panel-heading">
+				<strong>Questions</strong>
+			</div>
+			<div class="panel-body">
+				<small>List of questions</small>
+			</div>
+			
+			<div class="panel-body">
+			
+				<div class="row panel-body table-responsive">
+					<table class="table table-striped table-bordered table-hover js_dataTable">
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>Question</th>
+								<th>actions</th>
+							</tr>
+						</thead>
+						
+						<tbody class="question_list_content">
+						
+							<?php foreach($questions as $question){ ?>
+								<tr class="question_tab" data-id="<?php echo $question['question_id']; ?>">
+									<td><?php echo $question['question_id']; ?></td>
+									<td><?php echo $question['question_question']; ?></td>
+									<td><a href="<?php echo $wo['config']['site_url']; ?>/post/<?php echo $question['post_id']; ?>" title="see question"><i class="fa fa-eye"></i></a>  <a class="admin-delete-question-from-list" href="#" title="<?php echo $wo['lang']['delete']; ?>"><i class="fa fa-trash-o"></i></a></td>
+								</tr>
+							<?php }//f ?>						
+						
+						</tbody>
+					</table>
+				</div>
+							
+			</div>
+		<?php } ?>
+
+	</div>
+</div>
+
+<script>
+	$('body').on('click', '.admin-delete-question-from-list', function(event){ event.preventDefault(); 
+		var self = $(this);
+		var question_id = self.closest('.question_tab').attr('data-id');
+		self.closest('.question_tab').hide();
+		$.ajax({type: 'post',url: site_url+'/plugin_requests.php?f=admin_question', data: {'task':'question_delete', 'question_id':question_id}, cache : false, 
+					success: function(result){ 
+						self.closest('.question_tab').remove();
+					}
+		});
+	});	
+</script>

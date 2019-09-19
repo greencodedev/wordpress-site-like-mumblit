@@ -1,0 +1,14 @@
+/* 
+
+Add here your custom css styles Example: p { text-align: center; color: red; } 
+
+*/
+.content-container .container {width: 85%; margin-right: 15%;}
+.offline-users { border-bottom: 1px solid #ccc; }
+.online-users { border-top: 1px solid #ccc; }
+.post .post-heading .avatar { border-radius: 50%; }
+.verified-color { color: #462178; }
+.mejs__time { display: none; }
+.mejs__time-rail { display: none; }
+.mejs__speed-button {display: none; }
+.mejs__jump-forward-button {display: none; }

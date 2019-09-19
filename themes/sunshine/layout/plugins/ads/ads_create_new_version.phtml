@@ -1,0 +1,293 @@
+<?php 
+$type = ( isset($_POST['type']) ? $_POST['type'] : ( isset($_GET['type']) ? $_GET['type'] : 'website' ) );
+$post_id = ( isset($_POST['post_id']) ? $_POST['post_id'] : ( isset($_GET['post_id']) ? $_GET['post_id'] : 0 ) );
+
+/* page content */ ?>
+<div class="container mt20">
+    <div class="row">
+ 
+		<?php /* ad content */ ?>		
+				 
+		<div class="mt20 mb20"><strong>Campaign in this website</strong></div>
+
+        <?php /*menu*/ ?> 
+		<script>
+		$('body').on('click', '.ad_menu a',function(e){ e.preventDefault();
+		var icon = $(this).find('i').attr('data-icon');
+		$('#ad_menu_search_icon').removeAttr('class').addClass('fa fa-'+icon); });
+		</script>
+			<div class="ad_menu col-sm-4" style="padding:0px;">
+				<div class="panel panel-default">
+							<div <?php if($type == "website"){ ?>class="active selected"<?php } ?> style="padding:15px; border-bottom:1px solid #CCC;">
+							<a href="<?php echo $wo['config']['site_url']; ?>/index.php?link1=campaign_create"><i class="fa fa-paper-plane fa-fw fa-lg" data-icon="paper-plane"></i> Send people to your website</a>
+							</div>
+							<div <?php if($type == "pages"){ ?>class="active selected"<?php } ?> style="padding:15px; border-bottom:1px solid #CCC;">
+							<a href="<?php echo $wo['config']['site_url']; ?>/index.php?link1=campaign_create&type=pages"><i class="fa fa-thumbs-o-up fa-fw fa-lg" data-icon="thumbs-o-up"></i> Promote your page</a>
+							</div>
+							<div <?php if($type == "pages"){ ?>class="active selected"<?php } ?> style="padding:15px; border-bottom:1px solid #CCC;">
+							<a href="<?php echo $wo['config']['site_url']; ?>/index.php?link1=campaign_create&type=group"><i class="fa fa-users fa-fw fa-lg"></i> Promote your group</a>
+							</div>
+							<div <?php if($type == "pages"){ ?>class="active selected"<?php } ?> style="padding:15px; border-bottom:1px solid #CCC;">
+							<a href="<?php echo $wo['config']['site_url']; ?>/index.php?link1=campaign_create&type=blog"><i class="fa fa-book fa-fw fa-lg"></i> Promote your blog</a>
+							</div>
+							<div <?php if($type == "post"){ ?>class="active selected"<?php } ?> style="padding:15px; border-bottom:1px solid #CCC;">
+							<a href="<?php echo $wo['config']['site_url']; ?>/index.php?link1=campaign_create&type=post"><i class="fa fa-wechat fa-fw fa-lg"></i> Promote your publications</a>
+							</div>
+							<div <?php if($type == "post"){ ?>class="active selected"<?php } ?> style="padding:15px; border-bottom:1px solid #CCC;">
+							<a href="<?php echo $wo['config']['site_url']; ?>/index.php?link1=campaign_create&type=post"><i class="fa fa-cart-plus fa-fw fa-lg"></i> Promote your product</a>
+							</div>
+							<div <?php if($type == "post"){ ?>class="active selected"<?php } ?> style="padding:15px; border-bottom:1px solid #CCC;">
+							<a href="<?php echo $wo['config']['site_url']; ?>/index.php?link1=campaign_create&type=event"><i class="fa fa-calendar fa-fw fa-lg"></i> Promote your event</a>
+							</div>
+							<div <?php if($type == "post"){ ?>class="active selected"<?php } ?> style="padding:15px;">
+							<a href="<?php echo $wo['config']['site_url']; ?>/index.php?link1=campaign_create&type=event"><i class="fa fa-gamepad fa-fw fa-lg"></i> Promote a game</a>
+							</div>
+				</div>
+			</div>
+		
+		<div class="ad_menu_search row col-sm-8">
+				<div class="panel panel-default" style="padding:40px;">
+		
+					<?php if($type == "website"){ ?>
+
+						<div class=" clearfix" style="text-align:center; border-radius: 3px; background-color: #f6f7f8; border:1px solic #d3d3d3;">
+
+<form class="auto_js_ajax_forms" data-url="ads/create.php?task=website">
+<div class="col-sm-12 mb20">
+
+		<i class="fa fa-check-circle" style="position:absolute; margin-left:82px;background:#fff; border-radius: 50px; font-size:28px; color:#83C84C;"></i>
+
+		<i class="fa fa-paper-plane" id="ad_menu_search_icon" style="background:#435C9E; border-radius: 50px; padding:25px; font-size:40px; color:#FFF; box-shadow: 0 0 0 1px #d3d3d3, 
+                0 0 0 5px #FFF, 
+                0 0 0 6px #d3d3d3;"></i>
+		
+</div>
+
+<div class="col-sm-12 mb20" style="font-size:24px;">
+	<strong>Clics en el sitio web</strong>
+</div>
+
+<div class="col-sm-12 mb20">
+	Get more people to visit your website.
+</div>
+
+<div class="col-sm-12 mb20">
+	<div class="col-sm-3"></div>
+	<div class="col-sm-6 mb20 form-group">
+	<input type="text" class="form-control" name="url" id="url" placeholder="enter a URL to promote" value="">
+	</div>
+	<div class="col-sm-3"></div>
+	
+</div>
+</form>
+						</div>
+						
+					<?php }else if($type == "page"){ ?>
+					<?php } ?>
+					<div class="mt10" style="text-align:center;"><button type="submit" class="btn btn-default">Volver</button></div>
+				</div>
+			</div>  				
+		<?php /*menu*/ ?>        
+				
+				
+<?php /* ad photos */ ?>
+<div class="row col-sm-12">
+	<div class="mb10">
+		<strong>Images</strong>
+	</div>
+	<div class="panel panel-default clearfix">
+		<div class="panel-body col-sm-8" style="text-align:center; border-right:1px solid #CCC;">
+			
+			<div class="col-sm-12 mb20">
+				<span style="border:2px solid #CCC; border-radius: 50px; padding:10px;font-size:16px; color:#CCC;"><i class="fa fa-photo"></i></span> Use up to 6 diferent images to create more ads in you campaign at no extra cost.
+			</div>
+			
+			<div class="col-sm-12 mt20 mb20">				
+				<span style="margin-right:5px; margin-top:5px; padding:0 50px; background:#000; float:left;"><div style="margin-left:120px; color:#fff; position:absolute;">x</div><img alt="" style="width:84px;height:84px;left:48px;top:0px;" src="http://localhost/ldrsoft_2015/uploads/ads/ad_4_11.jpg?rand=32486"></span>
+				<span style="margin-right:5px; margin-top:5px; padding:0 50px; background:#000; float:left;"><div style="margin-left:120px; color:#fff; position:absolute;">x</div><img alt="" style="width:84px;height:84px;left:48px;top:0px;" src="http://localhost/ldrsoft_2015/uploads/ads/ad_4_8.jpg?rand=83039"></span>
+				<span style="margin-right:5px; margin-top:5px; padding:0 50px; background:#000; float:left;"><div style="margin-left:120px; color:#fff; position:absolute;">x</div><img alt="" style="width:84px;height:84px;left:48px;top:0px;" src="http://localhost/ldrsoft_2015/uploads/ads/ad_4_7.jpg?rand=57491"></span>
+				<span style="margin-right:5px; margin-top:5px; padding:0 50px; background:#000; float:left;"><div style="margin-left:120px; color:#fff; position:absolute;">x</div><img alt="" style="width:84px;height:84px;left:48px;top:0px;" src="http://localhost/ldrsoft_2015/uploads/ads/ad_4_10.jpg?rand=40088"></span>
+				<span style="margin-right:5px; margin-top:5px; padding:0 50px; background:#000; float:left;"><div style="margin-left:120px; color:#fff; position:absolute;">x</div><img alt="" style="width:84px;height:84px;left:48px;top:0px;" src="http://localhost/ldrsoft_2015/uploads/ads/ad_4_9.jpg?rand=47927"></span>
+				<span style="margin-right:5px; margin-top:5px; padding:0 50px; background:#000; float:left;"><div style="margin-left:120px; color:#fff; position:absolute;">x</div><img alt="" style="width:84px;height:84px;left:48px;top:0px;" src="http://localhost/ldrsoft_2015/uploads/ads/ad_2_2.jpg"></span>
+				
+				<button style=" margin-top:5px; border:1px solid #CCC; background:#efefef; padding:6px 74px; font-size:50px; float:left; color:#999;">+</button>
+			</div>
+			
+			<div class="col-sm-12">
+				<button class="btn btn-default">
+				   <i class="fa fa-upload progress-icon"></i> Upload images
+				</button>
+			</div>
+			
+		</div>
+		<div class="panel-body col-sm-4" style="text-align:justify">
+			<div class="mb10"><strong>Creating more ads</strong></div>
+			<div>Each picture that you add will create a different ad in your ad group. When the campaign starts, you can monitor how they respond to different public images.
+			</div>
+			<div class="mt20 mb10"><strong>Recommended image size</strong></div>
+			<div class="mb10">600 x 225 pixels</div>
+			<div>
+			If you want more information about the different ad formats and sizes, see.
+			</div>
+		</div>
+	</div>
+</div>
+<?php /* ad photos */ ?>
+
+
+
+				
+				
+<?php /* preview */ ?>
+<div class="row col-sm-12">
+	<div class="mb10">
+		<strong>Text and links</strong>
+	</div>
+	<div class="panel panel-default clearfix">
+		<div class="panel-body col-sm-4">
+			<div class="mb10">
+				<strong>Heahline</strong>
+			</div>	
+			<div class="mb10 form-group">
+				<input class="form-control" name="title" value="">
+			</div>
+			<div class="mb10">
+				<strong>Text</strong>
+			</div>	
+			<div class="mb10 form-group">
+				<textarea class="form-control" name="desc"></textarea>
+			</div>
+			<div class="mb10">
+				<strong>Show more options</strong>
+			</div>
+			<div class="x-hidden_">
+				<div class="mb10">
+					<strong>Campaing name</strong>
+				</div>	
+				<div class="mb10 form-group">
+					<textarea class="form-control" name="desc"></textarea>
+				</div>
+			</div>
+		</div>
+		<div class="panel-body col-sm-8" style="border-left:1px solid #CCC; padding:0;">
+			<div style="border-bottom:1px solid #CCC; padding:10px;">
+				<strong>AD PREVIEW AND PLACEMENTS</strong>
+			</div>	
+			<div style="border-bottom:1px solid #CCC; padding:10px;">
+				<strong><i class="fa fa-check"></i> Computer news section</strong>
+			</div>	
+			<div style="max-height: 200px; padding:10px; overflow: scroll; overflow-x: hidden; position: relative;" id="cn">
+			<div style="height:250px;"></div>
+			</div>
+			
+			<div style="border-bottom:1px solid #CCC; border-top:1px solid #CCC; padding:10px;">
+				<strong><i class="fa fa-check"></i> Cell phone news section</strong>
+			</div>	
+			<div style="max-height: 200px; padding:10px; overflow: scroll; overflow-x: hidden; position: relative;" id="cp">
+			<div style="height:250px;"></div>
+			</div>
+			
+			<div style="border-bottom:1px solid #CCC; border-top:1px solid #CCC; padding:10px;">
+				<strong><i class="fa fa-check"></i> Right column</strong>
+			</div>	
+			<div style="max-height: 200px; padding:10px; overflow: scroll; overflow-x: hidden; position: relative;" id="cr">
+			<div style="height:250px;"></div>
+			</div>	
+				
+		</div>
+	
+	</div>
+</div>
+<?php /* preview */ ?>
+				
+
+
+<?php /* place */ ?>
+<div class="row col-sm-12">
+	<div class="mb10">
+		<strong>Audience</strong>
+	</div>
+	<div class="panel panel-default clearfix">
+	
+		<div class="panel-heading with-icon with-nav">
+			<?php /* panel title */ ?>
+				<strong>Who do you want your ads to reach?</strong>
+			<?php /* panel title */ ?>
+
+		</div>
+		<div class="panel-body tab-content">
+			<div class="col-sm-8" style="border-right:1px solid #CCC;">
+
+				<div class="form-group">
+					<label class="col-sm-4" for="location"><strong>Location</strong></label>
+					<div class="mb10 col-sm-8">
+					<button class="btn btn-default">Everyone</button>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-4" for="location"><strong>Age</strong></label>
+					<div class="mb10 col-sm-8">
+					<button class="btn btn-default">18</button> - <button class="btn btn-default">65+</button>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-4" for="location"><strong>Gender</strong></label>
+					<div class="mb10 col-sm-8">
+					<button class="btn btn-default">All</button><button class="btn btn-default">Men</button><button class="btn btn-default">Woman</button>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-4" for="location"><strong>Languages</strong></label>
+					<div class="mb10 col-sm-8">
+					<input name="location" type="text" value="" class="form-control" placeholder="Enter a language">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-4" for="location"><strong>Interests</strong></label>
+					<div class="mb10 col-sm-8">
+					<input name="location" type="text" value="" class="form-control" placeholder="">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-4" for="location"><strong>Behaviors</strong></label>
+					<div class="mb10 col-sm-8">
+					<input name="location" type="text" value="" class="form-control" placeholder="">
+					</div>
+				</div>
+			
+			</div>
+			<div class="col-sm-4">
+				<div class="mb20"><strong>Audience Definition:</strong></div>
+				<div>Your audience is too specific for you ads to be shown. Try making it broader.</div>
+				
+				<div class="mb20 mt10"><strong>Audience Details:</strong></div>
+				<div>-Location - Livin in:</div>
+				<div>-Age</div>
+				<div>-30-58</div>
+				<div>Interests:</div>
+				<div>-Job title</div>
+				<div>Placements</div>
+			</div>
+		
+		</div>
+	</div>
+</div>
+<?php /* place */ ?>
+
+
+<?php /* send form */ ?>
+<div class="col-sm-12">		    
+  <button type="submit" class="btn btn-success ml10">Order</button>   
+  <div class="mt20 ml10">
+  <small>By clicking on "Order" you agree to the Bill of Rights and Responsibilities, including your obligation to comply with the advertising rules of this website. We do not use personal and confidential data for segmenting advertising. The topics you choose to target your ads does not reflect personal beliefs, characteristics or values of users. The breach of the Terms and Conditions and advertising rules can lead to consequences, including termination of your ads and the elimination of your account.</small>
+  </div>
+</div>
+<?php /* send form */ ?>
+	  
+	 
+	 
+	 
+	 
+    </div>
+</div>              
+<?php /* page content */ ?>

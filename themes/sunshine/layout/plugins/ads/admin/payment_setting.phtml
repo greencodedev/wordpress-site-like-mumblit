@@ -1,0 +1,113 @@
+<div class="row col-sm-12">
+
+	<div class="panel panel-default">
+		<div class="panel-heading"><?php echo $wo['lang']['plugin_configurations']; ?></div>
+		<div class="panel-body">
+
+<form class="js_ajax_forms form-horizontal" action="<?php echo $wo['config']['site_url']; ?>/plugin_requests.php?f=admin_ads&task=payment_setting" data-url="?f=admin_ads&task=payment_setting" method="post">		
+
+	<div class="form-group">
+		<label class="col-sm-4"><?php echo $wo['lang']['plugin_ads_c_enable_paypal']; ?></label>
+		<div class="col-sm-7">
+			<select class="form-control" name="ads_enable_paypal">
+			<option <?php if($wo['system']['ads_enable_paypal'] == 1){ echo 'selected=""'; } ?> value="1"><?php echo $wo['lang']['yes']; ?></option>
+			<option <?php if($wo['system']['ads_enable_paypal'] == 0){ echo 'selected=""'; } ?> value="0"><?php echo $wo['lang']['no']; ?></option>
+			</select>
+			<p class="help-block"><?php echo $wo['lang']['plugin_ads_c_enable_paypal_desc']; ?></p>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-sm-4"><?php echo $wo['lang']['plugin_ads_c_paypal_sandbox']; ?></label>
+		<div class="col-sm-7">
+			<select class="form-control" name="ads_enable_sandbox">
+			<option <?php if($wo['system']['ads_enable_sandbox'] == 1){ echo 'selected=""'; } ?> value="1"><?php echo $wo['lang']['yes']; ?></option>
+			<option <?php if($wo['system']['ads_enable_sandbox'] == 0){ echo 'selected=""'; } ?> value="0"><?php echo $wo['lang']['no']; ?></option>
+			</select>
+			<p class="help-block"><?php echo $wo['lang']['plugin_ads_c_paypal_sandbox_desc']; ?></p>
+		</div>
+	</div>
+							
+	<div class="form-group">
+		<label class="col-sm-4"><?php echo $wo['lang']['plugin_ads_c_email_paypal']; ?></label>
+		<div class="col-sm-7">
+			<input class="form-control" type="text" name="corporate_paypal_email" value="<?php echo $wo['system']['corporate_paypal_email']; ?>">
+			<p class="help-block"><?php echo $wo['lang']['plugin_ads_c_email_paypal_desc']; ?></p>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-sm-4"><?php echo $wo['lang']['plugin_ads_c_paypal_notify']; ?></label>
+		<div class="col-sm-7">
+			<input class="form-control" type="text" name="paypal_email_notification" value="<?php echo $wo['system']['paypal_email_notification']; ?>">
+			<p class="help-block"><?php echo $wo['lang']['plugin_ads_c_paypal_notify_desc']; ?></p>
+		</div>
+	</div>
+	
+	<div class="mb20"><hr></div>
+			
+	<div class="mt10 form-group">
+			<label class="col-sm-4">Eneable Voguepay</label>
+			<div class="col-sm-7">
+				<select class="form-control" name="ads_enable_voguepay">
+				<option <?php if($wo['system']['ads_enable_voguepay'] == 1){ echo 'selected=""'; } ?> value="1"><?php echo $wo['lang']['yes']; ?></option>
+				<option <?php if($wo['system']['ads_enable_voguepay'] == 0){ echo 'selected=""'; } ?> value="0"><?php echo $wo['lang']['no']; ?></option>
+				</select>
+				<p class="help-block">Active VoguePay</p>
+			</div>
+	</div>
+	
+	<div class="form-group">
+			<label class="col-sm-4">MerchantId</label>
+			<div class="col-sm-7">
+				<input class="form-control" type="text" name="voguePayMerchantId" value="<?php if($wo['system']['voguePayMerchantId'] != ''){ echo $wo['system']['voguePayMerchantId']; } ?>">
+				<p class="help-block">you voguepay key , no add nothing is for demo</p>
+			</div>
+	</div>
+    
+	<div class="mb20"><hr></div>
+	
+	<div class="form-group">
+		<label class="col-sm-4">Enable Stripe Payment Method</label>
+		<div class="col-sm-7">
+			<select class="form-control" name="ads_enable_stripe">
+			  <option <?php if($wo['system']['ads_enable_stripe'] == 1){ echo 'selected=""'; } ?> value="1">Yes</option>
+			  <option <?php if($wo['system']['ads_enable_stripe'] == 0){ echo 'selected=""'; } ?> value="0">No</option>
+			</select>
+			<p class="help-block">Option to Stripe paypal payment method</p>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-sm-4">Stripe Secret Key</label>
+		<div class="col-sm-7">
+			<input class="form-control" type="text" name="stripe_secret_key" value="<?php echo $wo['system']['stripe_secret_key']; ?>">
+			<p class="help-block">Option to set your stripe secret key</p>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-sm-4">Stripe Publishable Key</label>
+		<div class="col-sm-7">
+			<input class="form-control" type="text" name="stripe_publishable_key" value="<?php echo $wo['system']['stripe_publishable_key']; ?>">
+			<p class="help-block">Option to set your stripe publishable key</p>
+		</div>
+	</div>
+
+	<div class="body-header">
+	<button class="btn btn-success" type="submit"><?php echo $wo['lang']['plugin_save_changes']; ?></button>
+	</div>
+
+	<div class="row col-xs-12">
+	<?php /* success */ ?>
+	<div class="alert alert-success mb0 mt10 x-hidden" role="alert"></div>
+	<?php /* ssuccess */ ?>
+	<?php /* serror */ ?>
+	<div class="alert alert-danger mb0 mt10 x-hidden" role="alert"></div>
+	<?php /* serror */ ?>
+	</div>	
+</form>
+
+    </div>
+</div>                    
+</div>

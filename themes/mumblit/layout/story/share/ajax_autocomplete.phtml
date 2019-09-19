@@ -1,0 +1,12 @@
+<ul>
+    <?php foreach($users as $_user) { ?>
+    <li>
+        <div class="data-container row autocomplete-list clickable small js_share_add" data-uid="<?php echo $_user['id']; ?>" data-username="<?php echo $_user['fullname']; ?>">
+            <img class="data-avatar" src="<?php echo $wo['config']['site_url'].'/'.$_user['photo']; ?>" alt="<?php echo $_user['fullname']; ?> Profile Picture">
+            <div class="data-content" style="display: inline-block;">
+                <div><strong><?php echo $_user['fullname']; ?></strong></div>
+            </div>
+        </div>
+    </li>
+    <?php } ?>
+</ul>

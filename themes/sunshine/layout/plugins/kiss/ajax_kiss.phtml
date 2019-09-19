@@ -1,0 +1,43 @@
+<li class="feeds-item kiss kiss_<?php echo $kiss['user_id']; ?>" data-id="<?php echo $kiss['user_id']; ?>">
+   <div class="data-container">        
+		<a href="<?php echo $wo['config']['site_url'];?>/<?php echo $kiss['username']; ?>">
+			<img class="data-avatar" src="<?php echo $kiss['user_picture']; ?>" alt="<?php echo $kiss['username']; ?>" width="50">
+		</a>
+        <div class="data-content">
+		
+			<div class="pull-right flip delete_kiss">
+				<button type="button" class="close"><span>×</span></button>
+			</div>           
+			
+			<div class="kiss_sending pull-right flip x-hidden">
+				<?php echo $wo['lang']['plugin_kiss_gave_a_kiss']; ?>
+				<a href="<?php echo $wo['config']['site_url'];?>/<?php echo $kiss['username']; ?>"><?php echo $kiss['username']; ?></a>!
+			</div>
+			
+            <div class="pull-right flip">
+				<button type="button" class="btn btn-primary btn_kiss" data-id="<?php echo $kiss['user_id']; ?>">
+					<img src="<?php echo $wo['config']['site_url'];?>/assets/plugins/kiss/img/kiss2.png">
+					<span class="ml5">
+						<?php 
+						if($suggest == 0){
+							echo $wo['lang']['plugin_kiss_return_kiss'];
+						} else {
+							echo $wo['lang']['plugin_kiss_give_a_kiss'];
+						} ?>
+					</span>
+				</button>
+			</div>
+			
+            <div>
+                <span class="name js_user-popover"  data-uid="<?php echo $kiss['user_id']; ?>" data-type="user">
+                    <a href="<?php echo $wo['config']['site_url'];?>/<?php echo $kiss['username']; ?>"><?php echo $kiss['user_fullname']; ?></a>
+                </span>
+				<?php if($suggest == 0){ ?>
+					<div class="post-time"><a class="js_moment" data-time="<?php echo $kiss['time']; ?>"><?php echo $kiss['time']; ?></a></div>
+				<?php } ?>
+            </div>
+			
+        </div>
+		
+    </div>
+</li>

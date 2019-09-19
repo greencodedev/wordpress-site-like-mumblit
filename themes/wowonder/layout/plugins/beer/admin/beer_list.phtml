@@ -1,0 +1,67 @@
+<?php 
+	global $sqlConnect, $sub_view;
+	$beers = array(); 
+	$resource = $sqlConnect->query("SELECT * FROM beers");
+	while($row = $resource->fetch_assoc()){
+		$beers[] = $row;
+	}
+?>
+
+<div class="row col-sm-12">
+	<div class="panel panel-default">
+
+		<?php if($sub_view == ""){ ?> 
+			<div class="panel-heading">
+				<strong>Member</strong>
+			</div>
+			<div class="panel-body">
+				<small>List of beers</small>
+			</div>
+			
+			<div class="panel-body">
+			
+				<div class="row panel-body table-responsive">
+					<table class="table table-striped table-bordered table-hover js_dataTable">
+						<thead>
+							<tr>
+								<th>User</th>
+								<th>Owner</th>
+								<th>time</th>
+								<th>actions</th>
+							</tr>
+						</thead>
+						
+						<tbody class="beer_list_content">
+						
+							<?php foreach($beers as $beer){ ?>
+								<tr class="beer_tab" data-user_id="<?php echo $beer['user_id']; ?>" data-owner_id="<?php echo $beer['owner_id']; ?>">
+									<td><?php echo $beer['user_id']; ?></td>
+									<td><?php echo $beer['owner_id']; ?></td>
+									<td><?php echo Wo_Time_Elapsed_String($beer['beer_stamp']); ?></td>
+									<td><a class="admin-delete-beer-from-list" href="#" title="<?php echo $wo['lang']['delete']; ?>"><i class="fa fa-trash-o"></i></a></td>
+								</tr>
+							<?php }//f ?>						
+						
+						</tbody>
+					</table>
+				</div>
+							
+			</div>
+		<?php } ?>
+
+	</div>
+</div>
+
+<script>
+	$('body').on('click', '.admin-delete-beer-from-list', function(event){ event.preventDefault(); 
+		var self = $(this);
+		var user_id = self.closest('.beer_tab').attr('data-user_id');
+		var owner_id = self.closest('.beer_tab').attr('data-owner_id');
+		self.closest('.beer_tab').hide();
+		$.ajax({type: 'post',url: site_url+'/plugin_requests.php?f=admin_beer', data: {'task':'beer_delete', 'user_id':user_id, 'owner_id':owner_id}, cache : false, 
+					success: function(result){ 
+						self.closest('.beer_tab').remove();
+					}
+		});
+	});	
+</script>

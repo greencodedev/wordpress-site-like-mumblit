@@ -1,0 +1,83 @@
+<?php /* page content */ 
+
+$by = ( isset($_POST['by']) ? $_POST['by'] : ( isset($_GET['by']) ? $_GET['by'] : 'all' ) );
+
+$where = "";
+if ($by != 'all') { $where = " A.type = '{$by}' AND "; }
+$limit = "";
+//get ads lists
+$ads = Ads::get_ads_lists($limit, FALSE, FALSE, " A.id DESC ", $where."user_id='{$wo['user']['user_id']}' ");
+$active = $by;
+
+?>
+<div class="container mt20">
+		<div class="col-md-11">
+		
+			<?php /* left panel */ ?>
+				<div class="col-sm-12" style="padding:0px;"><?php include "ads_header.phtml"; ?></div>
+			<?php /* left panel */ ?>
+				
+		<?php /* content */?>
+		<div class="panel panel-default">
+    
+	<div class="panel-heading" style="padding-bottom: 0;border: none">
+        <ul class="nav nav-tabs">
+            <li class="<?php if($active == 'all'){ echo 'active'; } ?>"><a href="<?php echo $wo['config']['site_url']; ?>/index.php?link1=campaign&by=all"><?php echo $wo['lang']['plugin_ads_all']; ?></a></li>
+            <li class="<?php if($active == 'website'){ echo 'active'; } ?>"><a href="<?php echo $wo['config']['site_url']; ?>/index.php?link1=campaign&by=website"><?php echo $wo['lang']['plugin_ads_website']; ?></a></li>
+            <li class="<?php if($active == 'page'){ echo 'active'; } ?>"><a href="<?php echo $wo['config']['site_url']; ?>/index.php?link1=campaign&by=page"><?php echo $wo['lang']['plugin_ads_pages']; ?></a></li>
+            <li class="<?php if($active == 'post'){ echo 'active'; } ?>"><a href="<?php echo $wo['config']['site_url']; ?>/index.php?link1=campaign&by=post"><?php echo $wo['lang']['plugin_ads_posts']; ?></a></li>
+        </ul>
+    </div>
+
+
+
+<div class="panel-body with-table">
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered table-hover js_dataTable">
+                    <thead>
+                        <tr>
+                    <th><?php echo $wo['lang']['plugin_ads_campaign_name']; ?></th>
+                    <th class="hidden-xs"><?php echo $wo['lang']['plugin_ads_type']; ?></th>
+					<th class="hidden-xs"><?php echo $wo['lang']['plugin_ads_plan']; ?></th>
+                    <th class="hidden-xs"><?php echo $wo['lang']['plugin_ads_clicks']; ?></th>
+					<th class="hidden-xs"><?php echo $wo['lang']['plugin_ads_impressions']; ?></th>
+					<th class="hidden-xs"><?php echo $wo['lang']['plugin_ads_ctr']; ?></th>
+                    <th><?php echo $wo['lang']['plugin_ads_balance']; ?></th>
+                    <th><?php echo $wo['lang']['plugin_ads_status']; ?></th>
+                    <th><?php echo $wo['lang']['plugin_ads_action']; ?></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach($ads['ads'] as $ad){ ?>
+                    <tr class="list_ad" data-id="<?php echo $ad['id']; ?>">
+                        <td><?php echo truncate($ad['campaign_name'], 15, TRUE); ?></td>
+                        <td class="hidden-xs"><?php echo $ad['type']; ?></td>
+						<td class="hidden-xs"><?php echo $ad['plan_type']; ?></td>
+                        <td class="hidden-xs"><strong><?php echo $ad['clicks']; ?></strong></td>
+						<td class="hidden-xs"><strong><?php echo $ad['impression_stats']; ?></strong></td>
+						<td class="hidden-xs"><strong><?php echo $ad['ctr']; ?></strong></td>
+                        <td><?php echo $ad['quantity']; ?></td>
+                        <td><?php if($ad['status'] == 1){ echo $wo['lang']['plugin_ads_active']; }else{ echo $wo['lang']['plugin_ads_inactive']; ?><?php } //iF ?>	</td>
+                        <td>
+            <a href="<?php echo $wo['config']['site_url']; ?>/index.php?link1=campaign_edit&ad_id=<?php echo $ad['id']; ?>" data-toggle="tooltip" data-placement="top" title="<?php echo $wo['lang']['plugin_ads_edit']; ?>" class="btn btn-xs btn-primary"><i class="fa fa-pencil"></i></a>
+            <a data-warning="<?php echo $wo['lang']['plugin_ads_delete-ad_warning']; ?>" data-id="<?php echo $ad['id']; ?>" data-toggle="tooltip" data-placement="top" title="<?php echo $wo['lang']['plugin_ads_delete']; ?>" class="delete-ads-from-list btn btn-xs btn-danger"><i class="fa fa-trash-o"></i></a>
+            <?php if($ad['paid'] != 1){ ?>
+            <a href="<?php echo $wo['config']['site_url']; ?>/index.php?link1=campaign_activate&ad_id=<?php echo $ad['id']; ?>" data-toggle="tooltip" data-placement="top" title="<?php echo $wo['lang']['plugin_ads_activate']; ?>" class="btn btn-xs btn-success"><i class="fa fa-usd"></i></a>
+            <?php }else if($ad['quantity'] == 0){ ?>
+            <a href="<?php echo $wo['config']['site_url']; ?>/index.php?link1=campaign_activate&ad_id=<?php echo $ad['id']; ?>" data-toggle="tooltip" data-placement="top" title="<?php echo $wo['lang']['plugin_ads_re_activate']; ?>" class="btn btn-xs btn-success"><i class="fa fa-minus-circle"></i></a>
+            <?php } //iF ?>	
+                        </td>
+                    </tr>
+<?php } //F ?>			
+                    </tbody>
+                </table>
+            </div>
+        </div>
+</div>
+		<?php /* content */ ?>
+		
+		
+		</div>
+		<?php /* left panel */ ?>
+</div>
+<?php /* page content */ ?>

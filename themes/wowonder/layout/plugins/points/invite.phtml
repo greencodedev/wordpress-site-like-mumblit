@@ -1,0 +1,136 @@
+<?php if($wo['system']['userpoints_invitation'] == 1 || $wo['system']['userpoints_refer'] == 1){ ?>
+<?php
+	global $sqlConnect;
+	//get invites
+	$resource = $sqlConnect->query("SELECT * FROM invites WHERE invite_user_id='{$wo['user']['user_id']}' ORDER BY invite_date DESC");
+	$invites_total = $resource->num_rows;
+	 
+	$invites = array();
+	while($row = $resource->fetch_assoc()){
+		  $row['date'] = date('Y-m-d H:i:s', $row['invite_date']);
+		  $invites[] = $row;
+	}
+?>
+
+  	   		<ul class="nav nav-pills nav-justified thumbnail invite_options">
+                <?php if($wo['system']['userpoints_invitation'] == 1){ ?>
+				<li class="active"><a href="" data-id="1"><p class="list-group-item-text"><?php echo $wo['lang']['plugin_point_invite']; ?></p></a></li>
+                <li class=""><a href="" data-id="2"><p class="list-group-item-text"><?php echo $wo['lang']['plugin_point_pending_invite']; ?></p></a></li>
+				<?php 
+				}
+				if($wo['system']['userpoints_refer'] == 1){ ?>
+                <li class="<?php if($wo['system']['userpoints_invitation'] == 0){ ?>active<?php } ?>"><a href="" data-id="3"><p class="list-group-item-text"><?php echo $wo['lang']['plugin_point_referal_link']; ?></p></a></li>
+				<?php } ?>
+            </ul>
+			<?php if($wo['system']['userpoints_invitation'] == 1){ ?>
+ <?php /* box 1 */ ?>
+                <div class="list-group panel-default invite_content" id="invite-1">
+                    <div class="list-group-item light clearfix mt5">
+                        <div class="col-sm-7">
+                            <strong><?php echo $wo['lang']['plugin_point_invite_friends']; ?></strong> <br />
+						</div>	
+						<div class="pull-right"><?php echo $wo['lang']['plugin_point_you_have']; ?> <strong class="total_invites"><?php echo $wo['user']['user_invitesleft']; ?></strong> <?php $wo['lang']['plugin_point_invitations']; ?></div>                        
+                    </div>
+                    <div class="panel-body">
+                        <small><?php echo $wo['lang']['plugin_point_invite_friends_to_join']; ?>.</small>
+			<form class="js_ajax_form_invite" data-url="?f=points&s=invite" method='post'>
+				<div class="form-group"> 
+				<h6><label for="invite_emails"><?php echo $wo['lang']['plugin_point_to']; ?>: </label></h6>			
+				<textarea name='invite_emails' rows='1' class="form-control"></textarea>
+				</div>			
+				<div class="form-group"> 
+				<h6><label for="invite_message"><?php echo $wo['lang']['plugin_point_message']; ?>: </label></h6>			
+				<textarea name='invite_message' rows='3' class="form-control" maxlength="500"><?php if(!empty($invite_message)){ echo $invite_message; } ?></textarea>
+				<small class="form-description"><?php echo $wo['lang']['plugin_point_type_message']; ?>.</small>
+				</div>			
+				<div class="body-header">
+				<input class="btn btn-success no_radius form-control" type="submit" value="<?php echo $wo['lang']['plugin_point_send_invitation']; ?>">
+				</div>
+	
+				<div class="row col-xs-12">
+					<?php /* success */ ?>
+					<div class="alert alert-success mb0 mt10 x-hidden" role="alert"></div>
+					<?php /* error */ ?>
+					<div class="alert alert-danger mb0 mt10 x-hidden" role="alert"></div>
+				</div>	
+				<input type='hidden' name='task' value='doinvite'>
+			</form>
+						
+                    </div>
+                </div>
+        <?php /* box 1 */ ?>
+
+<?php /* box 2 */ ?>
+<div class="list-group panel-default x-hidden invite_content" id="invite-2">
+<div class="list-group-item light clearfix mt5"><div class="col-sm-7"><strong><?php echo $wo['lang']['plugin_point_pending_invites']; ?></strong></div></div>
+                    <div class="panel-body">
+                     <small><?php echo $wo['lang']['plugin_point_see_status_invitations']; ?>.</small>
+<div class="row mt20">			
+	<?php if(count($invites) == 0){ ?>
+		<div style="text-align:center;"><?php echo $wo['lang']['plugin_point_havent_pending_invites']; ?>.</div>
+			<?php } else { ?> 
+		<div class="panel-body table-responsive">
+			<table class="table table-striped table-bordered table-hover js_dataTable">
+				<thead>
+				<tr>
+					<th><?php echo $wo['lang']['plugin_point_email']; ?></th>
+					<th><?php echo $wo['lang']['plugin_point_code']; ?></th>
+					<th><?php echo $wo['lang']['plugin_point_date']; ?></th>
+					<th><?php echo $wo['lang']['plugin_point_action']; ?></th>                
+				</tr>
+				</thead>
+	
+				<tbody class="ads_list_content">
+	<?php foreach($invites as $inv){ ?> 
+				<tr data-id="<?php echo $inv['invite_id']; ?>">			
+					<td><?php echo truncate($inv['invite_email']); ?></td>
+					<td><?php echo $inv['invite_code']; ?></td>
+					<td class="post-time"><a class="js_moment" data-time="<?php echo $inv['date']; ?>"><?php echo $inv['date']; ?></a></td>	
+					<td>
+						<a class="invite_delete" data-toggle="tooltip" title="<?php echo $wo['lang']['delete']; ?>"><i class="fa fa-trash-o"></i></a> | <a class="re_send_invite" data-toggle="tooltip" title="<?php echo $wo['lang']['plugin_point_send_new_invite']; ?>"><i class="fa fa-fw fa-share"></i></a>
+					</td>	
+				</tr>
+	<?php } ?>
+			   </tbody>
+			</table>
+			<div class="row col-xs-12">
+			<?php /* success */ ?>
+			<div class="alert alert-success mb0 mt10 x-hidden" role="alert"></div>
+			<?php /* error */ ?>
+			<div class="alert alert-danger mb0 mt10 x-hidden" role="alert"></div>
+			</div>
+		</div>					
+			<?php } ?>
+		</div>		 
+</div>
+</div>
+<?php /* box 2 */ ?>	
+<?php } ?>
+
+<?php if($wo['system']['userpoints_refer'] == 1){ ?>
+<?php /* box 3 */ ?>
+<div class="list-group panel-default<?php if($wo['system']['userpoints_invitation'] == 1){ ?>x-hidden<?php } ?> invite_content" id="invite-3">
+<div class="list-group-item light clearfix mt5"><div class="col-sm-7"><strong><?php echo $wo['lang']['plugin_point_my_referral_link']; ?></strong></div></div>
+                    <div class="panel-body">
+                     <small><?php echo $wo['lang']['plugin_point_you_can_send_invitation']; ?>.</small>
+<div class="mt20">
+<textarea class="form-control" onclick="javascript:this.focus();this.select();"><?php echo $wo['config']['site_url']; ?>/register?signup_referer=<?php echo $wo['user']['username']; ?></textarea>
+</div>
+</div>
+</div>
+<?php /* box 3 */ ?>
+<?php } ?>
+<?php } else { ?>
+<?php /* box 4 */ ?>
+<div class="list-group panel-default">
+	<div class="list-group-item light clearfix mt5">
+		<div class="col-sm-7">
+			<strong>Notification error</strong>
+		</div>
+	</div>
+	<div class="panel-body">
+		Sorry, the invitations and refers was disable for autor. Try more late.
+	</div>
+</div>
+<?php /* box 4 */ ?>
+<?php } ?>	

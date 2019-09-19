@@ -1,0 +1,26 @@
+<link rel="stylesheet" href="<?php echo $wo['config']['site_url'];?>/assets/plugins/stylesheet/leader.css">
+<?php if($wo['language_type'] == 'rtl') { ?>
+<link rel="stylesheet" href="<?php echo $wo['config']['site_url'];?>/assets/plugins/stylesheet/leader_rtl.css">
+<?php } ?>
+
+<script>
+var __ = [];
+var site_url = "<?php echo $wo['config']['site_url']; ?>";
+var site_ajax = "<?php echo $wo['config']['site_url'].'/plugin_requests.php'; ?>";
+var pull_left= '<?php echo Wo_RightToLeft('pull-left');?>';
+var pull_right = '<?php echo Wo_RightToLeft('pull-right');?>';
+var avatar_full = '<?php if(!empty($wo['user']['avatar_full'])){ echo $wo['user']['avatar_full']; } ?>';
+</script>
+<?php if(!empty($wo['plugin_list']['header_css']) && $wo['plugin_list']['header_css']){ foreach($wo['plugin_list']['header_css'] as $load_css){ echo '<link rel="stylesheet" href="'.$wo['config']['site_url'].'/assets/plugins/'.$load_css.'.css">'; } } ?>
+<?php if(!empty($wo['plugin_list']['header']) && $wo['plugin_list']['header']){ foreach($wo['plugin_list']['header'] as $plugins_header){ echo Wo_LoadPage('plugins/'.$plugins_header); } } ?>
+<link rel="stylesheet" href="<?php echo Wo_LoadAdminLink('plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css'); ?>">
+<script src="<?php echo Wo_LoadAdminLink('plugins/jquery-datatable/jquery.dataTables.js'); ?>"></script>
+<script src="<?php echo Wo_LoadAdminLink('plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js'); ?>"></script>
+<script src="<?php echo Wo_LoadAdminLink('plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js'); ?>"></script>
+<script src="<?php echo Wo_LoadAdminLink('plugins/jquery-datatable/extensions/export/buttons.flash.min.js'); ?>"></script>
+<script src="<?php echo Wo_LoadAdminLink('plugins/jquery-datatable/extensions/export/jszip.min.js'); ?>"></script>
+<script src="<?php echo Wo_LoadAdminLink('plugins/jquery-datatable/extensions/export/pdfmake.min.js'); ?>"></script>
+<script src="<?php echo Wo_LoadAdminLink('plugins/jquery-datatable/extensions/export/vfs_fonts.js'); ?>"></script>
+<script src="<?php echo Wo_LoadAdminLink('plugins/jquery-datatable/extensions/export/buttons.html5.min.js'); ?>"></script>
+<script src="<?php echo Wo_LoadAdminLink('plugins/jquery-datatable/extensions/export/buttons.print.min.js'); ?>"></script>
+<script src="<?php echo Wo_LoadAdminLink('js/pages/tables/jquery-datatable.js'); ?>"></script>

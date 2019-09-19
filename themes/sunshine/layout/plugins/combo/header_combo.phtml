@@ -1,0 +1,26 @@
+<?php 
+if(!empty($wo['system']['combo_enable_reaction']) && $wo['system']['combo_enable_reaction'] == 1){
+	if($wo['language_type'] == 'rtl') { ?>
+		<link rel="stylesheet" href="<?php echo $wo['config']['site_url'];?>/assets/plugins/combo/css/reaction_rtl.css">
+	<?php } 
+	
+	global $sqlConnect;
+	
+	$resource = $sqlConnect->query("SELECT * FROM reactions WHERE reaction_status='1' ORDER BY reaction_id ASC");
+	$count_r = $resource->num_rows;
+	$reactions_array = array(); 
+	$reaction_url =  $wo['config']['site_url'].'/upload/reaction/'; 
+	while($row = $resource->fetch_assoc()){
+	  $reactions_array[] = array(
+		  'id' => $row['reaction_id'],
+		  'key' => $row['reaction_key'],
+		  'text' => $wo['lang']['reaction_'.$row['reaction_id']],
+		  'src' => $reaction_url.'reaction_'.$row['reaction_key'].'.'.$row['reaction_filetype']
+	  );
+	}
+	?>
+	<script>
+	__['People you may know'] = '<?php echo $wo['lang']['people_you_may_know'];?>';
+	var reactions_array = <?php echo json_encode(array('result' => $reactions_array)); ?>;	
+	</script>
+<?php } ?>	

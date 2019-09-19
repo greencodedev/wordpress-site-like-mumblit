@@ -1,0 +1,23 @@
+<?php
+if(!empty($wo['plugin_list']['plugin_head_menu_down']) && count($wo['plugin_list']['plugin_head_menu_down']) > 0 ){
+	foreach($wo['plugin_list']['plugin_head_menu_down'] as $head_down){ ?>
+	<li <?php if(!empty($head_down['class'])){ echo 'class="'.$head_down['class'].'"'; } ?> >
+		<a href="<?php echo $wo['config']['site_url']; ?>/index.php?link1=<?php if(!empty($head_down['url']) && $head_down['url'] != ''){ echo $head_down['url']; } else{ echo $head_down['link']; } ?>"><?php echo $head_down['title']; ?></a>
+	</li>
+<?php
+	}
+}
+?>
+<?php 
+if(Wo_IsAdmin() || Wo_IsModerator()) {
+	if(count($wo['system']) != 0) { ?>
+		<li>
+			<a href="<?php echo $wo['config']['site_url'].'/index.php?link1=admin-plugins'; ?>">
+				<?php echo $wo['lang']['plugin_plugins']; ?>
+			</a>
+		</li>
+<?php 
+	}
+}
+?>
+<li><hr></li>

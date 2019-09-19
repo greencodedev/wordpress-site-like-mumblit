@@ -1,0 +1,9 @@
+<?php if(!empty($wo['plugin_list']['plugin_wall_menu']) && $wo['plugin_list']['plugin_wall_menu']){ 
+   foreach($wo['plugin_list']['plugin_wall_menu'] as $pwm){ ?>
+   <li class="hidden-xs">
+        <span class="js_publisher_plugin_tab" data-tab="<?php echo $pwm['id']; ?>">
+          <i class="fa <?php echo $pwm['icon']; ?> fa-fw"></i> <?php echo $pwm['text']; ?>
+        </span>
+   </li>
+	<?php }
+	     } ?>	

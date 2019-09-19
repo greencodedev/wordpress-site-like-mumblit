@@ -1,0 +1,43 @@
+         <div class="share_box">
+             <?php /* share in */ ?>
+                <div class="btn-group" data-toggle="tooltip" data-placement="top" data-value="wall" title='<?php echo $wo['lang']['plugin_share_shared_in_wall']; ?>'>
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                        <i class="btn-group-icon fa fa-pencil"></i> <span class="btn-group-text hidden-xs"><?php echo $wo['lang']['plugin_share_shared_in_you_wall']; ?></span> <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <a href="#" data-title='<?php echo $wo['lang']['plugin_share_shared_in_wall']; ?>' data-value="wall" data-placeholder="" data-id="<?php echo $wo['user']['user_id']; ?>">
+                                <i class="fa fa-pencil"></i> <?php echo $wo['lang']['plugin_share_shared_in_you_wall']; ?>
+                            </a>
+                        </li>
+						<li>
+                            <a href="#" data-title='<?php echo $wo['lang']['plugin_share_shared_in_wall_friend']; ?>' data-value="friend" data-placeholder="<?php echo $wo['lang']['plugin_share_name_friend']; ?>" data-id="">
+                                <i class="fa fa-user"></i> <?php echo $wo['lang']['plugin_share_shared_in_you_wall_friend']; ?>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" data-title='<?php echo $wo['lang']['plugin_share_shared_in_group']; ?>' data-value="group" data-placeholder="<?php echo $wo['lang']['plugin_share_name_group']; ?>" data-id="">
+                                <i class="fa fa-users"></i> <?php echo $wo['lang']['plugin_share_shared_in_you_group']; ?>
+                            </a>
+                        </li>
+						<?php /**/ ?>
+						<li>
+                                <a href="#" data-title='<?php echo $wo['lang']['plugin_share_shared_in_event']; ?>' data-value="event" data-placeholder="<?php echo $wo['lang']['plugin_share_name_event']; ?>" data-id="">
+                                    <i class="fa fa-calendar"></i> <?php echo $wo['lang']['plugin_share_shared_in_you_event']; ?>
+                                </a>
+                        </li>
+						
+                        <li>
+                                <a href="#" data-title='<?php echo $wo['lang']['plugin_share_shared_in_page']; ?>' data-value="page" data-placeholder="<?php echo $wo['lang']['plugin_share_name_page']; ?>" data-id="">
+                                    <i class="fa fa-flag"></i> <?php echo $wo['lang']['plugin_share_shared_in_you_page']; ?>
+                                </a>
+                        </li>
+                    </ul>
+                </div>
+             <?php /* share in */ ?>
+			 <div class="share_option x-hidden form-group mt10">
+			 <input type="hidden" class="share_option_type" name="share_option_type" value="wall">
+			 <input type="hidden" class="share_option_id" name="share_option_id" value="<?php echo $wo['user']['user_id']; ?>">
+			 <input type="text" class="form-control share_option_name" name="share_option_name" value="" autocomplete="off">
+			 </div>
+	    </div> 

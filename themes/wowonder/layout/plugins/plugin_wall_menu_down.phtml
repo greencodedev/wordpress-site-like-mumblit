@@ -1,0 +1,17 @@
+<?php if(!empty($wo['plugin_list']['publiser_footer'])){ 
+  foreach($wo['plugin_list']['publiser_footer'] as $pfoo){ ?>	
+		<div class="<?php echo Wo_RightToLeft('pull-left');?>">
+            <div class="poster-left-buttons">
+               <div class="input-group">
+                  <span class="btn btn-file js_<?php echo $pfoo['id']; ?>">
+					<?php if(!empty($pfoo['icon'])){ ?>
+						<i class="fa <?php echo $pfoo['icon']; ?>" <?php if(!empty($pfoo['color'])){ echo 'style="color:#'.$pfoo['color'].'; font-size:16px;"'; } ?>></i>
+				  <?php }else{ ?>
+						<img src="<?php echo $wo['config']['site_url']; ?>/assets/plugins/img/<?php echo $pfoo['img']; ?>" class="fa fa-fw"" />
+					<?php } ?> 
+                  </span>
+               </div>
+            </div>
+         </div>
+   <?php }
+	     } ?>

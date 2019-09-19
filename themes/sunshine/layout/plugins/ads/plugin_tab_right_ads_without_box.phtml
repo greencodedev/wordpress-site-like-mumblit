@@ -1,0 +1,23 @@
+<div class="pagelet_ego_ad pagelet_ego <?php if(!empty($wo['plugin_list']['ego_in_home'])){ echo 'ego_in_home'; } else { echo 'ego_in_profile'; }//fixed_elem ?> hidden-xs" id="rightColumn">
+<div class="pagelet_ego_head"><a href="<?php echo $wo['config']['site_url']; ?>/index.php?link1=campaign_create"><?php echo $wo['lang']['plugin_ads_sponsored']; ?> <div class="pull-right"><i class="fa fa-bullhorn fa-fw  "></i></div></a></div>
+
+<?php 
+$where = "";
+ // MAKE SURE TYPE
+ $where .= " A.type != 'post' "; 
+ // MAKE SURE  AD IS NOT PAID
+ $where .= " AND A.paid='1' ";
+ // MAKE SURE AD IS NOT PAUSED  
+ $where .= " AND A.status='1' ";  
+ // MAKE SURE EXIST QUANTITY  
+ $where .= " AND A.quantity>'0' ";
+ //IN NEXT VERSION CHECK COUNTRY
+ //if($wo['loggedin']){ $where .= " AND ( target_location = '{$wo['user']['country_id']}' OR target_location = 'all')";  }
+ // MAKE SURE IS GENDER
+ if($wo['loggedin']){  $where .= " AND ( target_gender = '{$wo['user']['gender']}' OR target_gender = 'all')"; }
+ $nowtime = time();
+ $where .= " AND date_start<'{$nowtime}' AND (date_end>'{$nowtime}' OR date_end='0') ";
+
+$ads_list = Ads::get_ads_lists($wo['system']['ads_no_right_column'], FALSE, FALSE, " RAND() ", $where );
+ foreach($ads_list['ads'] as $ad){ include "ads_random_without_box.phtml"; } ?>
+ </div>

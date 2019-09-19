@@ -1,0 +1,12 @@
+<wpml-config>
+    <custom-types>
+        <custom-type translate="1">st_faq</custom-type>
+    </custom-types>    
+    <admin-texts>
+        <key name="knowhow">
+            <key name="st_search_text" />
+            <key name="st_faq_slug" />
+            <key name="st_footer_copyright" />
+        </key>
+    </admin-texts>      
+</wpml-config>

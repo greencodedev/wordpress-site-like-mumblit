@@ -1,0 +1,17 @@
+<?php if(!empty($wo['plugin_list']['plugin_wall_menu'])){ 
+  foreach($wo['plugin_list']['plugin_wall_menu'] as $pwm){ ?>	
+		<div class="row <?php echo Wo_RightToLeft('pull-left');?>">
+            <div class="poster-left-buttons">
+               <div class="input-group">
+                  <span class="btn btn-default btn-file js_<?php echo $pwm['id']; ?>">
+					<?php if(!empty($pwm['icon'])){ ?>
+						<i class="fa <?php echo $pwm['icon']; ?>"></i>
+				  <?php }else{ ?>
+						<img src="<?php echo $wo['config']['site_url']; ?>/assets/plugins/<?php echo $pwm['img']; ?>" class="fa fa-fw"" />
+					<?php } ?> 
+                  </span>
+               </div>
+            </div>
+         </div>
+   <?php }
+	     } ?>

@@ -1,0 +1,16 @@
+<div class="col-sm-14 panel" id="pre-website-ads-container">
+    <div class="panel-body">
+        <form id="ad-page-pre-form"  action="" method="post">
+            <select class="form-control" id="page-selection">
+                <?php foreach($pages as $page){ ?>
+                    <option value="<?php echo $page['page_id']; ?>"><?php echo $page['page_name']; ?></option>
+                    <?php } ?>
+            </select>
+            <br/>
+            <a href="" id="ads-page-continue-button" class="btn btn-success btn-sm"><?php echo $wo['lang']['plugin_ads_continue']; ?></a>
+
+        </form>
+    </div>
+</div>
+
+<div class="row page-ads-add-container"> <?php //include "ajax_ads_get_page.phtml"; ?> </div>

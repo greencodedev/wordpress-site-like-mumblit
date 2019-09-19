@@ -1,0 +1,47 @@
+<div id="posts">
+
+<?php
+          if ($wo['config']['pro'] == 1) {
+          $promoted = $wo['story'] = Wo_GetPromotedPost();
+          if (count($promoted) > 0) {
+          $wo['story']['post_is_promoted'] = 1;
+         ?>
+		 <style>
+		 .promoted-icon {
+    opacity: 0.5;
+    filter: alpha(opacity=40);
+}
+
+.promoted-icon:hover {
+    opacity: 1.0;
+    filter: alpha(opacity=100);
+}
+		 </style>
+         <div class="promoted-post">
+           <a href="https://www.mumblit.com/boosted-posts"><img class="promoted-icon" src="<?php echo $wo['config']['theme_url'] . '/img/promote.png';?>" data-toggle="tooltip" title="Click to Promote a Mumbl!"></a>
+           <?php echo Wo_LoadPage('story/content'); ?>
+         </div>
+         <?php } } ?>
+	<?php
+		$stories = Wo_GetPosts(array('limit' => 10, 'publisher_id' => 0));
+		if (count($stories) <= 0) {
+			echo Wo_LoadPage('story/no-stories');
+		} else {
+			foreach ($stories as $wo['story']) {
+				echo Wo_LoadPage('story/content');
+			}
+		}
+		?>
+</div>
+<?php if (count($stories) > 0) { ?>
+<div class="load-more pointer" id="load-more-posts" onclick="Wo_GetMorePosts();">
+	<span class="btn btn-default">
+		<i class="fa fa-chevron-circle-down progress-icon" data-icon="chevron-circle-down"></i> <?php echo $wo['lang']['load_more_posts'];?>
+	</span>
+</div>
+<?php } ?>
+<!-- .load-more pointer -->
+<div id="load-more-filter">
+	<span class="filter-by-more hidden" data-filter-by="all"></span>
+</div>
+<!-- #load-more-filter -->

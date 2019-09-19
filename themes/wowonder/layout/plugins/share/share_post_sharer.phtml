@@ -1,0 +1,772 @@
+<form action="<?php echo $wo['config']['site_url'];?>/plugin_requests.php?f=share_new_post" method="post" class="post share_publisher_box form-horizontal">
+
+<?php include "share_position.phtml"; ?>				
+
+<div class="share_post publisher-box post" data-id="<?php echo $wo['story']['id']; ?>" data-handle="
+<?php if($wo['story']['page_id'] != 0){ echo 'page'; $wo['page'] = 'page'; } else if($wo['story']['group_id'] != 0){ echo 'group'; $wo['page'] = 'group'; } else { echo 'user'; $wo['page'] = 'user'; } ?>">
+
+	<div id="post-textarea">
+         <i class="fa fa-spinner fa-spin" id="loading_indicator"></i>
+         <textarea onkeyup="textAreaAdjust(this, 70)" onclick="Wo_ShowPosInfo();" name="postText" class="form-control postText ui-autocomplete-input PostTextShare" cols="10" rows="3" placeholder="<?php echo $wo['lang']['publisher_box_placeholder']; ?>" style="height: 75px;" dir="auto" autocomplete="off"></textarea> 
+    </div>
+
+	<div class="clearfix">
+    
+    <?php /* post */ ?>
+    <div class="post" data-id="<?php echo $wo['story']['id']; ?>" style="max-height: 200px; padding:10px; overflow: scroll; overflow-x: hidden; position: relative;">
+
+        <?php /* post body */ ?>
+        <div class="post-body">
+            <div class="post-container">
+			<div class="post" id="post-<?php echo $wo['story']['id']; ?>" data-post-id="<?php echo $wo['story']['id'];?>">
+						
+			<?php /* plugin start */ ?>
+			
+    <div class="panel panel-white panel-shadow">
+      <div class="post-heading">
+        <div class="<?php echo Wo_RightToLeft('pull-left');?> image">
+          <a href="<?php echo $wo['story']['publisher']['url']; ?>" data-ajax="?link1=timeline&u=<?php echo $wo['story']['publisher']['username']?>">
+          <img src="<?php echo $wo['story']['publisher']['avatar']; ?>" id="updateImage-<?php echo $wo['story']['publisher']['user_id']?>" class="avatar" alt="<?php echo $wo['story']['publisher']['name']; ?> profile picture">
+          </a>
+        </div>
+		
+	<?php /* plugin content */ ?>
+
+        <div class="meta">
+          <div class="title h5">
+            <span class="user-popover" data-type="<?php echo $wo['story']['publisher']['type']; ?>" data-id="<?php echo $wo['story']['publisher']['id']; ?>">
+
+              <a href="<?php echo $wo['story']['publisher']['url']; ?>" data-ajax="?link1=timeline&u=<?php echo $wo['story']['publisher']['username']; ?>"><b><?php echo $wo['story']['publisher']['name']; ?></b></a>
+              <?php if($wo['story']['publisher']['verified'] == 1) { ?>
+                <span class="verified-color">
+                <i class="fa fa-check-circle fa-fw" title="<?php echo $wo['lang']['verified_user'];?>" data-toggle="tooltip"></i>
+                </span>
+              <?php } ?>
+              
+            
+            </span>
+            <?php if (isset($wo['story']['publisher']['is_pro'])) { 
+              if(Wo_IsUserPro($wo['story']['publisher']['is_pro']) === true) { ?>
+            <?php 
+            $user_pro_type = Wo_GetUserProType($wo['story']['publisher']['pro_type']);
+            ?>
+            <span style="color:<?php echo $user_pro_type['color_name'];?>"><i class="fa fa-<?php echo $user_pro_type['icon'];?> fa-fw" title="<?php echo $user_pro_type['type_name'];?>" data-toggle="tooltip"></i></span>
+            <?php } } ?>
+
+            <?php if ($wo['story']['shared_from'] && is_array($wo['story']['shared_from'])): ?>
+              <span class="user-popover" data-type="<?php echo $wo['story']['shared_from']['type']; ?>" data-id="<?php echo $wo['story']['shared_from']['id']; ?>">         
+                    <span><?php echo strtolower($wo['lang']['shared']); ?></span> 
+                    <a href="<?php echo $wo['story']['shared_from']['url']; ?>" class="pointer no_decor" data-ajax="?link1=timeline&u=<?php echo $wo['story']['shared_from']['username']; ?>"><b><?php echo $wo['story']['shared_from']['name']; ?></b></a>
+                    <?php if($wo['story']['shared_from']['verified'] == 1) { ?>
+                    <span class="verified-color">
+                    <i class="fa fa-check-circle fa-fw" title="<?php echo $wo['lang']['verified_user'];?>" data-toggle="tooltip"></i>
+                    </span>
+              <?php } ?>
+              </span>
+            <?php endif; ?>
+            <?php if ($wo['story']['shared_from'] && is_array($wo['story']['shared_from'])): ?>
+            <span>  
+              <a href="<?php echo $wo['story']['post_url']; ?>" class="pointer"><span style="color: #666;"><?php echo strtolower($wo['lang']['post']); ?></span></a>
+            </span>
+            <?php endif; ?>
+
+          
+
+            <?php if ($wo['story']['recipient_exists'] == true) {  ?>
+            <i class="fa fa-arrow-right"></i>
+            <span class="user-popover" data-type="<?php echo $wo['story']['recipient']['type']; ?>" data-id='<?php echo $wo['story']['recipient']['id']; ?>'>
+            <a href="<?php echo $wo['story']['recipient']['url']; ?>" data-ajax="?link1=timeline&u=<?php echo $wo['story']['recipient']['username']; ?>">
+            <b>
+            <?php echo $wo['story']['recipient']['name']; ?>
+            </b>
+            </a>
+            <?php if($wo['story']['recipient']['verified'] == 1) { ?> <span class="verified-color"><i class="fa fa-check-circle" title="<?php echo $wo['lang']['verified_user'];?>"></i></span>
+            <?php } ?>
+            </span>
+            <?php } ?>
+
+            <?php if (!empty($wo['story']['page_event_id'])) {?>
+            <small class="small-text"> <?php echo $wo['lang']['created_new_event'] ?></small>
+            <?php } ?>
+            <?php if (!empty($wo['story']['event_id']) && $wo['page'] != 'events') {  ?>
+            <i class="fa fa-arrow-right"></i> <a href="<?php echo $wo['story']['event']['url']; ?>" data-ajax="?link1=show-event&eid=<?php echo $wo['story']['event']['id']; ?>"><b><?php echo $wo['story']['event']['name']; ?></b></a>
+            <?php } ?>
+            <?php if ($wo['story']['group_recipient_exists'] == true && $wo['page'] != 'group') {  ?>
+            <i class="fa fa-arrow-right"></i>
+            <span class="user-popover" data-type="<?php echo $wo['story']['group_recipient']['type']; ?>" data-id='<?php echo $wo['story']['group_recipient']['id']; ?>'>
+            <a href="<?php echo $wo['story']['group_recipient']['url']; ?>" data-ajax="?link1=timeline&u=<?php echo $wo['story']['group_recipient']['username']; ?>">
+            <b><?php echo $wo['story']['group_recipient']['name']; ?></b>
+            </a>
+            </span>
+            <?php } ?>
+            <?php if (!empty($wo['story']['album_name']) && empty($wo['story']['shared_from'])) {  ?>
+            <small class="small-text"><?php echo $wo['lang']['added_new_photos_to'];?> <b><a href="<?php echo $wo['story']['url']; ?>" data-ajax="?link1=post&id=<?php echo $wo['story']['id'];?>"><?php echo $wo['story']['album_name']; ?></a></b></small>
+            <?php } ?>
+            <?php if (!empty($wo['story']['product_id']) && empty($wo['story']['shared_from'])) {  ?>
+            <small class="small-text"><?php echo $wo['lang']['added_new_product_for_sell']; ?></small>
+            <?php } ?>
+            <?php if (!empty($wo['story']['blog_id'])  && empty($wo['story']['shared_from'])) {  ?>
+            <small class="small-text"><?php echo $wo['lang']['created_new_blog'] ?></small>
+            <?php } ?>
+            <?php if (empty($wo['story']['shared_from'])): ?>
+              <small class="small-text">
+                <?php 
+                  if($wo['story']['postType'] == 'profile_picture') { 
+                     $changed_profile_pic_lang = $wo['lang']['changed_profile_picture_male'];
+                     if ($wo['story']['publisher']['gender'] == 'female') {
+                        $changed_profile_pic_lang = $wo['lang']['changed_profile_picture_female'];
+                     } else {
+                        $changed_profile_pic_lang = $wo['lang']['changed_profile_picture_male'];
+                     }
+                     echo $changed_profile_pic_lang;
+                  } 
+                  if($wo['story']['postType'] == 'profile_cover_picture') { 
+                     $changed_profile_cover_pic_lang = $wo['lang']['changed_profile_cover_picture_male'];
+                     if ($wo['story']['publisher']['gender'] == 'female') {
+                        $changed_profile_cover_pic_lang = $wo['lang']['changed_profile_cover_picture_female'];
+                     } else {
+                        $changed_profile_cover_pic_lang = $wo['lang']['changed_profile_cover_picture_male'];
+                     }
+                     echo $changed_profile_cover_pic_lang;
+                  } 
+                  ?>
+              </small>
+            <?php endif; ?>
+            <?php if($wo['story']['via_type'] == 'share') {  ?>
+            <small style="color:#a33e40;"><?php echo $wo['story']['via']['name'];?> <?php echo $wo['lang']['shared_this_post'];?></small>
+            <?php }  ?>
+            <?php /* plugin share */
+			if($wo['story']['postType'] == 'share') {  ?>
+            <small style="color:#a33e40;"><?php echo $wo['lang']['shared_this_post'];?></small>
+            <?php } /* plugin share */ 
+          $extra_exists = 0;
+          if (!empty($wo['story']['postFeeling'])) {
+            if (empty($changed_profile_pic_lang) 
+              && $wo['story']['via_type'] != 'share'
+              && $wo['story']['group_recipient_exists'] != true
+              && empty($wo['story']['album_name'])) {
+          ?>
+          <span class="feeling-text"> <?php echo $wo['lang']['is_feeling'];?> <i class="twa-lg twa twa-<?php echo $wo['story']['postFeelingIcon'];?>"></i> <?php echo $wo['lang'][$wo['story']['postFeeling']];?></span>
+          <?php
+          } else {
+            $extra_exists = 1;
+          }
+          }
+          if (!empty($wo['story']['postTraveling'])) {
+            if (empty($changed_profile_pic_lang) 
+              && $wo['story']['via_type'] != 'share'
+              && $wo['story']['group_recipient_exists'] != true
+              && empty($wo['story']['album_name'])) {
+          ?>
+          <span class="feeling-text"><i class="fa fa-plane"></i> <?php echo $wo['lang']['is_traveling'];?> <?php echo $wo['story']['postTraveling'];?></span>
+          <?php
+          } else {
+            $extra_exists = 1;
+          }
+          }
+          if (!empty($wo['story']['postListening'])) {
+            if (empty($changed_profile_pic_lang) 
+              && $wo['story']['via_type'] != 'share'
+              && $wo['story']['group_recipient_exists'] != true
+              && empty($wo['story']['album_name'])) {
+          ?>
+          <span class="feeling-text"><i class="fa fa-headphones"></i> <?php echo $wo['lang']['is_listening'];?> <?php echo $wo['story']['postListening'];?></span>
+          <?php
+          } else {
+            $extra_exists = 1;
+          }
+          }
+          if (!empty($wo['story']['postPlaying'])) {
+            if (empty($changed_profile_pic_lang) 
+              && $wo['story']['via_type'] != 'share'
+              && $wo['story']['group_recipient_exists'] != true
+              && empty($wo['story']['album_name'])) {
+          ?>
+          <span class="feeling-text"><i class="fa fa-gamepad"></i> <?php echo $wo['lang']['is_playing'];?> <?php echo $wo['story']['postPlaying'];?></span>
+          <?php
+          } else {
+            $extra_exists = 1;
+          }
+          }
+          if (!empty($wo['story']['postWatching'])) {
+            if (empty($changed_profile_pic_lang) 
+              && $wo['story']['via_type'] != 'share'
+              && $wo['story']['group_recipient_exists'] != true
+              && empty($wo['story']['album_name'])) {
+          ?>
+          <span class="feeling-text"><i class="fa fa-eye"></i> <?php echo $wo['lang']['is_watching'];?> <?php echo $wo['story']['postWatching'];?></span>
+          <?php
+          } else {
+            $extra_exists = 1;
+          }
+          }
+		  /*plugin*/
+		   if(!empty($wo['system']['combo_enable_tag_action'])  && $wo['system']['combo_enable_tag_action'] == 1 && in_array('Combo', $wo['plugin_list']['plugin_actived'] )){
+			  echo tags_in_post($wo['story']['id']);
+		  }
+		  /*plugin*/
+          ?>
+          </div>
+          <h6>
+            <span class="time">
+               <a  style="color:#9197a3" class="ajax-time" href="<?php echo $wo['story']['url'];?>" title="<?php echo date('c',$wo['story']['time']); ?>" target="_blank"><?php echo Wo_Time_Elapsed_String($wo['story']['time']); ?></a>
+            </span>
+            <?php if (strlen($wo['story']['postText']) >= 2): ?>
+                <span onclick="Wo_Translate($(this).attr('id'),$(this).attr('data-language'))" title="<?php echo $wo['lang']['translate'];?>" class="pointer time" id="<?php echo $wo['story']['id']; ?>" data-language="<?php echo DetermineUserLang(); ?>" data-trans-btn="<?php echo $wo['story']['id']; ?>">
+                  - <?php echo $wo['lang']['translate'];?>
+                </span> 
+            <?php endif ?>
+            <?php  if ($wo['story']['admin'] === true && $wo['story']['group_recipient_exists'] == false && empty($wo['story']['product_id'])) { ?>
+            <?php  if (empty($wo['story']['page_id'])) { ?>
+            <span class="dropdown" style="color:#9197a3">
+              <span class="dropdown-toggle pointer" data-toggle="dropdown" role="button" aria-expanded="false">
+              <span class="pointer post-privacy" style="color:#9197a3">
+              <?php  if($wo['story']['postPrivacy'] == 0) { ?>
+              <i class="fa fa-globe progress-icon fa-fw" data-toggle="tooltip" title="<?php echo $wo['lang']['everyone'];?>" data-icon="globe"></i>
+              <?php  } ?>
+              <?php  if($wo['story']['postPrivacy'] == 1) { ?>
+              <i class="fa fa-users progress-icon fa-fw" data-toggle="tooltip" title="<?php echo ($wo['config']['connectivitySystem'] == 1) ? $wo['lang']['my_friends'] : $wo['lang']['people_i_follow'];?>" data-icon="user"></i>
+              <?php  }  ?>
+              <?php  if($wo['story']['postPrivacy'] == 2) { ?>
+              <i class="fa fa-user progress-icon fa-fw" data-toggle="tooltip" title="<?php echo ($wo['config']['connectivitySystem'] == 1) ? $wo['lang']['my_friends'] : $wo['lang']['people_follow_me'];?>" data-icon="users"></i>
+              <?php  }  ?>
+              <?php  if($wo['story']['postPrivacy'] == 3) { ?>
+              <i class="fa fa-lock progress-icon fa-fw" data-toggle="tooltip" title="<?php echo $wo['lang']['only_me'];?>" data-icon="lock"></i>
+              <?php  }  ?>
+              </span>
+              <span class="caret" style="color:#9197a3"></span>
+              </span>
+              
+              <ul class="dropdown-menu post-privacy-menu" role="menu">
+                <li>
+                  <div class="pointer" onclick="Wo_UpdatePostPrivacy(<?php echo $wo['story']['id']; ?>,3,event);">
+                  <i class="fa fa-lock progress-icon fa-fw" data-toggle="tooltip" data-icon="lock"></i> 
+                  <?php echo $wo['lang']['only_me'];?>
+                  </div>
+                </li>
+                <li>
+                  <div class="pointer" onclick="Wo_UpdatePostPrivacy(<?php echo $wo['story']['id']; ?>,0,event);">
+                  <i class="fa fa-globe progress-icon fa-fw" data-toggle="tooltip" data-icon="pencil"></i> <?php echo $wo['lang']['everyone'];?>
+                  </div>
+                </li>
+                <?php if ($wo['config']['connectivitySystem'] == 1) { ?>
+                <li>
+                  <div class="pointer" onclick="Wo_UpdatePostPrivacy(<?php echo $wo['story']['id']; ?>,1,event);">
+                  <i class="fa fa-users progress-icon fa-fw" data-toggle="tooltip" data-icon="pencil"></i> <?php echo $wo['lang']['my_friends'];?>
+                  </div>
+                </li>
+                <?php } else { ?>
+                <li>
+                  <div class="pointer" onclick="Wo_UpdatePostPrivacy(<?php echo $wo['story']['id']; ?>,1,event);">
+                  <i class="fa fa-user progress-icon fa-fw" data-toggle="tooltip" data-icon="pencil"></i> 
+                  <?php echo $wo['lang']['people_i_follow'];?>
+                  </div>
+                </li>
+                <li>
+                  <div class="pointer" onclick="Wo_UpdatePostPrivacy(<?php echo $wo['story']['id']; ?>,2,event);">
+                  <i class="fa fa-users progress-icon fa-fw" data-toggle="tooltip" data-icon="pencil"></i> <?php echo $wo['lang']['people_follow_me'];?>
+                  </div>
+                </li>
+                <?php } ?>
+              </ul>
+            </span>
+            <?php } else { ?>
+            <span class="dropdown">
+              <span class="dropdown-toggle pointer" data-toggle="dropdown" role="button" aria-expanded="false">
+              <span class="pointer post-privacy" style="color:#9197a3">
+              <?php  if($wo['story']['postPrivacy'] == 0) { ?>
+              <i class="fa fa-globe progress-icon " data-toggle="tooltip" title="<?php echo $wo['lang']['everyone'];?>" data-icon="globe"></i>
+              <?php  } ?>
+              <?php  if($wo['story']['postPrivacy'] == 2) { ?>
+              <i class="fa fa-thumbs-up progress-icon" data-toggle="tooltip" title="Liked My Page" data-icon="thumbs-up"></i>
+              <?php  }  ?>
+              </span>
+              <span class="caret"></span>
+              </span>
+              <ul class="dropdown-menu post-privacy-menu" role="menu">
+                <li>
+                  <span class="pointer" onclick="Wo_UpdatePostPrivacy(<?php echo $wo['story']['id']; ?>,0,event);">
+                  <i class="fa fa-globe progress-icon" data-toggle="tooltip" data-icon="pencil"></i> <?php echo $wo['lang']['everyone'];?>
+                  </span>
+                </li>
+                <li>
+                  <hr>
+                </li>
+                <li>
+                  <span class="pointer" onclick="Wo_UpdatePostPrivacy(<?php echo $wo['story']['id']; ?>,2,event);">
+                  <i class="fa fa-thumbs-up progress-icon" data-toggle="tooltip" data-icon="thumbs-up"></i> Liked My Page
+                  </span>
+                </li>
+              </ul>
+            </span>
+            <?php } ?>
+            <?php }  ?>
+
+            <?php if(!empty($wo['story']['postMap'])) { ?>
+            <?php if(!empty($wo['story']['postSoundCloud']) || 
+              !empty($wo['story']['postVine']) || 
+              !empty($wo['story']['postYoutube']) || 
+              !empty($wo['story']['postVimeo']) || 
+              !empty($wo['story']['postText']) || 
+              !empty($wo['story']['postFile']) || 
+              !empty($wo['story']['postLink']) || 
+              !empty($wo['story']['postFacebook']) || 
+              !empty($wo['story']['postDailymotion']) ||
+              !empty($wo['story']['album_name'])) { ?>
+            <span style="color:#9197a3"> - <i class="fa fa-map-marker"></i> <?php echo $wo['story']['postMap'];?>.</span>
+            <?php } ?>
+            <?php } else { ?>
+            <?php
+              $small_icon = '';
+              $icon_type = '';
+              if(!empty($wo['story']['postVine'])) { 
+                 $small_icon = 'vine';
+                 $icon_type = 'Vine';
+              } else if (!empty($wo['story']['postVimeo'])) {
+                 $small_icon = 'vimeo';
+                 $icon_type = 'Vimeo';
+              } else if (!empty($wo['story']['postFacebook'])) {
+                 $small_icon = 'facebook-official';
+                 $icon_type = 'Facebook';
+              } else if (!empty($wo['story']['postDailymotion'])) {
+                 $small_icon = 'film';
+                 $icon_type = 'Dailymotion';
+              } else if (!empty($wo['story']['postYoutube'])) {
+                 $small_icon = 'youtube-square';
+                 $icon_type = 'Youtube';
+              } else if (!empty($wo['story']['postSoundCloud'])) {
+                 $small_icon = 'soundcloud';
+                 $icon_type = 'SoundCloud';
+              }
+              if (!empty($icon_type)) {
+              ?>
+            <span style="color:#9197a3"> - <i class="fa fa-<?php echo $small_icon; ?>"></i> <?php echo $icon_type; ?></span>
+            <?php  } } ?>
+          </h6>
+        </div>
+      </div>
+
+      <div class="post-description" id="post-description-<?php echo $wo['story']['id']; ?>">
+        <?php
+        if (!empty($wo['story']['product_id'])) {
+            echo '<div class="product-name">' . $wo['lang']['product_name'] . ':<br><span class="product-description">' . $wo['story']['product']['name'] . '</span></div><br>';
+            echo '<div class="product-name">' . $wo['lang']['description'] . ':<br><p class="product-description product-description-'.$wo['story']['product']['id'].'">' . $wo['story']['product']['description'] . '</p></div><br>';
+            echo '<div class="product-name">' . $wo['lang']['price'] . ': <span class="product-price">' . $wo['config']['classified_currency_s'] . $wo['story']['product']['price'] . ' (' . $wo['config']['classified_currency'] . ')</span></div><br>';
+            if (!empty($wo['story']['product']['location'])) {
+               echo '<div class="product-name">' . $wo['lang']['location'] . ': <span class="product-description"><i class="fa fa-map-marker"></i> ' . $wo['story']['product']['location'] . '</span></div><br>';
+            } 
+            $status = ($wo['story']['product']['status'] == 0) ? '<span class="product-description">' . $wo['lang']['in_stock'] . '</span>' : '<span class="product-status-sold">' . $wo['lang']['sold'] . '</span><br><br>';
+            $type = ($wo['story']['product']['type'] == 0) ? '<span class="product-description">' . $wo['lang']['new'] . '</span>' : '<span class="product-description">' . $wo['lang']['used'] . '</span><br>';
+            echo '<div class="product-name">' . $wo['lang']['type'] . ': ' . $type . '</div><br>';
+            echo '<div class="product-name">' . $wo['lang']['status'] . ': ' . $status . '</div><br>';
+            $class = '';
+            $small = '';
+            if (count($wo['story']['product']['images']) == 2) {
+                 $class = 'width-2';
+            }
+            if (count($wo['story']['product']['images']) > 1) {
+                 $small = '_small';
+            }
+            if (count($wo['story']['product']['images']) > 2) {
+                 $class = 'width-3';
+            }
+            if (count($wo['story']['product']['images']) > 3) {
+             foreach (array_slice($wo['story']['product']['images'],0,3) as $key => $photo) {
+              if ($key == 2) {
+                  echo "<div onclick='Wo_OpenAlbumLightBox(" . $photo['id'] . ", \"product\");' class='album-collapse pointer'> 
+                            <img src='".($photo['image_org'])."' class='image-file'>
+                            <span>+".count(array_slice($wo['story']['product']['images'],2))."</span>
+                        </div>
+                        "; 
+              }
+              else{
+                echo  "<img src='" . ($photo['image_org']) ."' alt='image' class='" . $class . " image-file pointer' 
+                       onclick='Wo_OpenAlbumLightBox(" . $photo['id'] . ", \"product\");'>";
+              }
+              
+             }
+             foreach (array_slice($wo['story']['product']['images'],3) as $photo) {
+                echo  "<img src='" . ($photo['image_org']) ."' alt='image' class='" . $class . " image-file pointer hidden' 
+                      onclick='Wo_OpenAlbumLightBox(" . $photo['id'] . ", \"product\");'>";
+             }
+            }
+            else{
+              foreach ($wo['story']['product']['images'] as $photo) {
+                echo  "<img src='" . ($photo['image_org']) ."' alt='image' class='" . $class . " image-file pointer' 
+                      onclick='Wo_OpenAlbumLightBox(" . $photo['id'] . ", \"product\");'>";
+              }
+            }
+          } 
+        ?>
+        <p dir="auto" style="<?php if(!empty($wo['plugin_list']['plugin_actived']) && in_array('Colorbox', $wo['plugin_list']['plugin_actived']) && !empty($wo['story']['color'])){ echo get_colorbox($wo['story']['color']); } ?>">
+        <span data-translate-text="<?php echo $wo['story']['id']; ?>"> <?php echo $wo['story']['postText']; ?></span>
+        <?php if (!empty($wo['story']['postFeeling']) && $extra_exists == 1) { ?>
+        <span class="feeling-text"> — <i class="twa-lg twa twa-<?php echo $wo['story']['postFeelingIcon'];?>"></i> <?php echo $wo['lang']['feeling'];?> <?php echo $wo['lang'][$wo['story']['postFeeling']];?></span>
+        <?php } ?>
+        <?php if (!empty($wo['story']['postTraveling']) && $extra_exists == 1) { ?>
+        <span class="feeling-text"> — <i class="fa fa-plane"></i> <?php echo $wo['lang']['traveling'];?><?php echo $wo['story']['postTraveling'];?></span>
+        <?php } ?>
+        <?php if (!empty($wo['story']['postWatching']) && $extra_exists == 1) { ?>
+        <span class="feeling-text"> — <i class="fa fa-eye"></i> <?php echo $wo['lang']['watching'];?> <?php echo $wo['story']['postWatching'];?></span>
+        <?php } ?>
+        <?php if (!empty($wo['story']['postPlaying']) && $extra_exists == 1) { ?>
+        <span class="feeling-text"> — <i class="fa fa-gamepad"></i> <?php echo $wo['lang']['playing'];?> <?php echo $wo['story']['postPlaying'];?></span>
+        <?php } ?>
+         <?php if (!empty($wo['story']['postListening']) && $extra_exists == 1) { ?>
+        <span class="feeling-text"> — <i class="fa fa-headphones"></i> <?php echo $wo['lang']['listening'];?> <?php echo $wo['story']['postListening'];?></span>
+        <?php } ?>
+        </p>
+        <?php if(!empty($wo['story']['postYoutube'])) {  ?>
+        <div class="post-youtube">
+          <iframe id="ytplayer" type="text/html" width="100%" height="340" src="https://www.youtube.com/embed/<?php echo $wo['story']['postYoutube']; ?>?autoplay=0"
+            frameborder="0"/></iframe>
+        </div>
+        <?php } ?>
+        <?php if(!empty($wo['story']['postVimeo'])) {  ?>
+        <div class="post-youtube">
+          <iframe src="https://player.vimeo.com/video/<?php echo $wo['story']['postVimeo'];?>?byline=0&portrait=0" width="100%" height="340" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+        </div>
+        <?php } ?>
+        <?php if(!empty($wo['story']['postFacebook'])) {  ?>
+        <div class="post-youtube">
+          <iframe src="https://www.facebook.com/plugins/video.php?href=https://www.facebook.com/<?php echo $wo['story']['postFacebook'];?>&show_text=0" width="100%" height="100%" frameborder="0" allowfullscreen></iframe>
+          <div class="clear"></div>
+        </div>
+
+        <?php } ?>
+        <?php if(!empty($wo['story']['postDailymotion'])) {  ?>
+        <div class="post-youtube">
+          <iframe frameborder="0" width="100%" height="340" src="https://www.dailymotion.com/embed/video/<?php echo $wo['story']['postDailymotion']?>" allowfullscreen></iframe>
+        </div>
+
+        
+        <?php } ?>
+        <?php if(!empty($wo['story']['postVine'])) {  ?>
+        <iframe src="https://vine.co/v/<?php echo $wo['story']['postVine']; ?>/embed/simple" width="100%" height="400" frameborder="0"></iframe>
+        <?php } ?>
+        <?php if(!empty($wo['story']['postSoundCloud'])) { ?>
+        <iframe width="100%" src="https://w.soundcloud.com/player/?url=https://api.soundcloud.com/tracks/<?php echo $wo['story']['postSoundCloud'];?>&auto_play=false"></iframe>
+        <?php } ?>
+        <?php if(!empty($wo['story']['postMap']) && empty($wo['story']['postText']) && empty($wo['story']['postVine']) && empty($wo['story']['postSoundCloud']) && empty($wo['story']['postVimeo']) && empty($wo['story']['postDailymotion']) && empty($wo['story']['postYoutube']) && empty($wo['story']['postFile'])) { ?>
+        <div class="post-map">
+          <img src="https://maps.googleapis.com/maps/api/staticmap?center=<?php echo $wo['story']['postMap'];?>&zoom=13&size=600x250&maptype=roadmap&markers=color:red%7C<?php echo $wo['story']['postMap'];?>&key=<?php echo $wo['config']['google_map_api'];?>" width="100%">
+        </div>
+        <?php } ?>
+        <?php if(!empty($wo['story']['postLink']) && empty($wo['story']['postVine']) && empty($wo['story']['postSoundCloud']) && empty($wo['story']['postYoutube']) && empty($wo['story']['postFile'])) { ?>
+        <div class="post-fetched-url">
+          <a href="<?php echo $wo['story']['postLink'];?>" target="_blank">
+            <?php if (!empty($wo['story']['postLinkImage'])) {?>
+            <div class="post-fetched-url-con">
+              <img src="<?php echo $wo['story']['postLinkImage'];?>" class="<?php echo Wo_RightToLeft('pull-left');?>" alt="<?php echo $wo['story']['postLinkTitle'];?>"/>
+            </div>
+            <?php } ?>
+            <div class="fetched-url-text">
+              <h4><?php echo $wo['story']['postLinkTitle'];?></h4>
+              <div class="description"><?php echo $wo['story']['postLinkContent'];?></div>
+              <div class="url">
+                <?php 
+                  $parse = parse_url($wo['story']['postLink']);
+                  echo $parse['host'];
+                  ?>
+              </div>
+            </div>
+            <div class="clear"></div>
+            </a>
+        </div>
+        <?php } ?>
+		<?php if($wo['story']['postType'] == 'question' && !empty($wo['plugin_list']['plugin_actived']) && in_array('Question', $wo['plugin_list']['plugin_actived'])) { 
+		      echo Wo_LoadPage('plugins/question/content_question');
+		} else if($wo['story']['postType'] == 'share' && !empty($wo['plugin_list']['plugin_actived']) && in_array('Share', $wo['plugin_list']['plugin_actived'])) { 
+		      echo Wo_LoadPage('plugins/share/content_shared');
+		} ?>
+        <?php if(!empty($wo['story']['page_event_id'])) { ?>
+        <div class="post-fetched-url">
+          <a href="<?php echo $wo['story']['event']['url'];?>" target="_blank">
+            <?php if (!empty($wo['story']['event']['cover'])) {?>
+            <div class="post-fetched-url-con">
+              <img src="<?php echo $wo['story']['event']['cover'];?>" class="<?php echo Wo_RightToLeft('pull-left');?>"/>
+            </div>
+            <?php } ?>
+            <div class="fetched-url-text">
+              <h4><?php echo $wo['story']['event']['name'];?></h4>
+              <div class="description">
+                <p><?php echo $wo['story']['event']['description'];?></p>
+              </div>
+              <div class="url">
+               <?php echo $wo['story']['event']['start_date'];?> - <?php echo $wo['story']['event']['end_date'];?>
+              </div>
+            </div>
+            <div class="clear"></div>
+            </a>
+        </div>
+        <?php } ?>
+        <?php if(!empty($wo['story']['blog_id'])) { ?>
+        <div class="post-fetched-url">
+          <a href="<?php echo $wo['story']['blog']['url'];?>" target="_blank">
+            <?php if (!empty($wo['story']['blog']['thumbnail'])) {?>
+            <div class="post-fetched-url-con">
+              <img src="<?php echo $wo['story']['blog']['thumbnail'];?>" class="<?php echo Wo_RightToLeft('pull-left');?>" alt="<?php echo $wo['story']['blog']['title'];?>"/>
+            </div>
+            <?php } ?>
+            <div class="fetched-url-text">
+              <h4><?php echo $wo['story']['blog']['title'];?></h4>
+              <div class="description"><?php echo $wo['story']['blog']['description'];?></div>
+              <div class="url">
+                <?php 
+                  $parse = parse_url($wo['config']['site_url']);
+                  echo $parse['host'];
+                  ?>
+              </div>
+            </div>
+            <div class="clear"></div>
+            </a>
+        </div>
+        <?php } ?>
+        <?php if(!empty($wo['story']['postFile'])) { ?>
+        <div class="post-file">
+            <?php
+            $media = array(
+                'type' => 'post',
+                'storyId' => $wo['story']['id'],
+                'filename' => $wo['story']['postFile'],
+                'name' => $wo['story']['postFileName']
+            );
+            echo Wo_DisplaySharedFile($media);
+            ?>
+        </div>
+
+        <?php } ?>
+        <?php if (Wo_IsUrl($wo['story']['postSticker'])): ?>
+
+          <div class="post-file">
+          <img src="<?php echo $wo['story']['postSticker']; ?>">
+          </div>
+        <?php endif; ?>
+        <?php if(!empty($wo['story']['postRecord'])) { ?>
+        <div class="post-file">
+            <?php  
+              $media = array(
+                'type' => 'post',
+                'storyId' => $wo['story']['id'],
+                'filename' => $wo['story']['postRecord'],
+                'name' => ''
+              );
+              echo  Wo_DisplaySharedFile($media,'record');
+            ?>
+        </div>
+        <?php } ?>
+        <?php if (!empty($wo['story']['photo_album'])) {
+           $class = '';
+           $small = '';
+           if (count($wo['story']['photo_album']) == 2) {
+                $class = 'width-2';
+           }
+           if (count($wo['story']['photo_album']) > 1) {
+                $small = '_small';
+           }
+           if (count($wo['story']['photo_album']) > 2) {
+                $class = 'width-3';
+           }
+           $delete  = '';
+           $onhover = '';
+
+          if (count($wo['story']['photo_album']) > 3) {
+             foreach (array_slice($wo['story']['photo_album'],0,3) as $key => $photo) {
+              if ($key == 2) {
+                  echo "<div onclick='Wo_OpenAlbumLightBox(" . $photo['id'] . ", \"album\");' class='album-collapse pull-left pointer'> 
+                            <img src='".Wo_GetMedia($photo['image_org'])."' class='image-file'>
+                            <span>+".count(array_slice($wo['story']['photo_album'],2))."</span>
+                        </div>
+                        "; 
+              }
+              else{
+                if ($wo['story']['admin'] === true) {
+                  $delete = "<span onclick='Wo_RemoveAlbumImage(" . $photo['post_id'] . "," . $photo['id'] . ");' class='pointer'><i class='fa fa-remove'></i></span>";
+                  $onhover = "onmouseover='Wo_ShowDeleteButton(" . $photo['post_id'] . "," . $photo['id'] . ")' onmouseleave='Wo_HideDeleteButton(" . $photo['post_id'] . "," . $photo['id'] . ");'";
+                }
+                echo  "<div class='album-image " . $class . "' id='image-" . $photo['id'] . "' {$onhover}>{$delete}<img src='" . Wo_GetMedia($photo['image_org']) . "' alt='image' class='image-file  pointer' onclick='Wo_OpenAlbumLightBox(" . $photo['id'] . ", \"album\");'></div>";
+                }
+             }
+             foreach (array_slice($wo['story']['photo_album'],3) as $photo) {
+                if ($wo['story']['admin'] === true) {
+                $delete = "<span onclick='Wo_RemoveAlbumImage(" . $photo['post_id'] . "," . $photo['id'] . ");' class='pointer'><i class='fa fa-remove'></i></span>";
+                  $onhover = "onmouseover='Wo_ShowDeleteButton(" . $photo['post_id'] . "," . $photo['id'] . ")' onmouseleave='Wo_HideDeleteButton(" . $photo['post_id'] . "," . $photo['id'] . ");'";
+                }
+                echo  "<div class='album-image " . $class . "' id='image-" . $photo['id'] . "' {$onhover}>{$delete}<img src='" . Wo_GetMedia($photo['image_org']) . "' alt='image' class='image-file pointer hidden' onclick='Wo_OpenAlbumLightBox(" . $photo['id'] . ", \"album\");'></div>";
+             }
+          }
+          else{
+              foreach ($wo['story']['photo_album'] as $photo) {
+                if ($wo['story']['admin'] === true) {
+                  $delete = "<span onclick='Wo_RemoveAlbumImage(" . $photo['post_id'] . "," . $photo['id'] . ");' class='pointer'><i class='fa fa-remove'></i></span>";
+                  $onhover = "onmouseover='Wo_ShowDeleteButton(" . $photo['post_id'] . "," . $photo['id'] . ")' onmouseleave='Wo_HideDeleteButton(" . $photo['post_id'] . "," . $photo['id'] . ");'";
+                }
+                echo  "<div class='album-image " . $class . "' id='image-" . $photo['id'] . "' {$onhover}>{$delete}<img src='" . Wo_GetMedia($photo['image_org']) . "' alt='image' class='image-file pointer' onclick='Wo_OpenAlbumLightBox(" . $photo['id'] . ", \"album\");'></div>";
+              }
+          }
+        } 
+        ?>
+        <?php if ($wo['story']['multi_image'] == 1) {
+           $class = '';
+           $small = '';
+           if (count($wo['story']['photo_multi']) == 2) {
+                $class = 'width-2';
+           }
+           if (count($wo['story']['photo_multi']) > 1) {
+                $small = '_small';
+           }
+           if (count($wo['story']['photo_multi']) > 2) {
+                $class = 'width-3';
+           }
+
+           if (count($wo['story']['photo_multi']) > 3) {
+             foreach (array_slice($wo['story']['photo_multi'],0,3) as $key => $photo) {
+              if ($key == 2) {
+                  echo "<div onclick='Wo_OpenAlbumLightBox(" . $photo['id'] . ", \"album\");' class='album-collapse pointer'> 
+                            <img src='".Wo_GetMedia($photo['image_org'])."' class='image-file'>
+                            <span>+".count(array_slice($wo['story']['photo_multi'],2))."</span>
+                        </div>
+                        "; 
+              }
+              else{
+                echo  "<img src='" . Wo_GetMedia($photo['image_org']) ."' alt='image' class='" . $class . " image-file pointer' 
+                       onclick='Wo_OpenAlbumLightBox(" . $photo['id'] . ", \"album\");'>";
+              }
+              
+             }
+             foreach (array_slice($wo['story']['photo_multi'],3) as $photo) {
+                echo  "<img src='" . Wo_GetMedia($photo['image_org']) ."' alt='image' class='" . $class . " image-file pointer hidden' 
+                      onclick='Wo_OpenAlbumLightBox(" . $photo['id'] . ", \"album\");'>";
+             }
+           }else{
+              foreach ($wo['story']['photo_multi'] as $photo) {
+                echo  "<img src='" . Wo_GetMedia($photo['image_org']) ."' alt='image' class='" . $class . " image-file pointer' 
+                      onclick='Wo_OpenAlbumLightBox(" . $photo['id'] . ", \"album\");'>";
+              }
+           }
+        }
+        ?>
+
+        <?php
+        if ($wo['story']['poll_id'] == 1) {
+           echo Wo_LoadPage('story/entries/options');
+        }
+        ?>
+        <div class="clear"></div>
+        
+        <?php /* plugin end */ ?>
+
+    </div>
+  </div>
+</div>
+
+        <?php /* post body */ ?>
+    </div>
+	
+	
+	
+	
+	</div>
+	</div>
+    <div class="publisher-footer clearfix">
+        <div class="pull-right flip mt5"><input type="submit" class="btn btn-primary post_share" value="<?php echo $wo['lang']['plugin_share_post']; ?>"><img src="<?php echo $wo['config']['site_url'];?>/assets/plugins/img/load.gif" style="display:none;" id="#formLoading"></div>
+			       <?php /* privacy */ ?>
+         <div id="status"></div>
+         <?php if (!isset($wo['input']['recipient']) && $wo['page'] != 'group') { ?>
+         <div class="row <?php echo Wo_RightToLeft('pull-right');?>">
+            <div class="poster-left-buttons" style="margin-top:8px;">
+               <div class="publisher-hidden-option inputsm">
+                  
+				  
+				  <?php /* plugin select */ ?>
+				  <div class="btn-group js_publisher-privacy" data-toggle="tooltip" data-placement="top" data-value="friends" title='<?php echo $wo['lang']['everyone'];?>'>
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                        <i class="btn-group-icon fa fa-globe"></i> <span class="btn-group-text hidden-xs"><?php echo $wo['lang']['everyone'];?></span> <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+					<?php if(empty($_GET['p'])) {?>
+                        <li>
+                            <a href="#" data-title='<?php echo $wo['lang']['only_me'];?>' data-value="3">
+                                <i class="fa fa-lock"></i> <?php echo $wo['lang']['only_me'];?>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" data-title='<?php echo $wo['lang']['everyone'];?>' data-value="0">
+                                <i class="fa fa-globe"></i> <?php echo $wo['lang']['everyone'];?>
+                            </a>
+                        </li>
+                        <?php if ($wo['config']['connectivitySystem'] == 0) { ?>
+						<li>
+                            <a href="#" data-title='<?php echo $wo['lang']['people_i_follow'];?>' data-value="1">
+                                <i class="fa fa-user"></i> <?php echo $wo['lang']['people_i_follow'];?>
+                            </a>
+                        </li>
+						<li>
+                            <a href="#" data-title='<?php echo $wo['lang']['people_follow_me'];?>' data-value="2">
+                                <i class="fa fa-users"></i> <?php echo $wo['lang']['people_follow_me'];?>
+                            </a>
+                        </li>
+                        <?php } else {?>
+						<li>
+                            <a href="#" data-title='<?php echo $wo['lang']['my_friends'];?>' data-value="1">
+                                <i class="fa fa-users"></i> <?php echo $wo['lang']['my_friends'];?>
+                            </a>
+                        </li>
+                        <?php }?>
+                     <?php } else { ?>
+						<li>
+                            <a href="#" data-title='<?php echo $wo['lang']['everyone'];?>' data-value="0">
+                                <i class="fa fa-globe"></i> <?php echo $wo['lang']['everyone'];?>
+                            </a>
+                        </li>
+						<li>
+                            <a href="#" data-title='<?php echo $wo['lang']['liked_my_page'];?>' data-value="2">
+                                <i class="fa fa-users"></i> <?php echo $wo['lang']['liked_my_page'];?>
+                            </a>
+                        </li>
+                     <?php } ?>					 
+                    </ul>
+					<input type="hidden" class="postPrivacy" name="postPrivacy" value="0">
+                </div>
+				<?php /* plugin select */ ?>
+				  
+				  
+               </div>
+            </div>
+         </div>
+         <?php } ?>
+            <?php /* privacy */ ?>
+
+       
+	
+</div>
+<?php if (isset($wo['input']['recipient'])) { ?>
+   <input type="hidden" name="recipient_id" value="<?php echo $wo['user_profile']['user_id']; ?>">
+   <?php } ?>
+   <?php if ($wo['page'] == 'page') {?>
+   <input type="hidden" name="page_id" value="<?php echo $wo['page_profile']['page_id']; ?>">
+   <?php } else if ($wo['page'] == 'group') {?>
+   <input type="hidden" name="group_id" value="<?php echo $wo['group_profile']['id']; ?>">
+   <?php } ?>
+   <input type="hidden" name="hash_id" value="<?php echo Wo_CreateSession();?>">
+   <input type="hidden" name="post_id" value="<?php echo $wo['story']['id']; ?>">
+   <input type="hidden" name="only" value="share">
+</form>
+<script type="text/javascript">
+$(function () {
+  $(".share_post .post-description p, .product-description").readmore({
+    speed: 75,
+    moreLink: '<a href="#" class="hash"><?php echo $wo["lang"]["read_more"];?></a>',
+    lessLink: '<a href="#" class="hash"><?php echo $wo["lang"]["read_less"];?></a>'
+  });
+  $(".share_post .PostTextShare").triggeredAutocomplete({
+     hidden: '#hidden_inputbox_comment',
+     source: Wo_Ajax_Requests_File() + "?f=mention",
+     trigger: "@" 
+  });
+  $('.share_post [data-toggle="tooltip"]').tooltip();
+  $('.dropdown-menu.post-recipient, .dropdown-menu.post-options').click(function (e) {
+    e.stopPropagation();
+  });
+});
+</script>

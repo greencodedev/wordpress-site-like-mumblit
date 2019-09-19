@@ -1,0 +1,67 @@
+<?php 
+	global $sqlConnect, $sub_view;
+	$kisses = array(); 
+	$resource = $sqlConnect->query("SELECT * FROM kisses");
+	while($row = $resource->fetch_assoc()){
+		$kisses[] = $row;
+	}
+?>
+
+<div class="row col-sm-12">
+	<div class="panel panel-default">
+
+		<?php if($sub_view == ""){ ?> 
+			<div class="panel-heading">
+				<strong>Member</strong>
+			</div>
+			<div class="panel-body">
+				<small>List of kisses</small>
+			</div>
+			
+			<div class="panel-body">
+			
+				<div class="row panel-body table-responsive">
+					<table class="table table-striped table-bordered table-hover js_dataTable">
+						<thead>
+							<tr>
+								<th>User</th>
+								<th>Owner</th>
+								<th>time</th>
+								<th>actions</th>
+							</tr>
+						</thead>
+						
+						<tbody class="kiss_list_content">
+						
+							<?php foreach($kisses as $kiss){ ?>
+								<tr class="kiss_tab" data-user_id="<?php echo $kiss['user_id']; ?>" data-owner_id="<?php echo $kiss['owner_id']; ?>">
+									<td><?php echo $kiss['user_id']; ?></td>
+									<td><?php echo $kiss['owner_id']; ?></td>
+									<td><?php echo Wo_Time_Elapsed_String($kiss['kiss_stamp']); ?></td>
+									<td><a class="admin-delete-kiss-from-list" href="#" title="<?php echo $wo['lang']['delete']; ?>"><i class="fa fa-trash-o"></i></a></td>
+								</tr>
+							<?php }//f ?>						
+						
+						</tbody>
+					</table>
+				</div>
+							
+			</div>
+		<?php } ?>
+
+	</div>
+</div>
+
+<script>
+	$('body').on('click', '.admin-delete-kiss-from-list', function(event){ event.preventDefault(); 
+		var self = $(this);
+		var user_id = self.closest('.kiss_tab').attr('data-user_id');
+		var owner_id = self.closest('.kiss_tab').attr('data-owner_id');
+		self.closest('.kiss_tab').hide();
+		$.ajax({type: 'post',url: site_url+'/plugin_requests.php?f=admin_kiss', data: {'task':'kiss_delete', 'user_id':user_id, 'owner_id':owner_id}, cache : false, 
+					success: function(result){ 
+						self.closest('.kiss_tab').remove();
+					}
+		});
+	});	
+</script>

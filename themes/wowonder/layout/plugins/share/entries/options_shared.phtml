@@ -1,0 +1,29 @@
+
+    <?php 
+    $is_voted = false;
+    if ($wo['loggedin'] == true) {
+    	$is_voted = Wo_IsPostVoted($wo['origin']['id'], $wo['user']['user_id']); 
+    }
+    ?>
+ <div class="options" data-vote='<?php echo ($is_voted) ? 'true' : 'false'?>'>
+	<?php foreach ($wo['origin']['options'] as $key => $value):
+	$is_option_voted = false;
+    if ($wo['loggedin'] == true) {
+    	$is_option_voted = Wo_IsOptionVoted($value['id'], $wo['user']['user_id']);
+    } 
+	?>
+	<div id="option-<?php echo $value['id']?>" onclick="Wo_VoteUp(<?php echo $value['id']?>);" data-post-id="<?php echo $wo['origin']['id'];?>">
+		<div class="poll-option <?php echo ($is_option_voted) ? 'active':'';?>">
+			<div class="<?php echo Wo_RightToLeft('pull-left');?>">
+				<span class="vote-icon"><?php echo ($is_option_voted) ? '<i class="fa fa-check-circle"></i>' : '<i class="fa fa-circle-o"></i>';?></span> <?php echo $value['text'];?>
+			</div>
+			<div class="answer-vote <?php echo Wo_RightToLeft('pull-right');?>">
+				<?php echo ($is_voted) ? $value['percentage']:''?>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<div class="result-bar" style="width:<?php echo $value['percentage'];?>"><?php echo ($value['percentage_num'] > 0 && $is_voted) ? ' ' : '';?></div>
+	</div>
+	<?php endforeach ?>
+	<div class="total-votes <?php echo ($is_voted) ? '' : 'hidden'?>"><span id="total-votes"><?php echo $value['all'];?></span> <?php echo $wo['lang']['total_votes'] ?></div>
+</div>

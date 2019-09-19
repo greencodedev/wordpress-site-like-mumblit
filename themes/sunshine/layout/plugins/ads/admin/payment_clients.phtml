@@ -1,0 +1,58 @@
+<?php
+	global $sqlConnect, $sub_view;
+	$payments = array(); 
+	$resource = $sqlConnect->query("SELECT * FROM ads_purchased");
+	if($resource->num_rows>0){
+		while($row = $resource->fetch_assoc()){
+			$payments[] = $row;
+		}
+	}
+	if($sub_view == ""){ 
+?>
+   	<div class="panel panel-default"> 
+		<div class="panel-heading"><strong>Payment Clients</strong></div>
+		<div class="panel-body"><small>Here you can view pays for users.</small></div>	
+		<div class="panel-body">
+
+			<div class="row panel-body table-responsive">
+					<table class="table table-striped table-bordered table-hover js_dataTable">
+						<thead>
+							<tr>
+								<th>id</th>
+								<th>payment type</th>
+								<th>amount</th>
+								<th>email</th>
+								<th><?php echo $wo['lang']['plugin_ads_action']; ?></th>
+							</tr>
+						</thead>
+			
+						<tbody class="ads_list_content">
+							   
+							<?php foreach($payments as $payment){ ?>
+								<tr class="list_ad" data-id="<?php echo $payment['id']; ?>">
+								
+								<td><?php echo $payment['id']; ?></td>
+								
+								<td><?php echo $payment['payment_type']; ?></td>
+								
+								<td><?php echo $payment['payment_amount']; ?></td>
+								
+								<td><?php echo $payment['payer_email']; ?></td>
+								
+								<td>
+									<a class="admin-delete-payment-from-list" data-id="<?php echo $payment['id']; ?>" href="#" title="<?php echo $wo['lang']['plugin_ads_delete']; ?>"><i class="fa fa-trash-o"></i></a>
+								</td>
+								</tr>
+							<?php }//f ?>					   
+					   
+						</tbody>
+				</table>
+			</div>
+
+
+    </div>
+	</div>
+ <?php }else{    
+        global $sqlConnect;
+        $payment_id = ( isset($_POST['ad_id']) ? $_POST['ad_id'] : ( isset($_GET['ad_id']) ? $_GET['ad_id'] : 0 ) );
+ } ?>

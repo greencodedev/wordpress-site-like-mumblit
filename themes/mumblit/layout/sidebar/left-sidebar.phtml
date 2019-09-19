@@ -1,0 +1,161 @@
+<?php if ($wo['loggedin'] == true && Wo_IsMobile() == false) { ?>
+<div class="left-sidebar" style="margin-bottom: 30px;">
+	<ul>
+		<li>
+			<a href="<?php echo $wo['user']['url']; ?>" data-ajax="?link1=timeline&u=<?php echo $wo['user']['username'];?>">
+				<img src="<?php echo $wo['user']['avatar']?>" style="width: 24px; border-radius: 50%; margin-right: 5px;">
+				<?php echo $wo['user']['first_name']?> <?php echo $wo['user']['last_name']?>
+			</a>
+		</li>
+		<li>
+			<a href="https://www.mumblit.com/help" target="new">
+				<img src="https://www.mumblit.com/icons/nav/How-to.png" style="margin-right: 5px;">
+				Help/Support
+			</a>
+		</li>
+		<li>
+			<a href="<?php echo Wo_SeoLink('index.php?link1=albums'); ?>" data-ajax="?link1=albums">
+				<img src="https://www.mumblit.com/icons/nav/iconfinder_Camera_132207.png" style="margin-right: 5px;">
+				<?php echo $wo['lang']['albums'];?>
+			</a>
+		</li>
+		<li>
+			<a href="https://www.mumblit.com/messages">
+				<img src="https://www.mumblit.com/icons/nav/iconfinder_Mail_132273.png" style="margin-right: 5px;">
+				My Messages
+			</a>
+		</li>
+		<li>
+			<a href="<?php echo Wo_SeoLink('index.php?link1=saved-posts');?>" data-ajax="?link1=saved-posts">
+				<img src="https://www.mumblit.com/icons/nav/iconfinder_Save_as_132230.png" style="margin-right: 5px;">
+				<?php echo $wo['lang']['saved_posts'];?>
+			</a>
+		</li>
+		<li>
+			<a href="<?php echo Wo_SeoLink('index.php?link1=poke');?>"  data-ajax="?link1=poke">
+				<img src="https://www.mumblit.com/icons/nav/iconfinder_Comment_132229.png" style="margin-right: 5px;">
+				<span><?php echo $wo['lang']['pokes'];?></span>
+			</a>
+		</li>
+		<?php if ($wo['config']['groups'] == 1) { ?>
+		<li>
+			<a href="<?php echo Wo_SeoLink('index.php?link1=groups'); ?>" data-ajax="?link1=groups">
+				<img src="https://www.mumblit.com/icons/nav/iconfinder_User_group_132235.png" style="margin-right: 5px;">
+				Explore Groups
+			</a> 
+		</li>
+		<?php } ?>
+		<?php if ($wo['config']['pages'] == 1) { ?>
+		<li>
+			<a href="<?php echo Wo_SeoLink('index.php?link1=pages'); ?>" data-ajax="?link1=pages">
+				<img src="https://www.mumblit.com/icons/nav/iconfinder_Clien_list_132301.png" style="margin-right: 5px;">
+				Explore Pages
+			</a>
+		</li>
+		<li>
+		<a href="#" onclick="Wo_CreateGChat(event)">
+				 <img src="https://www.mumblit.com/icons/nav/User-Group-icon.png" style="margin-right: 5px; width: 24px;"> Start Group Chat </a>
+			</li>
+		<?php } ?>
+		<?php if ($wo['config']['blogs'] == 1) { ?>
+		<li>
+		<a href="<?php echo Wo_SeoLink('index.php?link1=blogs'); ?>">
+			<img src="https://www.mumblit.com/icons/nav/iconfinder_Unordered_list_132287.png" style="margin-right: 5px;">
+				Blogs
+			</a>
+		</li>
+		<?php } ?>
+		<?php if (Wo_CanBlog() == true) { ?>
+		<li>
+			<a href="<?php echo Wo_SeoLink('index.php?link1=my-blogs'); ?>" data-ajax="?link1=my-blogs">
+				<img src="https://www.mumblit.com/icons/nav/iconfinder_Lists_132198.png" style="margin-right: 5px;">
+				<?php echo $wo['lang']['my_articles'] ?>
+			</a>
+		</li>
+		<?php } ?>
+		<?php if ($wo['config']['classified'] == 1) { ?>
+		<li>
+			<a href="<?php echo Wo_SeoLink('index.php?link1=products'); ?>">
+				<img src="https://www.mumblit.com/icons/nav/iconfinder_Remove_from_basket_132222.png" style="margin-right: 5px;">
+				<?php echo $wo['lang']['market'];?>
+			</a>
+		</li>
+		<?php } ?>
+		<?php if ($wo['config']['classified'] == 1) { ?>
+		<li>
+			<a href="<?php echo Wo_SeoLink('index.php?link1=my-products'); ?>" data-ajax="?link1=my-products">
+				<img src="https://www.mumblit.com/icons/nav/iconfinder_Price_list_132262.png" style="margin-right: 5px;">
+				<?php echo $wo['lang']['my_products'];?>
+			</a>
+		</li>
+		<?php } ?>
+        <li>
+			<a href="<?php echo Wo_SeoLink('index.php?link1=search?query=');?>">
+				<img src="https://www.mumblit.com/icons/nav/iconfinder_Search_132289.png" style="margin-right: 5px;">
+				Mumblit Search
+			</a>
+		</li>
+		<?php if ($wo['config']['popular_posts'] == 1) { ?>
+		<li>
+			<a href="<?php echo $wo['config']['site_url']; ?>/most_liked" data-ajax="?link1=most_liked">
+				<img src="https://www.mumblit.com/icons/nav/iconfinder_Best_132205.png" style="margin-right: 5px;">
+				<?php echo $wo['lang']['popular_posts'];?>
+			</a>
+		</li>
+		<?php } ?>
+        <?php if ($wo['config']['events'] == 1) { ?>
+		<li>
+			<a href="<?php echo Wo_SeoLink('index.php?link1=events'); ?>">
+				<img src="https://www.mumblit.com/icons/nav/iconfinder_Calendar_132204.png" style="margin-right: 5px;">
+				Explore Events
+			</a>
+		</li>
+		<?php } ?>
+		<?php if ($wo['config']['games'] == 1) { ?>
+		<li>
+			<a href="<?php echo Wo_SeoLink('index.php?link1=new-game'); ?>" data-ajax="?link1=new-game">
+				<img src="https://www.mumblit.com/icons/nav/iconfinder_Game_controller_132310.png" style="margin-right: 5px;">
+				<?php echo $wo['lang']['games'];?>
+			</a>
+		</li>
+		<?php } ?>
+		<?php if ($wo['config']['forum'] == 1) { ?>
+		<li>
+			<a href="<?php echo Wo_SeoLink('index.php?link1=forum'); ?>">
+				<img src="https://www.mumblit.com/icons/nav/iconfinder_Notes_132293.png" style="margin-right: 5px;">
+				<?php echo $wo['lang']['forum'];?>
+			</a>
+		</li>
+		<?php } ?>
+		<?php if ($wo['config']['find_friends'] == 1) { ?>
+		<li>
+			<a href="<?php echo Wo_SeoLink('index.php?link1=friends-nearby'); ?>">
+				<img src="https://www.mumblit.com/icons/nav/iconfinder_Bricks_132349.png" style="margin-right: 5px;">
+				<?php echo $wo['lang']['find_friends'];?>
+			</a>
+		</li>
+		<?php } ?>
+		<?php if ($wo['config']['movies'] == 1) { ?>
+		<li>
+			<a href="<?php echo Wo_SeoLink('index.php?link1=movies'); ?>">
+				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#8d73cc;"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="7" x2="7" y2="7"></line><line x1="2" y1="17" x2="7" y2="17"></line><line x1="17" y1="17" x2="22" y2="17"></line><line x1="17" y1="7" x2="22" y2="7"></line></svg>
+				<?php echo $wo['lang']['movies'];?>
+			</a>
+		</li>
+		<?php } ?>
+		<li>
+		<div class="fb-share-button" data-href="https://www.mumblit.com" data-layout="button_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.mumblit.com%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
+		</li>
+		<li><script type="text/javascript" async src="https://platform.twitter.com/widgets.js"></script>
+		<a class="twitter-share-button"
+  href="https://twitter.com/intent/tweet"
+  data-size="small"
+  data-text="Looking for the best free speech social media platform out there? Look no further! Mumblit.Com is your choice for free speech!"
+  data-url="https://www.mumblit.com"
+  data-hashtags="maga,trump,trump2020,freespeech,mumblit"
+  data-related="realdonaldtrump,realjameswoods">
+Tweet
+</a></li>
+	</ul>
+</div>
+<?php } ?>

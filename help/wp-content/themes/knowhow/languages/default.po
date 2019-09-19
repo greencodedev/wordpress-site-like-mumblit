@@ -1,0 +1,917 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: KnowHow WordPress Theme\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-05-10 14:40+0100\n"
+"PO-Revision-Date: 2016-05-10 14:40+0100\n"
+"Last-Translator: Chris Mooney <contact@iamchrismooney.com>\n"
+"Language-Team: HeroThemes <hello@herothemes.com>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x1,2c;_ex:1,2c\n"
+"X-Poedit-Basepath: .\n"
+"X-Generator: Poedit 1.8.7\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: ..\n"
+"X-Poedit-SearchPath-1: ../framework\n"
+"X-Poedit-SearchPath-2: ../framework/admin\n"
+"X-Poedit-SearchPath-3: ../framework/widgets\n"
+"X-Poedit-SearchPath-4: ../framework/meta-box-library\n"
+"X-Poedit-SearchPath-5: ../framework/admin\n"
+"X-Poedit-SearchPath-6: ../framework/wysiwyg\n"
+
+#: ../404.php:18
+msgid "Oops! That page can&rsquo;t be found."
+msgstr ""
+
+#: ../404.php:19
+msgid ""
+"It looks like nothing was found at this location. Maybe try a search above?"
+msgstr ""
+
+#: ../archive-st_faq.php:28
+msgid "Frequently Asked Questions"
+msgstr ""
+
+#: ../archive.php:16
+#, php-format
+msgid "Category: %s"
+msgstr ""
+
+#: ../archive.php:19
+#, php-format
+msgid "Tag: %s"
+msgstr ""
+
+#: ../archive.php:26
+#, php-format
+msgid "Author Archives: %s"
+msgstr ""
+
+#: ../archive.php:34
+#, php-format
+msgid "Daily Archives: %s"
+msgstr ""
+
+#: ../archive.php:37
+#, php-format
+msgid "Monthly Archives: %s"
+msgstr ""
+
+#: ../archive.php:40
+#, php-format
+msgid "Yearly Archives: %s"
+msgstr ""
+
+#: ../archive.php:43
+msgid "Archives"
+msgstr ""
+
+#: ../author-bio.php:4
+msgid "About The Author"
+msgstr ""
+
+#: ../author.php:26
+#, php-format
+msgid "All posts by %s"
+msgstr ""
+
+#: ../category.php:14
+msgid "Category: "
+msgstr ""
+
+#: ../comments.php:25 ../options.php:147
+msgid "Comments"
+msgstr ""
+
+#: ../comments.php:33
+msgid "Comment navigation"
+msgstr ""
+
+#: ../comments.php:34
+msgid "&larr; Older Comments"
+msgstr ""
+
+#: ../comments.php:35
+msgid "Newer Comments &rarr;"
+msgstr ""
+
+#: ../comments.php:42
+msgid "Comments are closed."
+msgstr ""
+
+#: ../content-meta.php:34
+msgid "0 Comments"
+msgstr ""
+
+#: ../content-meta.php:34
+msgid "1 Comment"
+msgstr ""
+
+#: ../content-meta.php:34
+msgid "% Comments"
+msgstr ""
+
+#: ../content-video.php:11 ../content.php:13
+msgid "Read More"
+msgstr ""
+
+#: ../framework/admin/includes/class-options-framework-admin.php:91
+#: ../framework/admin/includes/class-options-framework-admin.php:92
+msgid "Theme Options"
+msgstr ""
+
+#: ../framework/admin/includes/class-options-framework-admin.php:204
+msgid "Click OK to reset. Any theme settings will be lost!"
+msgstr ""
+
+#: ../framework/admin/includes/class-options-framework-admin.php:235
+msgid "Default options restored."
+msgstr ""
+
+#: ../framework/admin/includes/class-options-framework-admin.php:289
+msgid "Options saved."
+msgstr ""
+
+#: ../framework/admin/includes/class-options-media-uploader.php:62
+msgid "No file chosen"
+msgstr ""
+
+#: ../framework/admin/includes/class-options-media-uploader.php:65
+#: ../framework/admin/includes/class-options-media-uploader.php:118
+msgid "Upload"
+msgstr ""
+
+#: ../framework/admin/includes/class-options-media-uploader.php:67
+#: ../framework/admin/includes/class-options-media-uploader.php:119
+#: ../framework/meta-box-library/inc/fields/file-input.php:42
+msgid "Remove"
+msgstr ""
+
+#: ../framework/admin/includes/class-options-media-uploader.php:70
+msgid "Upgrade your version of WordPress for full media support."
+msgstr ""
+
+#: ../framework/admin/includes/class-options-media-uploader.php:94
+msgid "View File"
+msgstr ""
+
+#: ../framework/admin/includes/class-options-sanitization.php:316
+msgid "No Repeat"
+msgstr ""
+
+#: ../framework/admin/includes/class-options-sanitization.php:317
+msgid "Repeat Horizontally"
+msgstr ""
+
+#: ../framework/admin/includes/class-options-sanitization.php:318
+msgid "Repeat Vertically"
+msgstr ""
+
+#: ../framework/admin/includes/class-options-sanitization.php:319
+msgid "Repeat All"
+msgstr ""
+
+#: ../framework/admin/includes/class-options-sanitization.php:331
+msgid "Top Left"
+msgstr ""
+
+#: ../framework/admin/includes/class-options-sanitization.php:332
+msgid "Top Center"
+msgstr ""
+
+#: ../framework/admin/includes/class-options-sanitization.php:333
+msgid "Top Right"
+msgstr ""
+
+#: ../framework/admin/includes/class-options-sanitization.php:334
+msgid "Middle Left"
+msgstr ""
+
+#: ../framework/admin/includes/class-options-sanitization.php:335
+msgid "Middle Center"
+msgstr ""
+
+#: ../framework/admin/includes/class-options-sanitization.php:336
+msgid "Middle Right"
+msgstr ""
+
+#: ../framework/admin/includes/class-options-sanitization.php:337
+msgid "Bottom Left"
+msgstr ""
+
+#: ../framework/admin/includes/class-options-sanitization.php:338
+msgid "Bottom Center"
+msgstr ""
+
+#: ../framework/admin/includes/class-options-sanitization.php:339
+msgid "Bottom Right"
+msgstr ""
+
+#: ../framework/admin/includes/class-options-sanitization.php:351
+msgid "Scroll Normally"
+msgstr ""
+
+#: ../framework/admin/includes/class-options-sanitization.php:352
+msgid "Fixed in Place"
+msgstr ""
+
+#: ../framework/admin/includes/class-options-sanitization.php:424
+msgid "Normal"
+msgstr ""
+
+#: ../framework/admin/includes/class-options-sanitization.php:425
+msgid "Italic"
+msgstr ""
+
+#: ../framework/admin/includes/class-options-sanitization.php:426
+msgid "Bold"
+msgstr ""
+
+#: ../framework/admin/includes/class-options-sanitization.php:427
+msgid "Bold Italic"
+msgstr ""
+
+#: ../framework/comment-functions.php:20
+msgid "Pingback:"
+msgstr ""
+
+#: ../framework/comment-functions.php:20
+msgid "(Edit)"
+msgstr ""
+
+#: ../framework/comment-functions.php:31
+msgid "Edit"
+msgstr ""
+
+#: ../framework/comment-functions.php:32
+msgid "Reply"
+msgstr ""
+
+#: ../framework/comment-functions.php:41
+msgid "Article Author"
+msgstr ""
+
+#: ../framework/comment-functions.php:47
+#, php-format
+msgid "%1$s at %2$s"
+msgstr ""
+
+#: ../framework/comment-functions.php:53
+msgid "Your comment is awaiting moderation."
+msgstr ""
+
+#: ../framework/meta-box-library/inc/classes/meta-box.php:252
+#: ../framework/meta-box-library/inc/meta-box.php:241
+msgid "Please correct the errors highlighted below and try again."
+msgstr ""
+
+#: ../framework/meta-box-library/inc/classes/meta-box.php:426
+#: ../framework/meta-box-library/inc/field.php:190
+msgid "+"
+msgstr ""
+
+#: ../framework/meta-box-library/inc/classes/meta-box.php:448
+#: ../framework/meta-box-library/inc/field.php:207
+msgid "&#8211;"
+msgstr ""
+
+#: ../framework/meta-box-library/inc/fields/button.php:35
+msgid "Click me"
+msgstr ""
+
+#: ../framework/meta-box-library/inc/fields/file-advanced.php:23
+msgid "Select Files"
+msgstr ""
+
+#: ../framework/meta-box-library/inc/fields/file-input.php:17
+msgid "Select File"
+msgstr ""
+
+#: ../framework/meta-box-library/inc/fields/file-input.php:40
+msgid "Select"
+msgstr ""
+
+#: ../framework/meta-box-library/inc/fields/file.php:19
+#, php-format
+msgid "You may only upload maximum %d file"
+msgstr ""
+
+#: ../framework/meta-box-library/inc/fields/file.php:20
+#, php-format
+msgid "You may only upload maximum %d files"
+msgstr ""
+
+#: ../framework/meta-box-library/inc/fields/file.php:70
+msgid "Error: Cannot delete file"
+msgstr ""
+
+#: ../framework/meta-box-library/inc/fields/image-advanced.php:22
+msgid "Select Images"
+msgstr ""
+
+#: ../framework/meta-box-library/inc/fields/map.php:48
+msgid "Find Address"
+msgstr ""
+
+#: ../framework/meta-box-library/inc/fields/oembed.php:54
+msgid "Embed HTML not available."
+msgstr ""
+
+#: ../framework/meta-box-library/inc/fields/oembed.php:76
+msgid "Preview"
+msgstr ""
+
+#: ../framework/meta-box-library/inc/fields/post.php:52
+msgid "Post"
+msgstr ""
+
+#: ../framework/meta-box-library/inc/fields/post.php:66
+#: ../framework/meta-box-library/inc/fields/taxonomy.php:40
+#: ../framework/meta-box-library/inc/fields/user.php:62
+#, php-format
+msgid "Select a %s"
+msgstr ""
+
+#: ../framework/meta-box-library/inc/fields/user.php:54
+msgid "User"
+msgstr ""
+
+#: ../framework/post-meta.php:35
+msgid "Sidebar Options"
+msgstr ""
+
+#: ../framework/post-meta.php:52
+msgid "Sidebar Position"
+msgstr ""
+
+#: ../framework/post-meta.php:57
+msgid "Sidebar Right"
+msgstr ""
+
+#: ../framework/post-meta.php:58
+msgid "Sidebar Left"
+msgstr ""
+
+#: ../framework/post-meta.php:59
+msgid "Sidebar Off"
+msgstr ""
+
+#: ../framework/post-meta.php:76
+msgid "Video Post Format"
+msgstr ""
+
+#: ../framework/post-meta.php:93
+msgid "Video URL (oEmbed)"
+msgstr ""
+
+#: ../framework/post-meta.php:95
+msgid ""
+"Enter the URL to your video. (Supported services: YouTube, Vimeo, Hulu, "
+"Instagram, Qik)"
+msgstr ""
+
+#: ../framework/post-meta.php:100
+msgid "Video File Upload"
+msgstr ""
+
+#: ../framework/post-meta.php:102
+msgid "Upload your video file."
+msgstr ""
+
+#: ../framework/post-meta.php:109
+msgid "Video Poster Upload"
+msgstr ""
+
+#: ../framework/post-meta.php:111
+msgid ""
+"The video poster is displayed on the video player until the user hits the "
+"play button. (Optional)."
+msgstr ""
+
+#: ../framework/post-types.php:20
+msgid "FAQs"
+msgstr ""
+
+#: ../framework/post-types.php:21
+msgid "FAQ"
+msgstr ""
+
+#: ../framework/post-types.php:22
+msgid "Add New"
+msgstr ""
+
+#: ../framework/post-types.php:23
+msgid "Add New FAQ"
+msgstr ""
+
+#: ../framework/post-types.php:24
+msgid "Edit FAQ"
+msgstr ""
+
+#: ../framework/post-types.php:25
+msgid "New FAQ"
+msgstr ""
+
+#: ../framework/post-types.php:26
+msgid "View FAQ"
+msgstr ""
+
+#: ../framework/post-types.php:27
+msgid "Search FAQs"
+msgstr ""
+
+#: ../framework/post-types.php:28
+msgid "No FAQs found"
+msgstr ""
+
+#: ../framework/post-types.php:29
+msgid "No FAQs found in Trash"
+msgstr ""
+
+#: ../framework/post-types.php:66 ../framework/post-types.php:69
+msgid "FAQ updated."
+msgstr ""
+
+#: ../framework/post-types.php:67
+msgid "Custom field updated."
+msgstr ""
+
+#: ../framework/post-types.php:68
+msgid "Custom field deleted."
+msgstr ""
+
+#: ../framework/post-types.php:71
+#, php-format
+msgid "FAQ restored to revision from %s"
+msgstr ""
+
+#: ../framework/post-types.php:72
+msgid "FAQ published."
+msgstr ""
+
+#: ../framework/post-types.php:73
+msgid "FAQ saved."
+msgstr ""
+
+#: ../framework/post-types.php:74
+msgid "FAQ submitted."
+msgstr ""
+
+#: ../framework/post-types.php:75
+#, php-format
+msgid "FAQ scheduled for: <strong>%1$s</strong>."
+msgstr ""
+
+#: ../framework/post-types.php:78
+msgid "FAQ draft updated."
+msgstr ""
+
+#: ../framework/template-navigation.php:16
+msgid "Post navigation"
+msgstr ""
+
+#: ../framework/template-navigation.php:26
+msgid "Older posts"
+msgstr ""
+
+#: ../framework/template-navigation.php:30
+msgid "Newer posts"
+msgstr ""
+
+#: ../framework/template-navigation.php:149 ../home.php:65 ../home.php:88
+#: ../template-front-page.php:69 ../template-front-page.php:92
+#, php-format
+msgid "View all posts in %s"
+msgstr ""
+
+#: ../framework/template-navigation.php:183 ../page.php:38
+#: ../single-st_faq.php:50 ../single.php:52
+msgid "Pages:"
+msgstr ""
+
+#: ../framework/widgets/widget-articles.php:23
+msgid "A widget that displays your latest articles"
+msgstr ""
+
+#: ../framework/widgets/widget-articles.php:29
+msgid "Latest Articles Widget"
+msgstr ""
+
+#: ../framework/widgets/widget-articles.php:115
+#: ../framework/widgets/widget-popular-articles.php:113
+msgid "Title:"
+msgstr ""
+
+#: ../framework/widgets/widget-articles.php:121
+#: ../framework/widgets/widget-popular-articles.php:119
+msgid "Amount to show:"
+msgstr ""
+
+#: ../framework/widgets/widget-functions.php:31
+msgid "No categories"
+msgstr ""
+
+#: ../framework/widgets/widget-popular-articles.php:23
+msgid "A widget that displays your most popular articles"
+msgstr ""
+
+#: ../framework/widgets/widget-popular-articles.php:29
+msgid "Popular Articles Widget"
+msgstr ""
+
+#: ../framework/wysiwyg/interface.php:2
+msgid "You are not allowed to be here"
+msgstr ""
+
+#: ../functions.php:42
+msgid "Primary Menu"
+msgstr ""
+
+#: ../functions.php:43
+msgid "Footer Menu"
+msgstr ""
+
+#: ../functions.php:152 ../functions.php:153 ../functions.php:161
+msgid "Articles"
+msgstr ""
+
+#: ../functions.php:154 ../functions.php:163 ../functions.php:164
+msgid "Add Article"
+msgstr ""
+
+#: ../functions.php:162 ../functions.php:166
+msgid "Article"
+msgstr ""
+
+#: ../functions.php:165
+msgid "Edit Article"
+msgstr ""
+
+#: ../functions.php:167
+msgid "View Article"
+msgstr ""
+
+#: ../functions.php:168
+msgid "Search Articles"
+msgstr ""
+
+#: ../functions.php:169
+msgid "No Article Found"
+msgstr ""
+
+#: ../functions.php:170
+msgid "No Articles found in Trash"
+msgstr ""
+
+#: ../header.php:62
+msgid "Search"
+msgstr ""
+
+#: ../home.php:27 ../template-front-page.php:31
+msgid "Article Categories"
+msgstr ""
+
+#: ../no-results.php:12
+msgid "Nothing Found"
+msgstr ""
+
+#: ../no-results.php:18
+#, php-format
+msgid ""
+"Ready to publish your first post? <a href=\"%1$s\">Get started here</a>."
+msgstr ""
+
+#: ../no-results.php:22
+msgid ""
+"Sorry, but nothing matched your search terms. Please try again with some "
+"different keywords."
+msgstr ""
+
+#: ../no-results.php:27
+msgid ""
+"It seems we can't find what you're looking for. Perhaps searching can help."
+msgstr ""
+
+#: ../options.php:32
+msgid "One"
+msgstr ""
+
+#: ../options.php:33
+msgid "Two"
+msgstr ""
+
+#: ../options.php:34
+msgid "Three"
+msgstr ""
+
+#: ../options.php:35
+msgid "Four"
+msgstr ""
+
+#: ../options.php:36
+msgid "Five"
+msgstr ""
+
+#: ../options.php:41
+msgid "French Toast"
+msgstr ""
+
+#: ../options.php:42
+msgid "Pancake"
+msgstr ""
+
+#: ../options.php:43
+msgid "Omelette"
+msgstr ""
+
+#: ../options.php:44
+msgid "Crepe"
+msgstr ""
+
+#: ../options.php:45
+msgid "Waffle"
+msgstr ""
+
+#: ../options.php:116
+msgid "General Options"
+msgstr ""
+
+#: ../options.php:121
+msgid "Enable Live Search?"
+msgstr ""
+
+#: ../options.php:122
+msgid "Check to enable live search."
+msgstr ""
+
+#: ../options.php:127
+msgid "Search Text"
+msgstr ""
+
+#: ../options.php:134
+msgid "Article Meta"
+msgstr ""
+
+#: ../options.php:135
+msgid "Select which meta information to show with article posts."
+msgstr ""
+
+#: ../options.php:144
+msgid "Date"
+msgstr ""
+
+#: ../options.php:145
+msgid "Author"
+msgstr ""
+
+#: ../options.php:146
+msgid "Category"
+msgstr ""
+
+#: ../options.php:151
+msgid "Show Article Author Box?"
+msgstr ""
+
+#: ../options.php:152
+msgid ""
+"Check to show an author box at the end of an article. (The author must have "
+"their bio filled out for this to show)"
+msgstr ""
+
+#: ../options.php:158
+msgid "Show Related Articles?"
+msgstr ""
+
+#: ../options.php:159
+msgid "Check to show a related articles box at the end of an article."
+msgstr ""
+
+#: ../options.php:164
+msgid "Footer Copyright Text"
+msgstr ""
+
+#: ../options.php:165
+msgid "Custom copyright text that will appear in the footer of your theme."
+msgstr ""
+
+#: ../options.php:174
+msgid "Homepage Options"
+msgstr ""
+
+#: ../options.php:177
+msgid "Sidebar Layout"
+msgstr ""
+
+#: ../options.php:178
+msgid "Select or disable the position of the sidebar."
+msgstr ""
+
+#: ../options.php:189
+msgid "Top Level Category Options"
+msgstr ""
+
+#: ../options.php:190
+msgid "The below options apply to top level categories."
+msgstr ""
+
+#: ../options.php:193
+msgid "Exclude Categories"
+msgstr ""
+
+#: ../options.php:194 ../options.php:240
+msgid ""
+"Enter a list of category IDs to exclude from displaying on the homepage. "
+"Seperate with a comma like this: 3,6,4"
+msgstr ""
+
+#: ../options.php:200
+msgid "Number Of Category Posts"
+msgstr ""
+
+#: ../options.php:201
+msgid "Enter the number of posts to show under each category. Default is 5"
+msgstr ""
+
+#: ../options.php:208
+msgid "Category Post Ordering"
+msgstr ""
+
+#: ../options.php:209
+msgid "Change which article are shown below each category."
+msgstr ""
+
+#: ../options.php:215
+msgid "Post Date"
+msgstr ""
+
+#: ../options.php:216
+msgid "Random"
+msgstr ""
+
+#: ../options.php:217
+msgid "Popular"
+msgstr ""
+
+#: ../options.php:221
+msgid "Show Category Counts?"
+msgstr ""
+
+#: ../options.php:222 ../options.php:248
+msgid ""
+"Display the number of articles each category contains next to the category "
+"title?"
+msgstr ""
+
+#: ../options.php:228
+msgid "Sub Categories"
+msgstr ""
+
+#: ../options.php:229
+msgid "The below options apply to sub (2nd level) categories."
+msgstr ""
+
+#: ../options.php:233
+msgid "Show Sub Categories?"
+msgstr ""
+
+#: ../options.php:234
+msgid "Check to show sub categories on the homepage."
+msgstr ""
+
+#: ../options.php:239
+msgid "Exclude Sub Categories"
+msgstr ""
+
+#: ../options.php:247
+msgid "Show Sub Category Counts?"
+msgstr ""
+
+#: ../options.php:255
+msgid "FAQ Options"
+msgstr ""
+
+#: ../options.php:259
+msgid "FAQ Permalink Slug"
+msgstr ""
+
+#: ../options.php:260
+msgid ""
+"Enter the slug for your FAQ page. (Important: Set and resave your permalinks "
+"when you change this option)."
+msgstr ""
+
+#: ../options.php:266
+msgid "FAQ Sidebar"
+msgstr ""
+
+#: ../options.php:267
+msgid "Select or disable the position of the FAQ page sidebar."
+msgstr ""
+
+#: ../options.php:280
+msgid "Styling Options"
+msgstr ""
+
+#: ../options.php:283
+msgid "Custom Logo"
+msgstr ""
+
+#: ../options.php:284
+msgid "Upload a custom logo for your Website."
+msgstr ""
+
+#: ../options.php:288
+msgid "Custom Favicon"
+msgstr ""
+
+#: ../options.php:289
+msgid ""
+"Upload a 16px x 16px png/ico image that will represent your website's "
+"favicon."
+msgstr ""
+
+#: ../options.php:293
+msgid "Footer Widget Columns"
+msgstr ""
+
+#: ../options.php:294
+msgid "Select the number of column the footer widget should be displayed in."
+msgstr ""
+
+#: ../options.php:304
+msgid "Theme Color"
+msgstr ""
+
+#: ../options.php:305
+msgid ""
+"Select the theme color. (Works best when this and the link color match)."
+msgstr ""
+
+#: ../options.php:310
+msgid "Link Color"
+msgstr ""
+
+#: ../options.php:311
+msgid "Select a custom link color."
+msgstr ""
+
+#: ../options.php:316
+msgid "Link Color Hover"
+msgstr ""
+
+#: ../options.php:317
+msgid "Select a custom link hover color"
+msgstr ""
+
+#: ../options.php:322
+msgid "Custom CSS"
+msgstr ""
+
+#: ../options.php:323
+msgid "Add some CSS to your theme by adding it to this block."
+msgstr ""
+
+#: ../page-navigation.php:6
+msgid "&larr; Newer Entries"
+msgstr ""
+
+#: ../page-navigation.php:12
+msgid "Older Entries &rarr;"
+msgstr ""
+
+#: ../search.php:59
+msgid "Sorry, no posts were found."
+msgstr ""
+
+#: ../search.php:79
+#, php-format
+msgid "Search Results for: %s"
+msgstr ""
+
+#: ../search.php:80
+msgid "Here's what we've found for you"
+msgstr ""
+
+#: ../searchform.php:2
+msgid "Search..."
+msgstr ""
+
+#: ../single-related.php:21
+msgid "Related Articles"
+msgstr ""
+
+#: ../single.php:56
+msgid "Page"
+msgstr ""
+
+#: ../single.php:64
+msgid "Tagged:"
+msgstr ""
+
+#: ../tag.php:13
+msgid "Articles Tagged: "
+msgstr ""

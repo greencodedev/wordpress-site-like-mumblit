@@ -1,0 +1,5 @@
+<?php if(!empty($wo['plugin_list']['plugin_actived']) && in_array('Combo', $wo['plugin_list']['plugin_actived']) && $wo['system']['combo_enable_welcome'] == 1){ ?>
+	<div class="panel" style="padding:10px; font-weight:bolder;">
+		<?php echo combo_welcome(); ?>, <?php echo $wo['user']['name']; ?>!!
+	</div>
+<?php } ?>

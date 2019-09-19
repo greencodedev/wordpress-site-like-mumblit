@@ -1,0 +1,81 @@
+<div class="row col-sm-12">
+	<div class="list-group panel-default">
+		<div class="list-group-item">
+			<strong><?php echo $wo['lang']['plugin_configurations']; ?></strong>
+		</div>
+		<div class="panel-body">		
+			<form action="<?php echo $wo['config']['site_url']; ?>/plugin_requests.php?f=admin_combo&task=setting" class="js_ajax_forms form-horizontal" data-url="?f=admin_combo&task=setting" method="post">
+				<?php /*									
+				<div class="form-group">
+					<label class="col-sm-4"><?php echo $wo['lang']['plugin_combo_enable_reaction']; ?></label>
+					<div class="col-sm-7">
+						<select class="form-control" name="enable_reaction">
+							<option <?php if($wo['system']['combo_enable_reaction'] == 1){ echo 'selected=""'; } ?> value="1"><?php echo $wo['lang']['yes']; ?></option>
+							<option <?php if($wo['system']['combo_enable_reaction'] == 0){ echo 'selected=""'; } ?> value="0"><?php echo $wo['lang']['no']; ?></option>
+						</select>
+						<p class="help-block"><?php echo $wo['lang']['plugin_combo_enable_reaction_desc']; ?></p>
+					</div>
+				</div> */ ?>
+				
+				<div class="form-group">
+					<label class="col-sm-4"><?php echo $wo['lang']['plugin_combo_enable_welcome']; ?></label>
+					<div class="col-sm-7">
+						<select class="form-control" name="enable_welcome">
+							<option <?php if($wo['system']['combo_enable_welcome'] == 1){ echo 'selected=""'; } ?> value="1"><?php echo $wo['lang']['yes']; ?></option>
+							<option <?php if($wo['system']['combo_enable_welcome'] == 0){ echo 'selected=""'; } ?> value="0"><?php echo $wo['lang']['no']; ?></option>
+						</select>
+						<p class="help-block"><?php echo $wo['lang']['plugin_combo_enable_welcome_desc']; ?></p>
+					</div>
+				</div> 
+				
+				<div class="form-group">
+					<label class="col-sm-4"><?php echo $wo['lang']['plugin_combo_enable_tag_act']; ?></label>
+					<div class="col-sm-7">
+						<select class="form-control" name="enable_tag_action">
+							<option <?php if($wo['system']['combo_enable_tag_action'] == 1){ echo 'selected=""'; } ?> value="1"><?php echo $wo['lang']['yes']; ?></option>
+							<option <?php if($wo['system']['combo_enable_tag_action'] == 0){ echo 'selected=""'; } ?> value="0"><?php echo $wo['lang']['no']; ?></option>
+						</select>
+						<p class="help-block"><?php echo $wo['lang']['plugin_combo_enable_tag_act_desc']; ?></p>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label class="col-sm-4">Enable PhotoFrame</label>
+					<div class="col-sm-7">
+						<select class="form-control" name="frame">
+							<option <?php if($wo['system']['combo_enable_frame'] == 1){ echo 'selected=""'; } ?> value="1"><?php echo $wo['lang']['yes']; ?></option>
+							<option <?php if($wo['system']['combo_enable_frame'] == 0){ echo 'selected=""'; } ?> value="0"><?php echo $wo['lang']['no']; ?></option>
+						</select>
+						<p class="help-block">Active add photo frame in profile</p>
+					</div>
+				</div>
+	
+				<div class="form-group x-hidden">
+					<label class="col-sm-4"><?php echo $wo['lang']['plugin_combo_enable_dragdrop']; ?></label>
+					<div class="col-sm-7">
+						<select class="form-control" name="enable_dragdrop">
+							<option <?php if($wo['system']['combo_enable_dragdrop'] == 1){ echo 'selected=""'; } ?> value="1"><?php echo $wo['lang']['yes']; ?></option>
+							<option <?php if($wo['system']['combo_enable_dragdrop'] == 0){ echo 'selected=""'; } ?> value="0"><?php echo $wo['lang']['no']; ?></option>
+						</select>
+						<p class="help-block"><?php echo $wo['lang']['plugin_combo_enable_dragdrop_desc']; ?></p>
+					</div>
+				</div>
+				
+				<div class="body-header">
+					<button class="btn btn-success" type="submit"><?php echo $wo['lang']['plugin_save_changes']; ?></button>
+				</div>
+				
+				<div class="row col-xs-12">
+					<?php /* success */ ?>
+					<div class="alert alert-success mb0 mt10 x-hidden" role="alert"></div>
+					<?php /* ssuccess */ ?>
+					<?php /* serror */ ?>
+					<div class="alert alert-danger mb0 mt10 x-hidden" role="alert"></div>
+					<?php /* serror */ ?>
+				</div>	
+			
+			</form>
+
+		</div>
+	</div>
+</div>

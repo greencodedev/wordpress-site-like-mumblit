@@ -1,0 +1,259 @@
+<div class="page-margin">
+	<div class="row">
+		<div class="col-md-2 leftcol"><?php echo Wo_LoadPage("sidebar/left-sidebar"); ?></div>
+		<div class="col-md-12 profile-lists middlecol" style="width: 80%;">
+			<div class="wo_my_pages" style="border: 1px solid #ccc; border-radius: 2px; padding: 0;">
+                <div class="my_pages_header row" style="margin: 0px 0px 0px;">
+					<ul class="<?php echo Wo_RightToLeft('pull-left'); ?>" style="width: 100% !important;">
+						<div style="float: right; padding-top: 20px;"><a href="https://www.mumblit.com/setting/notifications-settings">Notify Settings</a></div><h3>Notifications</h3> 
+				<hr style="border-color: #ccc !important;">
+				<div>
+					<style>
+					@media screen and (max-width: 768px) {
+  .middlecol {
+    width: 100% !important;
+	margin: 0px !important;
+  }
+}
+			.notification_panel { background-color:#FFF; margin-bottom:10px; padding:0px; float:left; width:100%}
+			.notification_panel .avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+	float: left;
+	border: 2px solid #462178;
+}
+.notification_text { margin-left:10px; margin-top:4px;}
+.timeslot { float:right; color:#666;}
+div.e:hover {
+    background-color:#f9f9f9;
+}
+.plink:a { color: #462178; }
+			</style>
+			<div class="notification_panel">
+           <?php
+		   $homenotificatins=Wo_GetHomeNotification();
+		   $orginal_txt  = array(
+                        "{postType}",
+                        "{post}"
+                    );
+		   ?> 
+				<?php   
+			foreach ($homenotificatins as $homenotificatin) { 
+		   
+		 if($homenotificatin['notifier_id']!=0) {  $user_info=Wo_UserData($homenotificatin['notifier_id']); 
+		 } else {
+		   $user_info=Wo_PageData($homenotificatin['page_id']); }
+	
+		   $languesg = Wo_LangsFromDB($user_info['language']);
+		   
+		   $notificationText= $homenotificatin['text'];
+		   $notificationType2= $homenotificatin['type2'];
+
+                    if (isset($notificationType2) && !empty($notificationType2)) {
+                        if ($notificationType2 == 'post_image') {
+                            $type2 = $languesg['photo_n_label'];
+                        } elseif ($notificationType2 == 'post_youtube' || $notificationType2 == 'post_video') {
+                            $type2 = $languesg['video_n_label'];
+                        } elseif ($notificationType2 == 'post_file') {
+                            $type2 = $languesg['file_n_label'];
+                        } elseif ($notificationType2 == 'post_vine') {
+                            $type2 = $languesg['vine_n_label'];
+                        } elseif ($notificationType2 == 'post_soundFile') {
+                            $type2 = $languesg['sound_n_label'];
+                        } elseif ($notificationType2 == 'post_avatar') {
+                            $type2 = $languesg['avatar_n_label'];
+                        } elseif ($notificationType2 == 'post_cover') {
+                            $type2 = $languesg['cover_n_label'];
+                        } else {
+                            $type2 = '';
+                        }
+                    } else {
+                        $type2 = $languesg['post_n_label'];
+                    }
+
+				$notificationText='';
+			 $replaced_txt = array(
+                        $type2,
+                        $notificationText
+                    );
+		 if (!empty($homenotificatin['type'])) {
+                        if ($homenotificatin['type'] == "following") {
+                            $homenotificatin['type_text'] .= $languesg['followed_you'];
+                        }
+                        if ($homenotificatin['type'] == 'comment_mention') {
+                            $homenotificatin['type_text'] .= $languesg['comment_mention'];
+                        }
+						if ($homenotificatin['type'] == 'reaction') {
+                            $homenotificatin['type_text'] .= $languesg['reacted_to_your_post'];
+                        }
+						if ($homenotificatin['type'] == 'accepted_invite') {
+                            $homenotificatin['type_text'] .= $languesg['accepted_invited_page'];
+                        }
+                        if ($homenotificatin['type'] == 'post_mention') {
+                            $homenotificatin['type_text'] .= $languesg['post_mention'];
+                        }
+                        if ($homenotificatin['type'] == 'liked_post') {
+                            $homenotificatin['type_text'] = str_replace($orginal_txt, $replaced_txt, $languesg['liked_post']);
+                        }
+                        if ($homenotificatin['type'] == 'wondered_post') {
+                            $lang_type                                  = ($wo['config']['second_post_button'] == 'wonder') ? $languesg['wondered_post'] : $languesg['disliked_post'];
+                            $homenotificatin['type_text'] = str_replace($orginal_txt, $replaced_txt, $lang_type);
+                        }
+                        if ($homenotificatin['type'] == 'share_post') {
+                            $homenotificatin['type_text'] = str_replace($orginal_txt, $replaced_txt, $languesg['share_post']);
+                        }
+                        if ($homenotificatin['type'] == 'comment') {
+                            $homenotificatin['type_text'] = str_replace($orginal_txt, $replaced_txt, $languesg['commented_on_post']);
+                        }
+                        if ($homenotificatin['type'] == 'comment_reply') {
+							
+                            $homenotificatin['type_text'] = str_replace('{comment}', $homenotificatin['text'], $languesg['replied_to_comment']);
+                        }
+                        if ($homenotificatin['type'] == 'comment_reply_mention') {
+                            $homenotificatin['type_text'] = str_replace('{comment}', $homenotificatin['text'], $languesg['comment_reply_mention']);
+                        }
+                        if ($homenotificatin['type'] == 'also_replied') {
+                            $homenotificatin['type_text'] = str_replace('{comment}', $homenotificatin['text'], $languesg['also_replied']);
+                        }
+                        if ($homenotificatin['type'] == 'liked_comment') {
+                          //  $homenotificatin['type_text'] = str_replace('{comment}', $homenotificatin['text'], $languesg['liked_comment']);
+						  $homenotificatin['type_text']='Liked your comment';
+                        }
+                        if ($homenotificatin['type'] == 'wondered_comment') {
+                            $lang_type                                  = ($wo['config']['second_post_button'] == 'wonder') ? $languesg['wondered_comment'] : $languesg['disliked_comment'];
+                            $homenotificatin['type_text'] = str_replace('{comment}', $homenotificatin['text'], $lang_type);
+                        }
+                        if ($homenotificatin['type'] == 'liked_reply_comment') {
+                            $homenotificatin['type_text'] = str_replace('{comment}', $homenotificatin['text'], $languesg['liked_reply_comment']);
+                        }
+                        if ($homenotificatin['type'] == 'wondered_reply_comment') {
+                            $lang_type                                  = ($wo['config']['second_post_button'] == 'wonder') ? $languesg['wondered_reply_comment'] : $languesg['disliked_reply_comment'];
+                            $homenotificatin['type_text'] = str_replace('{comment}', $homenotificatin['text'], $lang_type);
+                        }
+                        if ($homenotificatin['type'] == 'profile_wall_post') {
+                            $homenotificatin['type_text'] = $languesg['posted_on_timeline'];
+                        }
+                        if ($homenotificatin['type'] == 'visited_profile') {
+                            $homenotificatin['type_text'] = $languesg['profile_visted'];
+                        }
+                        if ($homenotificatin['type'] == 'liked_page') {
+                            $page                                       = Wo_PageData($homenotificatin['page_id']);
+                            $homenotificatin['type_text'] = str_replace('{page_name}', $page['name'], $languesg['liked_page']);
+                        }
+                        if ($homenotificatin['type'] == 'joined_group') {
+                            $group                                      = Wo_GroupData($homenotificatin['group_id']);
+                            $homenotificatin['type_text'] = str_replace('{group_name}', $group['name'], $languesg['joined_group']);
+                        }
+                        if ($homenotificatin['type'] == 'accepted_invite') {
+                            $page_id                                    = @end(explode('/', $homenotificatin['url']));
+                            $page                                       = Wo_PageData(Wo_PageIdFromPagename($page_id));
+                            $homenotificatin['type_text'] = str_replace('{page_name}', $page['name'], $languesg['accepted_invited_page']);
+                        }
+                        
+                        if ($homenotificatin['type'] == 'invited_page') {
+                            $page_id                                    = @end(explode('/', $homenotificatin['url']));
+                            $page                                       = Wo_PageData(Wo_PageIdFromPagename($page_id));
+                            $homenotificatin['type_text'] = str_replace('{page_name}', $page['name'], $languesg['invited_page']);
+                        }
+                        if ($homenotificatin['type'] == 'accepted_join_request') {
+                            $group_id                                   = @end(explode('/', $homenotificatin['url']));
+                            $group                                      = Wo_GroupData(Wo_GroupIdFromGroupname($group_id));
+                            $homenotificatin['type_text'] = str_replace('{group_name}', $group['name'], $languesg['accepted_join_request']);
+                        }
+                        if ($homenotificatin['type'] == 'added_you_to_group') {
+                            $group_id                                   = @end(explode('/', $homenotificatin['url']));
+                            $group                                      = Wo_GroupData(Wo_GroupIdFromGroupname($group_id));
+                            $homenotificatin['type_text'] = str_replace('{group_name}', $group['name'], $languesg['added_you_to_group']);
+                        }
+                        if ($homenotificatin['type'] == 'requested_to_join_group') {
+                            $homenotificatin['type_text'] = $languesg['requested_to_join_group'];
+                        }
+                        
+                        if ($homenotificatin['type'] == 'interested_event') {
+                            $event_data                                 = Wo_EventData($homenotificatin['event_id']);
+                            $homenotificatin['type_text'] = str_replace('{event_name}', $event_data['name'], $languesg['is_interested']);
+                        }
+                        if ($homenotificatin['type'] == 'going_event') {
+                            $event_data                                 = Wo_EventData($homenotificatin['event_id']);
+                            $homenotificatin['type_text'] = str_replace('{event_name}', $event_data['name'], $languesg['is_going']);
+                        }
+                        if ($homenotificatin['type'] == 'invited_event') {
+                            $event_data                                 = Wo_EventData($homenotificatin['event_id']);
+                            $homenotificatin['type_text'] = str_replace('{event_name}', $event_data['name'], $languesg['invited_you_event']);
+                        }
+                        if ($homenotificatin['type'] == 'forum_reply') {
+                            $homenotificatin['type_text'] = $languesg['replied_to_topic'];
+                        }
+                        if ($homenotificatin['type'] == 'accepted_request') {
+                            if ($wo['config']['connectivitySystem'] == 1) {
+                                $homenotificatin['type_text'] = $languesg['accepted_friend_request'];
+                            } else {
+                                $homenotificatin['type_text'] = $languesg['accepted_follow_request'];
+                            }
+                        }
+                        
+                        if ($homenotificatin['type'] == 'admin_notification') {
+                            $homenotificatin['type_text'] = $homenotificatin['text'];
+                            $homenotificatin['url']       = $homenotificatin['full_link'];
+                        }
+                        if ($homenotificatin['type'] == 'page_admin') {
+                            $homenotificatin['type_text'] = $languesg['added_page_admin'];
+                            $homenotificatin['url']       = $homenotificatin['url'];
+                        }
+                        if ($homenotificatin['type'] == 'group_admin') {
+                            $homenotificatin['type_text'] = $languesg['added_group_admin'];
+                            $homenotificatin['url']       = $homenotificatin['url'];
+                        }
+                        if ($homenotificatin['type'] == 'added_u_as') {
+                            $homenotificatin['type_text'] = $homenotificatin['text'];
+                            $homenotificatin['url']       = $homenotificatin['url'];
+                        }
+                        if ($homenotificatin['type'] == 'accept_u_as') {
+                            $homenotificatin['type_text'] = $homenotificatin['text'];
+                            $homenotificatin['url']       = $homenotificatin['url'];
+                        }
+                        if ($homenotificatin['type'] == 'rejected_u_as') {
+                            $homenotificatin['type_text'] = $homenotificatin['text'];
+                            $homenotificatin['url']       = $homenotificatin['url'];
+                        }
+                    }
+		  $useravatar=str_replace("https://www.mumblit.com/","",$user_info['avatar']);
+		  $avaterfileSrc="https://www.mumblit.com/icons/".$homenotificatin['type'].".png";
+
+		  
+		 if(file_exists($_SERVER['DOCUMENT_ROOT'].'/themes/mumblit/reaction/reactions_'.strtolower($notificationType2).'.png'))
+		 {
+			 $avaterfileSrc='https://www.mumblit.com/themes/mumblit/reaction/reactions_'.strtolower($notificationType2).'.png';
+			}
+				?>
+              
+                <div class="pull-left image"><img src="<?php echo $avaterfileSrc; ?>" style="padding: 3px; float: left; width: 25px; margin-right: 15px;"> <a style="color: #6f5f84;" href="https://www.mumblit.com/<?php echo $user_info['username']; ?>"> <img src="https://www.mumblit.com/<?php echo $useravatar; ?>?cache=0" class="avatar" alt="<?php echo  $user_info['username']; ?> profile picture"> </div>
+                <div class="pull-left notification_text" ><b>@<?php echo  $user_info['username']; ?></b></a> <a href="<?php echo Wo_SeoLink($homenotificatin['url']); ?>"><?php echo $homenotificatin['type_text']; ?></a><br /> </div><div class="timeslot"> <em><?php echo Wo_Time_Elapsed_String($homenotificatin['time']); ?></em></div>
+                
+                <?php 
+				if($homenotificatin['post_id']!=0) { $getPost = Wo_PostData($homenotificatin['post_id']); 
+			
+				if($getPost['postText']) { ?>
+                <div style="clear:both;"></div>
+             
+                <div style="border:1px solid #ccc; cursor:pointer; border-radius:14px; width:85%; padding:10px;margin-left: 10%;" onclick="location.href='<?php echo $getPost['url'] ?>';" class="e" >
+                <?php
+	
+				
+				echo $getPost['postText'];
+				
+				  ?>
+                </div>
+              
+                <?php } }?>
+                <div style="clear:both;"></div>
+                <hr>
+                <?php } ?>
+				Attention: Notifications older than 30 days are auto-deleted from the system.
+            </div>	
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

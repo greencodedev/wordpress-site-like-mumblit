@@ -1,0 +1,49 @@
+<?php global $sub_view; ?>
+   <div class="list-group-item"><i class="fa fa-fw fa-language"></i> Edit language: <?php echo ucfirst($sub_view); ?></div>
+   
+<div class="list-group panel mt10">
+   <div class="setting-well page-margin panel-body">
+     <div class="table-responsive">
+      <table class="table table-hover table-bordered table-condensed setting-table">
+         <thead>
+            <tr>
+               <th>Keyword</th>
+               <th>Value</th>
+               <th>Action</th>
+            </tr>
+         </thead>
+         <tbody class="posts-result manage-posts-list">
+            <?php 
+            $langs = Wo_LangsFromDB($_GET['id']);
+            if (count($langs) > 0) {
+                foreach ($langs as $wo['lang_key'] => $wo['langs']) {
+                	$wo['langs'] = $wo['langs'];
+                    echo Wo_LoadPage('plugins/edit_lang/list');
+                }
+            }  
+            ?>
+         </tbody>
+      </table>
+      </div>
+   </div>
+</div>
+
+<script type="text/javascript">
+function Wo_DeleteCustomPage(id) {
+  if (id == '') {
+    return false;
+  }
+  if (!confirm('Are you sure you want to delete this page ?')) {
+    return false;
+  }
+  Wo_progressIconLoader($('#' + id).find('.delete-field'));
+  $.get(Wo_Ajax_Requests_File(), {f: 'admin_setting', s:'delete_page', id:id}, function (data) {
+     if (data.status == 200) {
+        $('#' + id).fadeOut(300, function () {
+          $(this).remove();
+        });
+     }
+     Wo_progressIconLoader($('#' + id).find('.delete-field'));
+  });
+}
+</script>

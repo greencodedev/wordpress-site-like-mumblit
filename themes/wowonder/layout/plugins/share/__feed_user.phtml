@@ -1,0 +1,51 @@
+		<div class="profile-style">
+  		 <span class="user-popover" data-type="<?php echo $_user['type']; ?>" data-id="<?php echo $_user['user_id']; ?>">
+  		 <a href="<?php echo $wo['config']['site_url'].'/'.$_user['username']?>" data-ajax="?link1=timeline&u=<?php echo $_user['username']?>&ref=se">
+    		  <div class="avatar <?php echo Wo_RightToLeft('pull-left');?>">
+         		<img src="<?php echo $wo['config']['site_url'].'/'.$_user['user_picture'];?>" alt="<?php echo $_user['user_fullname']; ?> Profile Picture" />
+      		  </div>
+      		<?php echo $_user['user_fullname']; ?>
+      		<?php if(empty($_user['group_id'])) { ?>
+      		<?php if($_user['verified'] == 1) {   ?>
+      		<span class="verified-color">
+      		<i class="fa fa-check-circle" title="<?php echo $wo['lang']['verified_user']; ?>"></i>
+      		</span>
+      		<?php } ?>
+      		<?php } ?>
+   		</a>
+   	    </span>
+   
+   		<?php if (!empty($_user['page_id'])) { ?>
+   		
+		<div class="user-lastseen">
+      		<?php echo $wo['lang']['category'];?> <?php echo $_user['category']; ?>
+   		</div>
+   		<div class="user-follow-button">
+      		<?php echo Wo_GetLikeButton($_user['page_id']);?>
+   		</div>
+   		
+		<?php } else if (!empty($_user['group_id'])) { ?>
+   		
+		<div class="user-lastseen">
+    		  <?php echo $wo['lang']['members'];?>: <?php echo Wo_CountGroupMembers($_user['id']);?>
+   		</div>
+   		<div class="user-follow-button">
+   		   <?php echo Wo_GetJoinButton($_user['id']);?>
+   		</div>
+		
+   		<?php } else { ?>
+   		   
+		    <?php if($wo['config']['user_lastseen'] == 1 && $_user['showlastseen'] != 0) { ?>
+   				<div class="user-lastseen">
+   		   		<?php echo Wo_UserStatus($_user['user_id'],$_user['lastseen']); ?>
+   				</div>
+   		
+				<?php if (!isset($_user['no_btn'])) { ?>
+   				<div class="user-follow-button">
+   		   		<?php echo Wo_GetFollowButton($_user['user_id']);?>
+   				</div>
+   				<?php } ?>
+           <?php } ?>
+		   
+   <?php } ?>
+ </div>

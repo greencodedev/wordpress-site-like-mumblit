@@ -1,0 +1,39 @@
+<?php if($ad['user_id'] == $wo['user']['user_id']  ||  Wo_IsAdmin($wo['user']['user_id']) === true){ ?>
+<div class="pull-right">
+   <span class="dropdown">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+	     <span class="caret pointer"></span>
+	  </a>
+<ul class="dropdown-menu post-privacy-menu post-options" role="menu">
+   <li>
+      <span class="pointer" onclick="AdsDisableBox($(this), <?php echo $ad['id']; ?>);" data-value="0">
+	     <i class="fa fa-globe progress-icon fa-fw" data-icon="world"></i>
+		 <span class="status_do" style="padding-left:0px;"><?php echo $wo['lang']['plugin_ads_disable']; ?></span> <?php echo $wo['lang']['plugin_ads_this_ads']; ?>
+      </span>
+   </li> 
+   <?php if($ad['user_id'] == $wo['user']['user_id']){ ?>  
+   <li><hr></li>          
+   <li>
+      <span class="pointer" onclick="AdsEditBox($(this), <?php echo $ad['id']; ?>);">
+         <i class="fa fa-pencil fa-fw" data-icon="pencil"></i><?php echo $wo['lang']['plugin_ads_edit_ads']; ?>
+      </span>
+   </li>
+   <?php } ?>
+   <li><hr></li>
+   <li>
+      <span class="pointer" onclick="AdsDeleteBox($(this), <?php echo $ad['id']; ?>);">
+         <i class="fa fa-trash-o fa-fw" data-icon="trash-o"></i><?php echo $wo['lang']['plugin_ads_delete_ads']; ?>
+      </span>
+   </li>
+   <li><hr></li>
+   <li>
+      <span class="pointer" onclick="AdsCloseBox($(this), <?php echo $ad['id']; ?>);">
+         <i class="fa fa-cog fa-fw" data-icon="cog"></i><?php echo $wo['lang']['plugin_ads_hidden_ads']; ?>
+      </span>
+   </li>
+</ul>
+   </span>
+</div>
+<?php } else {?>
+<div class="pull-right flip"><button type="button" class="close close_ads" onclick="AdsCloseBox($(this), <?php echo $ad['id']; ?>);"><span>&times;</span></button></div>
+<?php } ?>

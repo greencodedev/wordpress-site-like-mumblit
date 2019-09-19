@@ -1,0 +1,49 @@
+<div class="list-group-item"><i class="fa fa-fw fa-language"></i> Languages</div>
+
+<div class="list-group panel mt10">
+   <div class="setting-well page-margin panel-body">
+     <?php /*<a href="<?php echo $system['system_url']; ?>/plugins/add_new_lang" class="btn btn-success mt10"><i class="fa fa-plus"></i> Add new language</a><br><br>*/ ?>
+     <div class="table-responsive">
+      <table class="table table-hover table-bordered table-condensed setting-table">
+         <thead>
+            <tr>
+               <th>Language</th>
+               <th>Action</th>
+            </tr>
+         </thead>
+         <tbody class="posts-result manage-posts-list">
+            <?php
+            $langs = Wo_LangsNamesFromDB();
+            if (count($langs) > 0) {
+                foreach ($langs as $key => $wo['langs']) {
+                	$wo['langs_'] = $wo['langs'];
+                	$wo['langs'] = ucfirst($wo['langs']);
+                    echo Wo_LoadPage('plugins/languages/list');
+                }
+            }  
+            ?>
+         </tbody>
+      </table>
+      </div>
+   </div>
+</div>
+
+<script type="text/javascript">
+function Wo_DeleteLang(id) {
+  if (id == '') {
+    return false;
+  }
+  if (!confirm('Are you sure you want to delete this lagnauge ?')) {
+    return false;
+  }
+  Wo_progressIconLoader($('#' + id).find('.delete-field'));
+  $.get(Wo_Ajax_Requests_File(), {f: 'admin_setting', s:'delete_lang', id:id}, function (data) {
+     if (data.status == 200) {
+        $('#' + id).fadeOut(300, function () {
+          $(this).remove();
+        });
+     }
+     Wo_progressIconLoader($('#' + id).find('.delete-field'));
+  });
+}
+</script>

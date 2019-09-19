@@ -1,0 +1,38 @@
+                          <?php if($wo['config']['AllLogin'] != 0): ?>
+                          <div class="form-group" style="overflow:hidden">
+                            <div class="row">
+                              <div class="col-lg-12">
+                                  <?php if($wo['config']['facebookLogin'] != 0): ?>
+                                  <a href="<?php echo $wo['facebookLoginUrl']?>" class="btn btn-social-icon btn-facebook">
+                                  <i class="fa fa-facebook"></i>
+                                  </a>
+                                  <?php endif; ?>
+                                  <?php if($wo['config']['googleLogin'] != 0): ?>
+                                  <a href="<?php echo $wo['googleLoginUrl']?>" class="btn btn-social-icon btn-google">
+                                  <i class="fa fa-google"></i>
+                                  </a>
+                                  <?php endif; ?>
+                                  <?php if($wo['config']['twitterLogin'] != 0): ?>
+                                  <a href="<?php echo $wo['twitterLoginUrl']?>" class="btn btn-social-icon btn-twitter">
+                                  <i class="fa fa-twitter"></i>
+                                  </a>
+                                  <?php endif; ?>
+                                  <?php if($wo['config']['linkedinLogin'] != 0): ?>
+                                  <a href="<?php echo $wo['linkedInLoginUrl']?>" class="btn btn-social-icon btn-linkedin">
+                                  <i class="fa fa-linkedin"></i>
+                                  </a>
+                                  <?php endif; ?>
+                                  <?php if($wo['config']['VkontakteLogin'] != 0): ?>
+                                  <a href="<?php echo $wo['VkontakteLoginUrl']?>" class="btn btn-social-icon btn-vk">
+                                  <i class="fa fa-vk"></i>
+                                  </a>
+                                  <?php endif; ?>
+                                  <?php if($wo['config']['instagramLogin'] != 0): ?>
+                                  <a href="<?php echo $wo['instagramLoginUrl']?>" class="btn btn-social-icon btn-instagram">
+                                  <i class="fa fa-instagram"></i>
+                                  </a>
+                                  <?php endif; ?>
+                              </div>
+                            </div>
+                          </div>
+                          <?php endif;?>

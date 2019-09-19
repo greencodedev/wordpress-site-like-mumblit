@@ -1,0 +1,74 @@
+<div class="page-margin">
+	<div class="row">
+		<div class="col-md-2 leftcol"><?php echo Wo_LoadPage("sidebar/left-sidebar"); ?></div>
+		<div class="col-md-12 profile-lists middlecol" style="width: 80% !important;">
+			<div class="wo_my_pages">
+                <div class="my_pages_header row" style="margin: 0px 0px 0px;">
+					<ul class="<?php echo Wo_RightToLeft('pull-left'); ?>" style="width: 100% !important;">
+						<h2>Notifications</h2>
+						<br><hr>
+				<div>
+					<style>
+			.notification_panel { background-color:#FFF; margin-bottom:10px; padding:0px; float:left; width:100%}
+			.notification_panel .avatar {
+    width: 25px;
+    height: 25px;
+    display: block;
+    border-radius: 50%;
+}
+.notification_text { margin-left:10px; margin-top:4px;}
+.timeslot { float:right; color:#666;}
+			</style>
+			<div class="notification_panel">
+           <?php
+		   $homenotificatins=Wo_GetHomeNotification();
+		   ?> 
+				<?php   
+			foreach ($homenotificatins as $homenotificatin) { 
+		   $user_info=Wo_UserData($homenotificatin['notifier_id']);
+			
+		  $useravatar=str_replace("https://www.mumblit.com/","",$user_info['avatar']);
+				?>
+              
+                <div class="pull-left image"><img src="https://www.mumblit.com/icons/<?php echo $homenotificatin['type']; ?>.png" style="float: left; width: 25px; margin-right: 5px;"> <a href="https://www.mumblit.com/<?php echo $user_info['username']; ?>" data-ajax="?link1=timeline&amp;u=<?php echo $user_info['username']; ?>"> <img src="https://www.mumblit.com/<?php echo $useravatar; ?>?cache=0" class="avatar" alt="<?php echo  $user_info['username']; ?> profile picture"> </a> </div>
+                <div class="pull-left notification_text" ><b>@<?php echo  $user_info['username']; ?></b> <?php echo $homenotificatin['type']; ?> you </div><div class="timeslot"> <em><?php echo Wo_Time_Elapsed_String($homenotificatin['time']); ?></em></div>
+                <div style="clear:both;"></div>
+                <hr />
+                <?php } ?>
+            </div>	
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+    function Wo_RegisterPokeBack(received_user_id ,self,  send_user_id, poke_id){
+        if (!received_user_id || !self || !send_user_id || !poke_id ) {
+            return false;
+        }
+        $(self).attr('disabled',true);
+        $(self).find('.button-text').html("<?php echo $wo['lang']['txt_poked'];?>");
+
+        $.ajax({
+            url: Wo_Ajax_Requests_File(),
+            type: 'GET',
+            dataType: 'json',
+            data: {f: 'poke',received_user_id:received_user_id,send_user_id:send_user_id,poke_id:poke_id},
+        })
+        .done(function(data) {
+            if (data.status == 200) {
+                Wo_Delay(function(){
+                    $('#pokeuser_' + received_user_id).remove();
+                },2000);
+            }else{
+                $(self).attr('disabled',false);
+                $(self).find('.button-text').html("<?php echo $wo['lang']['poke_back'];?>");
+            }
+        })
+        .fail(function() {
+            $(self).attr('disabled',false);
+            $(self).find('.button-text').html("<?php echo $wo['lang']['poke_back'];?>");
+            console.log("error");
+        })
+    }
+</script>

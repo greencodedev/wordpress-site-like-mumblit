@@ -1,0 +1,18 @@
+<?php 
+$where = "";
+ // MAKE SURE TYPE
+ $where .= " A.type != 'post' "; 
+ // MAKE SURE  AD IS NOT PAID
+ $where .= " AND A.paid='1' ";
+ // MAKE SURE AD IS NOT PAUSED  
+ $where .= " AND A.status='1' ";  
+ // MAKE SURE EXIST QUANTITY  
+ $where .= " AND A.quantity>'0' ";
+ //IN NEXT VERSION CHECK COUNTRY
+ //if($wo['loggedin']){ $where .= " AND ( target_location = '{$wo['user']['country_id']}' OR target_location = 'all')";  }
+ // MAKE SURE IS GENDER
+ if($wo['loggedin']){  $where .= " AND ( target_gender = '{$wo['user']['gender']}' OR target_gender = 'all')"; }
+$nowtime = time();
+ $where .= " AND date_start<'{$nowtime}' AND (date_end>'{$nowtime}' OR date_end='0') ";
+$ads_left = Ads::get_ads_lists($wo['system']['ads_no_left_column'], FALSE, FALSE, " RAND() ", $where );
+foreach($ads_left['ads'] as $ad){ include "ads_random.phtml"; } ?>

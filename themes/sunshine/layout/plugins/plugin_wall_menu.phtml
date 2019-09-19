@@ -1,0 +1,18 @@
+ <?php 
+ /* tab menu plugins in wall */ 
+ if(!empty($plugin_list['plugin_wall']) && count($plugin_list['plugin_wall']) > 0){
+ foreach($plugin_list['plugin_wall'] as $plugwall){ ?>
+ <div class="row pull-left" <?php if($plugwall['for'] == 'active'){ echo 'for="upload_'.$plugwall['id'].'"'; } ?>>
+           <div class="poster-left-buttons">
+               <div class="input-group">
+ <?php if($plugwall['icon'] != ''){ ?>
+ <span class="btn btn-default btn-file js_<?php echo $plugwall['id']; ?>"><i class="fa <?php echo $plugwall['icon']; ?>"></i></span>
+ <?php } else { ?>
+ <span><img src="<?php echo $wo['config']['site_url']; ?>/assets/lider/images/<?php echo $plugwall['img']; ?>" class="fa" title="<?php echo $plugwall['title']; ?>" /></span>
+ <?php } ?>
+               </div>
+            </div>
+         </div>
+ <?php } 
+  }
+  /* tab menu plugins in wall */ ?>
