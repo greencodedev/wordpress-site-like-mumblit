@@ -1,0 +1,2 @@
+this project is social website like mumblit.
+it is based on Wordpress.
